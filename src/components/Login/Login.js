@@ -24,7 +24,7 @@ const Login = () => {
                     'Content-Type': 'application/json'
                 }
             } 
-            const results = await axios.post('/apisirs/login',{
+            const results = await axios.post('/apisirs6v2/login',{
                 userName: email,
                 password: password
                 // reCaptchaToken: reCaptchaToken

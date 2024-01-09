@@ -29,8 +29,7 @@ const FormUbahRL32 = () => {
     const [rincianHariPerawatanKelas3, setRincianHariPerawatanKelas3] = useState(0)
     const [rincianHariPerawatanKelasKhusus, setRincianHariPerawatanKelasKhusus] = useState(0)
     const [jumlahAlokasiTempatTidurAwalBulan, setJumlahAlokasiTempatTidurAwalBulan] = useState(0)
-    const [kelompokJenisPelayanan, setKelompokJenisPelayanan] = useState([])
-    const [kelompokJenisPelayananId, setKelompokJenisPelayananId] = useState('')
+    const [kelompokJenisPelayananNama, setKelompokJenisPelayananNama] = useState('')
     const [token, setToken] = useState(0)
     const [expire, setExpire] = useState(0)
     const navigate = useNavigate()
@@ -39,14 +38,13 @@ const FormUbahRL32 = () => {
 
     useEffect(() => {
         refreshToken()
-        getKelompokJenisPelayanan()
         showRLTigaTitikDua(id)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const refreshToken = async () => {
         try {
-            const response = await axios.get('/apisirs/token')
+            const response = await axios.get('/apisirs6v2/token')
             setToken(response.data.accessToken)
             const decoded = jwt_decode(response.data.accessToken)
             setExpire(decoded.exp)
@@ -62,7 +60,7 @@ const FormUbahRL32 = () => {
     axiosJWT.interceptors.request.use(async (config) => {
         const currentDate = new Date()
         if (expire * 1000 < currentDate.getTime()) {
-            const response = await axios.get('/apisirs/token')
+            const response = await axios.get('/apisirs6v2/token')
             config.headers.Authorization = `Bearer ${response.data.accessToken}`
             setToken(response.data.accessToken)
             const decoded = jwt_decode(response.data.accessToken)
@@ -75,7 +73,7 @@ const FormUbahRL32 = () => {
 
     const getRumahSakit = async (id) => {
         try {
-            const response = await axiosJWT.get('/apisirs/rumahsakit/' + id, {
+            const response = await axiosJWT.get('/apisirs6v2/rumahsakit/' + id, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -89,34 +87,14 @@ const FormUbahRL32 = () => {
         }
     }
 
-    const getKelompokJenisPelayanan = async () => {
-        const results = []
-        results.push({
-            key: "ICU",
-            value: "1",
-        })
-        results.push({
-            key: "NICU",
-            value: "2",
-        })
-        results.push({
-            key: "Intensif Lainnya",
-            value: "3",
-        })
-        results.push({
-            key: "Non Intensif",
-            value: "4",
-        })
-        setKelompokJenisPelayanan([...results])
-    }
-
     const showRLTigaTitikDua = async (id) => {
         try {
-            const response = await axiosJWT.get('/apisirs/rltigatitikdua/' + id, {
+            const response = await axiosJWT.get('/apisirs6v2/rltigatitikdua/' + id, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             })
+            
             setJenisPelayanan(response.data.data.nama_jenis_pelayanan)
             setPasienAwalBulan(response.data.data.pasien_awal_bulan)
             setPasienMasuk(response.data.data.pasien_masuk)
@@ -130,7 +108,7 @@ const FormUbahRL32 = () => {
             setRincianHariPerawatanKelas3(response.data.data.rincian_hari_perawatan_kelas_3)
             setRincianHariPerawatanKelasKhusus(response.data.data.rincian_hari_perawatan_kelas_khusus)
             setJumlahAlokasiTempatTidurAwalBulan(response.data.data.jumlah_alokasi_tempat_tidur_awal_bulan)
-            setKelompokJenisPelayananId(response.data.data.kelompok_jenis_pelayanan_id)
+            setKelompokJenisPelayananNama(response.data.data.kelompok_jenis_pelayanan_nama)
             setPasienAkhirBulan(hitungPasienAkhirBulan())
             setJumlahHariPerawatan(hitungJumlahHariPerawatan())
         } catch (error) {
@@ -374,13 +352,6 @@ const FormUbahRL32 = () => {
                 }
                 setJumlahAlokasiTempatTidurAwalBulan(event.target.value)
                 break
-            case "kelompokJenisPelayanan":
-                if (event.target.value === '') {
-                    event.target.value = 0
-                    event.target.select(event.target.value)
-                }
-                setKelompokJenisPelayananId(event.target.value)
-                break
             default:
                 break
         }
@@ -410,8 +381,7 @@ const FormUbahRL32 = () => {
                 "rincianHariPerawatanKelas2": rincianHariPerawatanKelas2,
                 "rincianHariPerawatanKelas3": rincianHariPerawatanKelas3,
                 "rincianHariPerawatanKelasKhusus": rincianHariPerawatanKelasKhusus,
-                "jumlahAlokasiTempatTidurAwalBulan": jumlahAlokasiTempatTidurAwalBulan,
-                "kelompokJenisPelayananId": kelompokJenisPelayananId
+                "jumlahAlokasiTempatTidurAwalBulan": jumlahAlokasiTempatTidurAwalBulan
             }
 
             const customConfig = {
@@ -421,7 +391,7 @@ const FormUbahRL32 = () => {
                 }
             }
 
-            await axiosJWT.patch('/apisirs/rltigatitikdua/' + id, data, customConfig)
+            await axiosJWT.patch('/apisirs6v2/rltigatitikdua/' + id, data, customConfig)
 
             toast('Data Berhasil Diubah', {
                 position: toast.POSITION.TOP_RIGHT
@@ -599,27 +569,8 @@ const FormUbahRL32 = () => {
                                             onFocus={handleFocus} onChange={e => changeHandler(e)} disabled={false} min={0} onPaste={preventPasteNegative}
                                             onKeyPress={preventMinus} />
                                     </td>
-                                    <td>
-                                        <select
-                                            name="kelompokJenisPelayanan"
-                                            typeof="select"
-                                            className="form-select"
-                                            value={kelompokJenisPelayananId}
-                                            onChange={e => changeHandler(e)}
-                                            disabled={false}
-                                        >
-                                            {kelompokJenisPelayanan.map((nilai) => {
-                                                return (
-                                                    <option
-                                                        key={nilai.value}
-                                                        name={nilai.key}
-                                                        value={nilai.value}
-                                                    >
-                                                        {nilai.key}
-                                                    </option>
-                                                );
-                                            })}
-                                        </select>
+                                    <td><input type="text" name="kelompokJenisPelayananNama" className="form-control" value={kelompokJenisPelayananNama}
+                                        disabled={true}  />
                                     </td>
                                 </tr>
                             </tbody>

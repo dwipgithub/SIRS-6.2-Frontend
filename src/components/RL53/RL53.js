@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import jwt_decode from 'jwt-decode'
-import { useNavigate, Link } from 'react-router-dom'
-import style from './FormTambahRL32.module.css'
+import { useNavigate } from 'react-router-dom'
+import style from './FormTambahRL53.module.css'
 import { HiSaveAs } from 'react-icons/hi'
-import { confirmAlert } from 'react-confirm-alert'
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import 'react-confirm-alert/src/react-confirm-alert.css'
-import Modal from 'react-bootstrap/Modal';
+import Modal from 'react-bootstrap/Modal'
 import Table from 'react-bootstrap/Table'
+import { downloadExcel } from 'react-export-table-to-excel'
 
-const RL32 = () => {
+const RL53 = () => {
     const [bulan, setBulan] = useState(1)
     const [tahun, setTahun] = useState('')
     const [filterLabel, setFilterLabel] = useState([])
@@ -125,27 +125,6 @@ const RL32 = () => {
         setDaftarBulan([...results])
     }
 
-    const hitungPasienAkhirBulan = ((index) => {
-        const result = (parseInt(dataRL[index].pasien_awal_bulan) +
-        parseInt(dataRL[index].pasien_masuk)) -
-        (parseInt(dataRL[index].pasien_keluar_hidup) +
-            parseInt(dataRL[index].pasien_keluar_mati_kurang_dari_48_jam) +
-            parseInt(dataRL[index].pasien_keluar_mati_lebih_dari_atau_sama_dengan_48_jam)
-        )
-        return result
-    })
-
-    const hitungJumlahHariPerawatan = ((index) => {
-        const result  = 
-            parseInt(dataRL[index].rincian_hari_perawatan_kelas_VVIP) + 
-            parseInt(dataRL[index].rincian_hari_perawatan_kelas_VIP) +
-            parseInt(dataRL[index].rincian_hari_perawatan_kelas_1) +
-            parseInt(dataRL[index].rincian_hari_perawatan_kelas_2) +
-            parseInt(dataRL[index].rincian_hari_perawatan_kelas_3) +
-            parseInt(dataRL[index].rincian_hari_perawatan_kelas_khusus)
-        return result
-    })
-
     const bulanChangeHandler = async (e) => {
         setBulan(e.target.value)
     }
@@ -222,7 +201,7 @@ const RL32 = () => {
                     periode: String(tahun).concat("-").concat(bulan)
                 }
             }
-            const results = await axiosJWT.get('/apisirs6v2/rltigatitikdua',
+            const results = await axiosJWT.get('/apisirs6v2/rllimatitiksatu',
                 customConfig)
 
             const rlTigaTitikDuaDetails = results.data.data.map((value) => {
@@ -235,48 +214,6 @@ const RL32 = () => {
         } catch (error) {
             console.log(error)
         }
-    }
-
-    const deleteRL = async (id) => {
-        const customConfig = {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-        }
-        try {
-            await axiosJWT.delete(`/apisirs6v2/rltigatitikdua/${id}`,
-                customConfig)
-            toast('Data Berhasil Dihapus', {
-                position: toast.POSITION.TOP_RIGHT
-            })
-            setDataRL((current) =>
-                current.filter((value) => value.id !== id)
-            )
-        } catch (error) {
-            console.log(error)
-            toast('Data Gagal Disimpan', {
-                position: toast.POSITION.TOP_RIGHT
-            })
-        }
-    }
-
-    const deleteConfirmation = (id) => {
-        confirmAlert({
-            title: '',
-            message: 'Yakin data yang dipilih akan dihapus? ',
-            buttons: [
-                {
-                    label: 'Yes',
-                    onClick: () => {
-                        deleteRL(id)
-                    }
-                },
-                {
-                    label: 'No'
-                }
-            ]
-        })
     }
 
     const handleClose = () => setShow(false);
@@ -352,6 +289,44 @@ const RL32 = () => {
         } catch (error) {
             console.log(error)
         }
+    }
+
+    function handleDownloadExcel() {
+        const header = [
+            "No", 
+            "Kelompok ICD-10", 
+            "Kelompok Diagnosa Penyakit", 
+            "Jumlah Kasus Baru Menurut Jenis Kelamin Laki-Laki",
+            "Jumlah Kasus Baru Menurut Jenis Kelamin Perempuan",
+            "Total Jumlah Kasus Baru",
+            "Jumlah Kunjungan Laki-Laki",
+            "Jumlah Kunjungan Perempuan",
+            "Total Jumlah Kunjungan"
+        ]
+
+        const body = dataRL.map((value, index) => {
+            const data = [
+                index + 1,
+                value.icd_code_group,
+                value.description_code,
+                value.jumlah_kasus_baru_L,
+                value.jumlah_kasus_baru_P,
+                value.total_kasus_baru,
+                value.jumlah_kunjungan_L,
+                value.jumlah_kunjungan_P,
+                value.total_jumlah_kunjungan
+            ]
+            return data
+        })
+
+        downloadExcel({
+            fileName: "react-export-table-to-excel -> downloadExcel method",
+            sheet: "react-export-table-to-excel",
+            tablePayload: {
+                header,
+                body: body,
+            },
+        })
     }
 
     return (
@@ -559,21 +534,11 @@ const RL32 = () => {
             <div className="row">
                 <div className="col-md-12">
                     <div style={{marginBottom: "10px"}}>
-                        {
-                            user.jenisUserId === 4 ? (
-                                    <Link className='btn' to={`/rl32/tambah/`} style={{ marginRight: "5px", fontSize: "18px", backgroundColor: "#779D9E", color: "#FFFFFF" }}>
-                                        +
-                                    </Link>
-                                
-                            ) : (
-                                <></>
-                            )
-                        }
                         <button className='btn' style={{ fontSize: "18px", backgroundColor: "#779D9E", color: "#FFFFFF" }} onClick={handleShow}>
                             Filter
                         </button>
+                        <button className='btn' style={{ fontSize: "18px", marginLeft: "5px", backgroundColor: "#779D9E", color: "#FFFFFF" }} onClick={handleDownloadExcel}>Download</button> 
                     </div>
-                    
                     <div>
                         <h5 style={{fontSize: "14px"}}>
                             filtered by {filterLabel.map((value) => {
@@ -587,122 +552,47 @@ const RL32 = () => {
                         className={style.rlTable}
                         striped
                         responsive
-                        style={{ width: "200%" }}
+                        style={{ width: "100%" }}
                     >
                         <thead>
                             <tr>
-                                <th rowSpan="2" style={{ "width": "2%" }}>No.</th>
-                                <th rowSpan="2" style={{ "width": "2%" }}></th>
-                                <th rowSpan="2" style={{ "width": "10%" }}>Jenis Pelayanan</th>
-                                <th rowSpan="2" style={{ "width": "5%" }}>Pasien Awal Bulan</th>
-                                <th rowSpan="2" style={{ "width": "5%" }}>Pasien Masuk</th>
-                                <th rowSpan="2" style={{ "width": "5%" }}>Pasien Keluar Hidup</th>
-                                <th colSpan="2" style={{ "width": "5%" }}>Pasien Keluar Mati</th>
-                                <th rowSpan="2" style={{ "width": "5%" }}>Jumlah Lama Dirawat</th>
-                                <th rowSpan="2" style={{ "width": "5%" }}>Pasien Akhir Bulan</th>
-                                <th rowSpan="2" style={{ "width": "5%" }}>Jumlah Hari Perawatan</th>
-                                <th colSpan="6" style={{ "width": "5%" }}>Rincian Hari Perawatan Per Kelas</th>
-                                <th rowSpan="2" style={{ "width": "5%" }}>Jumlah Alokasi TT Awal Bulan</th>
-                                <th rowSpan="2" style={{ "width": "7%" }}>Kelompok Jenis Pelayanan</th>
+                                <th rowSpan="2" style={{ "width": "1%" }}>No.</th>
+                                <th rowSpan="2" style={{ "width": "5%" }}>Kelompok ICD-10</th>
+                                <th rowSpan="2" style={{ "width": "5%" }}>Kelompok Diagnosa Penyakit</th>
+                                <th colSpan="3" style={{ "width": "2%" }}>Jumlah Kasus Baru</th>
+                                <th colSpan="3" style={{ "width": "2%" }}>Jumlah Kunjungan</th>
                             </tr>
                             <tr>
-                                <th style={{ "width": "5%" }}>{"< 48 jam"}</th>
-                                <th style={{ "width": "5%" }}>{">= 48 jam"}</th>
-                                <th style={{ "width": "5%" }}>VVIP</th>
-                                <th style={{ "width": "5%" }}>VIP</th>
-                                <th style={{ "width": "5%" }}>1</th>
-                                <th style={{ "width": "5%" }}>2</th>
-                                <th style={{ "width": "5%" }}>3</th>
-                                <th style={{ "width": "5%" }}>Khusus</th>
+                                <th style={{ "width": "2%" }}>L</th>
+                                <th style={{ "width": "2%" }}>P</th>
+                                <th style={{ "width": "2%" }}>Total</th>
+                                <th style={{ "width": "2%" }}>L</th>
+                                <th style={{ "width": "2%" }}>P</th>
+                                <th style={{ "width": "2%" }}>Total</th>
                             </tr>
                         </thead>
                         <tbody>
                             {dataRL.map((value, index) => {
                                 return (
                                     <tr key={value.id}>
-                                        <td>
-                                            <input type='text' name='id' className="form-control" value={index + 1} disabled={true} />
-                                        </td>
-                                        <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                                            <ToastContainer />
-                                            {/* <RiDeleteBin5Fill  size={20} onClick={(e) => hapus(value.id)} style={{color: "gray", cursor: "pointer", marginRight: "5px"}} /> */}
-                                            {
-                                                user.jenisUserId === 4 ? (
-                                                    <div style={{ display: "flex" }}>
-                                                        <button className="btn btn-danger" style={{ margin: "0 5px 0 0", backgroundColor: "#FF6663", border: "1px solid #FF6663" }} type='button' onClick={(e) => deleteConfirmation(value.id)}>Hapus</button>
-                                                        <Link to={`/rl32/ubah/${value.id}`} className='btn btn-warning' style={{ margin: "0 5px 0 0", backgroundColor: "#CFD35E", border: "1px solid #CFD35E", color: "#FFFFFF" }} >
-                                                            Ubah
-                                                        </Link>
-                                                    </div>
-                                                    
-                                                ) : (
-                                                    <></>
-                                                )
-                                            }
-                                        </td>
-                                        <td>
-                                            <input type="text" name="jenisPelayanan" className="form-control" value={value.nama_jenis_pelayanan}
-                                                disabled={true} />
-                                        </td>
-                                        <td>
-                                            <input type="text" name="pasienAwalBulan" className="form-control" value={value.pasien_awal_bulan}
-                                                disabled={true} />
-                                        </td>
-                                        <td><input type="text" name="pasienMasuk" className="form-control" value={value.pasien_masuk}
-                                            disabled={true} />
-                                        </td>
-                                        <td><input type="text" name="pasienKeluarHidup" className="form-control" value={value.pasien_keluar_hidup}
-                                            disabled={true} />
-                                        </td>
-                                        <td><input type="text" name="kurangDari48Jam" className="form-control" value={value.pasien_keluar_mati_kurang_dari_48_jam}
-                                            disabled={true} />
-                                        </td>
-                                        <td><input type="text" name="lebihDariAtauSamaDengan48Jam" className="form-control" value={value.pasien_keluar_mati_lebih_dari_atau_sama_dengan_48_jam}
-                                            disabled={true} />
-                                        </td>
-                                        <td><input type="text" name="jumlahLamaDirawat" className="form-control" value={value.jumlah_lama_dirawat}
-                                            disabled={true} />
-                                        </td>
-                                        <td><input type="text" name="pasienAkhirBulan" className="form-control" value={hitungPasienAkhirBulan(index)}
-                                            disabled={true} />
-                                        </td>
-                                        <td><input type="text" name="jumlahHariPerawatan" className="form-control" value={hitungJumlahHariPerawatan(index)}
-                                            disabled={true} />
-                                        </td>
-                                        <td><input type="text" name="kelasVVIP" className="form-control" value={value.rincian_hari_perawatan_kelas_VVIP}
-                                            disabled={true} />
-                                        </td>
-                                        <td><input type="text" name="kelasVIP" className="form-control" value={value.rincian_hari_perawatan_kelas_VIP}
-                                            disabled={true} />
-                                        </td>
-                                        <td><input type="text" name="kelas1" className="form-control" value={value.rincian_hari_perawatan_kelas_1}
-                                            disabled={true} />
-                                        </td>
-                                        <td><input type="text" name="kelas2" className="form-control" value={value.rincian_hari_perawatan_kelas_2}
-                                            disabled={true} />
-                                        </td>
-                                        <td><input type="text" name="kelas3" className="form-control" value={value.rincian_hari_perawatan_kelas_3}
-                                            disabled={true} />
-                                        </td>
-                                        <td><input type="text" name="kelasKhusus" className="form-control" value={value.rincian_hari_perawatan_kelas_khusus}
-                                            disabled={true} />
-                                        </td>
-                                        <td><input type="text" name="jumlahAlokasiTTAwalBulan" className="form-control" value={value.jumlah_alokasi_tempat_tidur_awal_bulan}
-                                            disabled={true} />
-                                        </td>
-                                        <td><input type="text" name="namaKelompokJenisPelayanan" className="form-control" value={value.nama_kelompok_jenis_pelayanan}
-                                            disabled={true} />
-                                        </td>
+                                        <td><ToastContainer />{index + 1}</td>
+                                        <td>{value.icd_code_group}</td>
+                                        <td>{value.icd_code_group}</td>
+                                        <td>{value.jumlah_kasus_baru_L}</td>
+                                        <td>{value.jumlah_kasus_baru_P}</td>
+                                        <td>{value.total_kasus_baru}</td>
+                                        <td>{value.jumlah_kunjungan_L}</td>
+                                        <td>{value.jumlah_kunjungan_P}</td>
+                                        <td>{value.total_jumlah_kunjungan}</td>
                                     </tr>
                                 )
                             })}
                         </tbody>
                     </Table>
-
                 </div>
             </div>
         </div>
     )
 }
 
-export default RL32
+export default RL53

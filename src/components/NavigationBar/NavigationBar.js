@@ -23,7 +23,7 @@ const NavigationBar = () => {
 
     const refreshToken = async () => {
         try {
-            const response = await axios.get('/apisirs/token')
+            const response = await axios.get('/apisirs6v2/token')
             // setToken(response.data.accessToken)
             const decoded = jwt_decode(response.data.accessToken)
             setUser(decoded)
@@ -43,7 +43,7 @@ const NavigationBar = () => {
     axiosJWT.interceptors.request.use(async (config) => {
         const currentDate = new Date()
         if (expire * 1000 < currentDate.getTime()) {
-            const response = await axios.get('/apisirs/token')
+            const response = await axios.get('/apisirs6v2/token')
             config.headers.Authorization = `Bearer ${response.data.accessToken}`
             // setToken(response.data.accessToken)
             const decoded = jwt_decode(response.data.accessToken)
@@ -56,7 +56,7 @@ const NavigationBar = () => {
 
     const Logout = async () => {
         try {
-            await axios.delete('/apisirs/logout')
+            await axios.delete('/apisirs6v2/logout')
             localStorage.removeItem('id')
             navigate('/')
         } catch (error) {
@@ -84,6 +84,11 @@ const NavigationBar = () => {
                         <NavDropdown title="RL.3" id="basic-nav-dropdown">
                             <NavDropdown.Item as={Link} to="/rl32">
                                 RL 3.2 Rawat Inap
+                            </NavDropdown.Item>
+                        </NavDropdown>
+                        <NavDropdown title="RL.5" id="basic-nav-dropdown">
+                            <NavDropdown.Item as={Link} to="/rl53">
+                                RL 5.3 10 Besar Kunjungan Penyakit Rawat Jalan
                             </NavDropdown.Item>
                         </NavDropdown>
                     </Nav>

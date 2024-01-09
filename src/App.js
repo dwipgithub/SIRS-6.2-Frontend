@@ -12,10 +12,12 @@ import RL32 from "./components/RL32/RL32.js"
 import FormTambahRL32 from "./components/RL32/FormTambahRL32"
 import FormUbahRL32 from "./components/RL32/FormUbahRL32"
 
+// RL 5.3
+import RL53 from "./components/RL53/RL53.js"
 
 function App() {
   return (
-    <BrowserRouter>
+    <MemoryRouter history="/v2">
       <Routes>
         <Route path="/" element={<Login/>} />
         <Route path="/beranda" element={<><NavigationBar/></>} />
@@ -26,9 +28,11 @@ function App() {
         <Route path="/rl32/tambah" element={<><NavigationBar/><FormTambahRL32/></>}/>
         <Route path="/rl32/ubah/:id" element={<><NavigationBar/><FormUbahRL32/></>}/>
 
+        <Route path="/rl53" element={<><NavigationBar/><RL53/></>}/>
+
         <Route path="*" element={<PageNotFound />} status={404}/>
       </Routes>
-    </BrowserRouter>
+    </MemoryRouter>
   )
 }
 

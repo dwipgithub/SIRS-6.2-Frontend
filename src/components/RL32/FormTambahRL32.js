@@ -16,7 +16,6 @@ const FormTambahRL32 = () => {
     const [bulan, setBulan] = useState(1)
     const [tahun, setTahun] = useState('')
     const [daftarBulan, setDaftarBulan] = useState([])
-    const [namaKelompokJenisPelayanan, setnamaKelompokJenisPelayanan] = useState([])
     const [dataRL, setDataRL] = useState([])
     const [token, setToken] = useState('')
     const [expire, setExpire] = useState('')
@@ -27,7 +26,6 @@ const FormTambahRL32 = () => {
         refreshToken()
         getRLTigaTitikSatuTemplate()
         getBulan()
-        getKelompokJenisPelayanan()
         const date = new Date();
         setTahun(date.getFullYear() - 1)
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -35,7 +33,7 @@ const FormTambahRL32 = () => {
 
     const refreshToken = async() => {
         try {
-            const response = await axios.get('/apisirs/token')
+            const response = await axios.get('/apisirs6v2/token')
             setToken(response.data.accessToken)
             const decoded = jwt_decode(response.data.accessToken)
             setExpire(decoded.exp)
@@ -51,7 +49,7 @@ const FormTambahRL32 = () => {
     axiosJWT.interceptors.request.use(async(config) => {
         const currentDate = new Date()
         if (expire * 1000 < currentDate.getTime()) {
-            const response = await axios.get('/apisirs/token')
+            const response = await axios.get('/apisirs6v2/token')
             config.headers.Authorization = `Bearer ${response.data.accessToken}`
             setToken(response.data.accessToken)
             const decoded = jwt_decode(response.data.accessToken)
@@ -116,30 +114,9 @@ const FormTambahRL32 = () => {
         setDaftarBulan([...results])
     }
 
-    const getKelompokJenisPelayanan = async () => {
-        const results = []
-        results.push({
-            key: "ICU",
-            value: "1",
-        })
-        results.push({
-            key: "NICU",
-            value: "2",
-        })
-        results.push({
-            key: "Intensif Lainnya",
-            value: "3",
-        })
-        results.push({
-            key: "Non Intensif",
-            value: "4",
-        })
-        setnamaKelompokJenisPelayanan([...results])
-    }
-
     const getRumahSakit = async (id) => {
         try {
-            const response = await axiosJWT.get('/apisirs/rumahsakit/' + id, {
+            const response = await axiosJWT.get('/apisirs6v2/rumahsakit/' + id, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -155,7 +132,7 @@ const FormTambahRL32 = () => {
 
     const getRLTigaTitikSatuTemplate = async() => {
         try {
-            const response = await axiosJWT.get('/apisirs/rltigatitikduajenispelayanan', {
+            const response = await axiosJWT.get('/apisirs6v2/rltigatitikduajenispelayanan', {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -181,7 +158,7 @@ const FormTambahRL32 = () => {
                     rincianHariPerawatanKelas3: 0,
                     rincianHariPerawatanKelasKhusus: 0,
                     jumlahAlokasiTempatTidurAwalBulan:0,
-                    kelompokJenisPelayananId:1,
+                    kelompokJenisPelayananNama: value.kelompok_jenis_pelayanan_nama,
                     disabledInput: true,
                     checked: false
                 }
@@ -392,7 +369,7 @@ const FormTambahRL32 = () => {
                 }
             }
 
-            await axiosJWT.post('/apisirs/rltigatitikdua',{
+            await axiosJWT.post('/apisirs6v2/rltigatitikdua',{
                 periodeBulan: parseInt(bulan),
                 periodeTahun: parseInt(tahun),
                 data: dataRLArray
@@ -613,25 +590,7 @@ const FormTambahRL32 = () => {
                                                 onKeyPress={preventMinus}/>
                                             </td>
                                             <td>
-                                                <select
-                                                    name="kelompokJenisPelayanan"
-                                                    typeof="select"
-                                                    className="form-select"
-                                                    onChange={e => changeHandler(e, index)} 
-                                                    disabled={value.disabledInput}
-                                                    >
-                                                    {namaKelompokJenisPelayanan.map((nilai) => {
-                                                        return (
-                                                        <option
-                                                            key={nilai.value}
-                                                            name={nilai.key}
-                                                            value={nilai.value}
-                                                        >
-                                                            {nilai.key}
-                                                        </option>
-                                                        );
-                                                    })}
-                                                </select>
+                                                <input type="text" name="jenisPelayanan" className="form-control" value={value.kelompokJenisPelayananNama} disabled={true} />
                                             </td>
                                         </tr>
                                     )

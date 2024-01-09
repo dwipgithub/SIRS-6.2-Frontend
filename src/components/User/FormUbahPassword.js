@@ -24,7 +24,7 @@ const FormUbahPassword = () => {
 
     const refreshToken = async() => {
         try {
-            const response = await axios.get('/apisirs/token')
+            const response = await axios.get('/apisirs6v2/token')
             setToken(response.data.accessToken)
             const decoded = jwt_decode(response.data.accessToken)
             setId(decoded.id)
@@ -40,7 +40,7 @@ const FormUbahPassword = () => {
     axiosJWT.interceptors.request.use(async(config) => {
         const currentDate = new Date()
         if (expire * 1000 < currentDate.getTime()) {
-            const response = await axios.get('/apisirs/token')
+            const response = await axios.get('/apisirs6v2/token')
             config.headers.Authorization = `Bearer ${response.data.accessToken}`
             const decoded = jwt_decode(response.data.accessToken)
             setExpire(decoded.exp)
@@ -60,7 +60,7 @@ const FormUbahPassword = () => {
                     'Authorization': `Bearer ${token}`
                 }
             } 
-            await axiosJWT.patch('/apisirs/users/' + id + '/admin',{
+            await axiosJWT.patch('/apisirs6v2/users/' + id + '/admin',{
                 passwordLama: passwordLama,
                 passwordBaru: passwordBaru,
                 passwordBaruConfirmation: passwordBaruConfirmation
