@@ -201,7 +201,7 @@ const RL53 = () => {
                     periode: String(tahun).concat("-").concat(bulan)
                 }
             }
-            const results = await axiosJWT.get('/apisirs6v2/rllimatitiksatu',
+            const results = await axiosJWT.get('/apisirs6v2/rllimatitiktiga',
                 customConfig)
 
             const rlTigaTitikDuaDetails = results.data.data.map((value) => {
@@ -576,14 +576,14 @@ const RL53 = () => {
                                 return (
                                     <tr key={value.id}>
                                         <td><ToastContainer />{index + 1}</td>
-                                        <td>{value.icd_code_group}</td>
-                                        <td>{value.icd_code_group}</td>
-                                        <td>{value.jumlah_kasus_baru_L}</td>
-                                        <td>{value.jumlah_kasus_baru_P}</td>
-                                        <td>{value.total_kasus_baru}</td>
-                                        <td>{value.jumlah_kunjungan_L}</td>
-                                        <td>{value.jumlah_kunjungan_P}</td>
-                                        <td>{value.total_jumlah_kunjungan}</td>
+                                        <td>{value.kelompok_icd_10}</td>
+                                        <td>{value.kelompok_diagnosa_penyakit}</td>
+                                        <td>{value.jumlah_kasus_baru_l}</td>
+                                        <td>{value.jumlah_kasus_baru_p}</td>
+                                        <td>{value.total_jumlah_kasus_baru}</td>
+                                        <td>{value.jumlah_kunjungan_l}</td>
+                                        <td>{value.jumlah_kunjungan_p}</td>
+                                        <td>{value.total_kunjungan}</td>
                                     </tr>
                                 )
                             })}

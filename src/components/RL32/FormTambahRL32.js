@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import jwt_decode from 'jwt-decode'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate, useHistory, Link } from 'react-router-dom'
 import style from './FormTambahRL32.module.css'
 import { HiSaveAs } from 'react-icons/hi'
 import { ToastContainer, toast } from 'react-toastify';
@@ -379,9 +379,9 @@ const FormTambahRL32 = () => {
             toast('Data Berhasil Disimpan', {
                 position: toast.POSITION.TOP_RIGHT
             })
-            // setTimeout(() => {
-            //     navigate('/rl31')
-            // }, 1000);
+            setTimeout(() => {
+                navigate('/rl32')
+            }, 1000);
         } catch (error) {
             toast(`Data tidak bisa disimpan karena ,${error.response.data.message}`, {
                 position: toast.POSITION.TOP_RIGHT

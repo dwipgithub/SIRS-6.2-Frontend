@@ -12,6 +12,55 @@ import RL32 from "./components/RL32/RL32.js"
 import FormTambahRL32 from "./components/RL32/FormTambahRL32"
 import FormUbahRL32 from "./components/RL32/FormUbahRL32"
 
+// RL 3.8
+import RL38 from "./components/RL38/RL38"
+import FormTambahRL38 from "./components/RL38/FormTambahRL38"
+import { FormEditRL38 } from "./components/RL38/FormUbahRL38"
+
+// RL 3.9
+import RL39 from "./components/RL39/RL39.js";
+import FormTambahRL39 from "./components/RL39/FormTambahRL39.js";
+import FormUbahRL39 from "./components/RL39/FormUbahRL39.js"
+
+// RL 3.11
+import RL311 from "./components/RL311/RL311.js";
+import FormTambahRL311 from "./components/RL311/FormTambahRL311";
+import FormEditRL311 from "./components/RL311/FormUbahRL311";
+
+// RL 3.12
+import RL312 from "./components/RL312/RL312.js";
+import FormTambahRL312 from "./components/RL312/FormTambahRL312";
+import FormEditRL312 from "./components/RL312/FormUbahRL312";
+
+// RL 3.14
+import RL314 from "./components/RL314/RL314.js"
+import FormTambahRL314 from "./components/RL314/FormTambahRL314"
+import FormUbahRL314 from "./components/RL314/FormUbahRL314"
+
+// RL 3.17
+import RL317 from "./components/RL317/RL317"
+import FormTambahRL317 from "./components/RL317/FormTambahRL317"
+import FormUbahRL317 from "./components/RL317/FormUbahRL317"
+
+// RL 3.18
+import RL318 from "./components/RL318/RL318"
+import FormTambahRL318 from "./components/RL318/FormTambahRL318"
+import FormUbahRL318 from "./components/RL318/FormUbahRL318"
+
+// RL 4.1
+import RL41 from "./components/RL41/RL41"
+import FormTambahRL41 from "./components/RL41/FormTambahRL41"
+import { FormUbahRL41 } from "./components/RL41/FormUbahRL41"
+
+// RL 4.2
+import RL42 from "./components/RL42/RL42.js"
+
+// RL 4.3
+import RL43 from "./components/RL43/RL43.js"
+
+// RL 5.2
+import RL52 from "./components/RL52/RL52.js"
+
 // RL 5.3
 import RL53 from "./components/RL53/RL53.js"
 
@@ -27,6 +76,94 @@ function App() {
         <Route path="/rl32" element={<><NavigationBar/><RL32/></>}/>
         <Route path="/rl32/tambah" element={<><NavigationBar/><FormTambahRL32/></>}/>
         <Route path="/rl32/ubah/:id" element={<><NavigationBar/><FormUbahRL32/></>}/>
+
+        <Route path="/rl38" element={<><NavigationBar/><RL38/></>}/>
+        <Route path="/rl38/tambah"element={<><NavigationBar/><FormTambahRL38/></>}/>
+        <Route path="/rl38/ubah/:id" element={<><NavigationBar/><FormEditRL38 /></>}/>
+
+        <Route path="/rl39" element={<><NavigationBar/><RL39/></>}/>
+        <Route path="/rl39/tambah" element={<><NavigationBar/><FormTambahRL39/></>}/>
+        <Route path="/rl39/ubah/:id" element={<><NavigationBar/><FormUbahRL39/></>}/>
+        
+        <Route
+          path="/RL311"
+          element={
+            <>
+              <NavigationBar />
+              <RL311 />
+            </>
+          }
+        />
+        <Route
+          path="/rl311/tambah"
+          element={
+            <>
+              <NavigationBar />
+              <FormTambahRL311 />
+            </>
+          }
+        />
+        <Route
+          path="/rl311/edit/:id"
+          element={
+            <>
+              <NavigationBar />
+              <FormEditRL311 />
+            </>
+          }
+        />
+
+        <Route
+          path="/RL312"
+          element={
+            <>
+              <NavigationBar />
+              <RL312 />
+            </>
+          }
+        />
+
+        <Route
+          path="/rl312/tambah"
+          element={
+            <>
+              <NavigationBar />
+              <FormTambahRL312 />
+            </>
+          }
+        />
+
+        <Route
+          path="/rl312/edit/:id"
+          element={
+            <>
+              <NavigationBar />
+              <FormEditRL312 />
+            </>
+          }
+        />
+
+        <Route path="/RL314" element={<><NavigationBar/><RL314/></>}/>
+        <Route path="/rl314/tambah" element={<><NavigationBar/><FormTambahRL314/></>}/>
+        <Route path="/rl314/ubah/:id" element={<><NavigationBar/><FormUbahRL314/></>}/>
+
+        <Route path="/rl317" element={<><NavigationBar/><RL317/></>}/>
+        <Route path="/rl317/tambah" element={<><NavigationBar/><FormTambahRL317/></>}/>
+        <Route path="/rl317/ubah/:id" element={<><NavigationBar/><FormUbahRL317/></>}/>
+
+        <Route path="/rl318" element={<><NavigationBar/><RL318/></>}/>
+        <Route path="/rl318/tambah" element={<><NavigationBar/><FormTambahRL318/></>}/>
+        <Route path="/rl318/ubah/:id" element={<><NavigationBar/><FormUbahRL318/></>}/>
+
+        <Route path="/rl41" element={<><NavigationBar/><RL41/></>}/>
+        <Route path="/rl41/tambah" element={<><NavigationBar/><FormTambahRL41/></>}/>
+        <Route path="/rl41/ubah/:id" element={<><NavigationBar/><FormUbahRL41/></>}/>
+        
+        <Route path="/rl42" element={<><NavigationBar/><RL42/></>}/>
+        
+        <Route path="/rl43" element={<><NavigationBar/><RL43/></>}/>
+
+        <Route path="/rl52" element={<><NavigationBar/><RL52/></>}/>
 
         <Route path="/rl53" element={<><NavigationBar/><RL53/></>}/>
 

@@ -85,8 +85,43 @@ const NavigationBar = () => {
                             <NavDropdown.Item as={Link} to="/rl32">
                                 RL 3.2 Rawat Inap
                             </NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/rl38">
+                                RL 3.8 Laboratorium
+                            </NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/rl39">
+                                RL 3.9 Radiologi
+                            </NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/rl311">
+                                RL 3.11 Gigi Dan Mulut
+                            </NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/rl312">
+                                RL 3.12 Pembedahan
+                            </NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/rl314">
+                                RL 3.14 Rujukan
+                            </NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/rl317">
+                                RL 3.17 Farmasi Pengadaan Obat
+                            </NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/rl318">
+                                RL 3.18 Farmasi Resep
+                            </NavDropdown.Item>
+                        </NavDropdown>
+                        <NavDropdown title="RL.4" id="basic-nav-dropdown">
+                            <NavDropdown.Item as={Link} to="/rl41">
+                                RL 4.1 Morbiditas Pasien Rawat Inap
+                            </NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/rl42">
+                                RL 4.2 10 Besar Penyakit Rawat Inap
+                            </NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/rl43">
+                                RL 4.3 10 Besar Kematian Penyakit Pasien Rawat Inap
+                            </NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown title="RL.5" id="basic-nav-dropdown">
+                            <NavDropdown.Item as={Link} to="/rl52">
+                                RL 5.2 10 Besar Kasus Baru Penyakit Rawat Jalan
+                            </NavDropdown.Item>
                             <NavDropdown.Item as={Link} to="/rl53">
                                 RL 5.3 10 Besar Kunjungan Penyakit Rawat Jalan
                             </NavDropdown.Item>
