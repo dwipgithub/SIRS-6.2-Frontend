@@ -32,6 +32,12 @@ import RL312 from "./components/RL312/RL312.js";
 import FormTambahRL312 from "./components/RL312/FormTambahRL312";
 import FormEditRL312 from "./components/RL312/FormUbahRL312";
 
+// RL 3.13
+import RL313 from "./components/RL313/RL313.js";
+import FormTambahRL313 from "./components/RL313/FormTambahRL313";
+import FormEditRL313 from "./components/RL313/FormUbahRL313";
+
+
 // RL 3.14
 import RL314 from "./components/RL314/RL314.js"
 import FormTambahRL314 from "./components/RL314/FormTambahRL314"
@@ -139,6 +145,36 @@ function App() {
             <>
               <NavigationBar />
               <FormEditRL312 />
+            </>
+          }
+        />
+
+<Route
+          path="/RL313"
+          element={
+            <>
+              <NavigationBar />
+              <RL313 />
+            </>
+          }
+        />
+
+        <Route
+          path="/rl313/tambah"
+          element={
+            <>
+              <NavigationBar />
+              <FormTambahRL313 />
+            </>
+          }
+        />
+
+        <Route
+          path="/rl313/edit/:id"
+          element={
+            <>
+              <NavigationBar />
+              <FormEditRL313 />
             </>
           }
         />

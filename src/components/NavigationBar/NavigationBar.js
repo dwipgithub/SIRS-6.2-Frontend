@@ -97,6 +97,9 @@ const NavigationBar = () => {
                             <NavDropdown.Item as={Link} to="/rl312">
                                 RL 3.12 Pembedahan
                             </NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/rl313">
+                                RL 3.13 Rehabilitasi Medik
+                            </NavDropdown.Item>
                             <NavDropdown.Item as={Link} to="/rl314">
                                 RL 3.14 Rujukan
                             </NavDropdown.Item>

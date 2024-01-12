@@ -574,7 +574,7 @@ const RL53 = () => {
                         <tbody>
                             {dataRL.map((value, index) => {
                                 return (
-                                    <tr key={value.id}>
+                                    <tr key={index}>
                                         <td><ToastContainer />{index + 1}</td>
                                         <td>{value.kelompok_icd_10}</td>
                                         <td>{value.kelompok_diagnosa_penyakit}</td>
