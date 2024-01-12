@@ -12,6 +12,26 @@ import RL32 from "./components/RL32/RL32.js"
 import FormTambahRL32 from "./components/RL32/FormTambahRL32"
 import FormUbahRL32 from "./components/RL32/FormUbahRL32"
 
+// RL 3.4
+import RL34 from "./components/RL34/RL34.js"
+import FormTambahRL34 from "./components/RL34/FormTambahRL34"
+import FormUbahRL34 from "./components/RL34/FormUbahRL34"
+
+// RL 3.5
+import RL35 from "./components/RL35/RL35.js"
+import FormTambahRL35 from "./components/RL35/FormTambahRL35"
+import FormUbahRL35 from "./components/RL35/FormUbahRL35"
+
+// RL 3.6
+import RL36 from "./components/RL36/RL36.js"
+import FormTambahRL36 from "./components/RL36/FormTambahRL36"
+import FormUbahRL36 from "./components/RL36/FormUbahRL36"
+
+// RL 3.7
+import RL37 from "./components/RL37/RL37.js"
+import FormTambahRL37 from "./components/RL37/FormTambahRL37"
+import FormUbahRL37 from "./components/RL37/FormUbahRL37"
+
 // RL 3.8
 import RL38 from "./components/RL38/RL38"
 import FormTambahRL38 from "./components/RL38/FormTambahRL38"
@@ -82,6 +102,22 @@ function App() {
         <Route path="/rl32" element={<><NavigationBar/><RL32/></>}/>
         <Route path="/rl32/tambah" element={<><NavigationBar/><FormTambahRL32/></>}/>
         <Route path="/rl32/ubah/:id" element={<><NavigationBar/><FormUbahRL32/></>}/>
+
+        <Route path="/rl34" element={<><NavigationBar/><RL34/></>}/>
+        <Route path="/rl34/tambah" element={<><NavigationBar/><FormTambahRL34/></>}/>
+        <Route path="/rl34/ubah/:id" element={<><NavigationBar/><FormUbahRL34/></>}/>
+
+        <Route path="/rl35" element={<><NavigationBar/><RL35/></>}/>
+        <Route path="/rl35/tambah"element={<><NavigationBar/><FormTambahRL35/></>}/>
+        <Route path="/rl35/ubah/:id" element={<><NavigationBar/><FormUbahRL35 /></>}/>
+
+        <Route path="/rl36" element={<><NavigationBar/><RL36/></>}/>
+        <Route path="/rl36/tambah" element={<><NavigationBar/><FormTambahRL36/></>}/>
+        <Route path="/rl36/ubah/:id" element={<><NavigationBar/><FormUbahRL36/></>}/>
+
+        <Route path="/rl37" element={<><NavigationBar/><RL37/></>}/>
+        <Route path="/rl37/tambah" element={<><NavigationBar/><FormTambahRL37/></>}/>
+        <Route path="/rl37/ubah/:id" element={<><NavigationBar/><FormUbahRL37/></>}/>
 
         <Route path="/rl38" element={<><NavigationBar/><RL38/></>}/>
         <Route path="/rl38/tambah"element={<><NavigationBar/><FormTambahRL38/></>}/>

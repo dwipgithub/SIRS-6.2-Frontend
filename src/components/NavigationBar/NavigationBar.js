@@ -85,6 +85,18 @@ const NavigationBar = () => {
                             <NavDropdown.Item as={Link} to="/rl32">
                                 RL 3.2 Rawat Inap
                             </NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/rl34">
+                                RL 3.4 Pengunjung
+                            </NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/rl35">
+                                RL 3.5 Kunjungan
+                            </NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/rl36">
+                                RL 3.6 Kebidanan
+                            </NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/rl37">
+                                RL 3.7 Neonatal, Bayi, dan Balita
+                            </NavDropdown.Item>
                             <NavDropdown.Item as={Link} to="/rl38">
                                 RL 3.8 Laboratorium
                             </NavDropdown.Item>
