@@ -352,24 +352,24 @@ const FormTambahRL36 = () => {
                             <div className="card-body">
                                 <h5 className="card-title h5">Profile Fasyankes</h5>
                                 <div className="form-floating" style={{width:"100%", display:"inline-block"}}>
-                                    <input type="text" className="form-control" id="floatingInput"
+                                    <input type="text" className="form-control" id="nama"
                                         value={ namaRS } disabled={true}/>
-                                    <label htmlFor="floatingInput">Nama</label>
+                                    <label htmlFor="nama">Nama</label>
                                 </div>
                                 <div className="form-floating" style={{width:"100%", display:"inline-block"}}>
-                                    <input type="text" className="form-control" id="floatingInput"
+                                    <input type="text" className="form-control" id="alamat"
                                         value={ alamatRS} disabled={true}/>
-                                    <label htmlFor="floatingInput">Alamat</label>
+                                    <label htmlFor="alamat">Alamat</label>
                                 </div>
                                 <div className="form-floating" style={{width:"50%", display:"inline-block"}}>
-                                    <input type="text" className="form-control" id="floatingInput"
+                                    <input type="text" className="form-control" id="provinsi"
                                         value={ namaPropinsi } disabled={true}/>
-                                    <label htmlFor="floatingInput">Provinsi </label>
+                                    <label htmlFor="provinsi">Provinsi </label>
                                 </div>
                                 <div className="form-floating" style={{width:"50%", display:"inline-block"}}>
-                                    <input type="text" className="form-control" id="floatingInput"
+                                    <input type="text" className="form-control" id="kabkota"
                                         value= { namaKabKota } disabled={true}/>
-                                    <label htmlFor="floatingInput">Kab/Kota</label>
+                                    <label htmlFor="kabkota">Kab/Kota</label>
                                 </div>
                             </div>
                         </div>

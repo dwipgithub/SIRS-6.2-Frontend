@@ -45,8 +45,10 @@ const RL35 = () => {
         getLastYear().then((results) => {
             
         })
+
+        totalPengunjung()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[])
+    },[dataRL])
 
     const refreshToken = async() => {
         try {
@@ -250,7 +252,7 @@ const RL35 = () => {
 
             setDataRL(dataRLTigaTitikLimaDetails)
             setSpinner(false)
-            totalPengunjung()
+            
             handleClose()
         } catch (error) {
             console.log(error)
@@ -268,6 +270,9 @@ const RL35 = () => {
             total2 = total2 + value.kunjungan_pasien_luar_kabkota
             total3 = total3 + value.total_kunjungan}
         )
+        console.log(total1)
+        console.log(total2)
+        console.log(total3)
         setTotalKunjunganPasienDalamKabkota(total1)
         setTotalKunjunganPasienLuarKabkota(total2)
         setTotalKunjungan(total3)
