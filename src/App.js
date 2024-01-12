@@ -84,6 +84,11 @@ import RL42 from "./components/RL42/RL42.js"
 // RL 4.3
 import RL43 from "./components/RL43/RL43.js"
 
+// RL 5.1
+import RL51 from "./components/RL51/RL51.js";
+import FormTambahRL51 from "./components/RL51/FormTambahRL51";
+import FormEditRL51 from "./components/RL51/FormUbahRL51";
+
 // RL 5.2
 import RL52 from "./components/RL52/RL52.js"
 
@@ -234,6 +239,36 @@ function App() {
         <Route path="/rl42" element={<><NavigationBar/><RL42/></>}/>
         
         <Route path="/rl43" element={<><NavigationBar/><RL43/></>}/>
+
+        <Route
+          path="/RL51"
+          element={
+            <>
+              <NavigationBar />
+              <RL51 />
+            </>
+          }
+        />
+
+        <Route
+          path="/rl51/tambah"
+          element={
+            <>
+              <NavigationBar />
+              <FormTambahRL51 />
+            </>
+          }
+        />
+
+        <Route
+          path="/rl51/edit/:id"
+          element={
+            <>
+              <NavigationBar />
+              <FormEditRL51 />
+            </>
+          }
+        />
 
         <Route path="/rl52" element={<><NavigationBar/><RL52/></>}/>
 

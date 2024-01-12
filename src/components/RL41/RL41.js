@@ -833,7 +833,7 @@ const RL41 = () => {
                           type="button"
                           onClick={(e) => Delete(value.id)}
                         >
-                          H
+                          Hapus
                         </button>
                         <Link
                           to={`/rl41/ubah/${value.id}`}
@@ -845,7 +845,7 @@ const RL41 = () => {
                             color: "#FFFFFF",
                           }}
                         >
-                          U
+                          Ubah
                         </Link>
                       </div>
                     </td>

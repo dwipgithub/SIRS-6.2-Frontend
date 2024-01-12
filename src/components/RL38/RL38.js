@@ -800,7 +800,7 @@ const RL38 = () => {
                                         confirmationDelete(value3.id)
                                       }
                                     >
-                                      H
+                                      Hapus
                                     </button>
                                     <Link
                                       to={`/rl38/ubah/${value3.id}`}
@@ -812,7 +812,7 @@ const RL38 = () => {
                                         color: "#FFFFFF",
                                       }}
                                     >
-                                      U
+                                      Ubah
                                     </Link>
                                   </div>
                                     ) : (

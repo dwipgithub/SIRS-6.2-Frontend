@@ -728,7 +728,7 @@ const RL314 = () => {
                           type="button"
                           onClick={(e) => hapus(value.id)}
                         >
-                          H
+                          Hapus
                         </button>
                         <Link
                           to={`/rl314/ubah/${value.id}`}
@@ -740,7 +740,7 @@ const RL314 = () => {
                             color: "#FFFFFF",
                           }}
                         >
-                          U
+                          Ubah
                         </Link>
                       </div>
                     </td>
