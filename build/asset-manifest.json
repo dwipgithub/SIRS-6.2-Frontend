@@ -1,12 +1,12 @@
 {
   "files": {
-    "main.css": "/v2/static/css/main.a549aebe.css",
-    "main.js": "/v2/static/js/main.0197d4d6.js",
+    "main.css": "/v2/static/css/main.8e461250.css",
+    "main.js": "/v2/static/js/main.21718762.js",
     "static/media/sirsImage4.jpeg": "/v2/static/media/sirsImage4.0552bf004bcb0072e7e4.jpeg",
     "index.html": "/v2/index.html"
   },
   "entrypoints": [
-    "static/css/main.a549aebe.css",
-    "static/js/main.0197d4d6.js"
+    "static/css/main.8e461250.css",
+    "static/js/main.21718762.js"
   ]
 }

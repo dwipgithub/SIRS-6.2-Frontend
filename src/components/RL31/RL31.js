@@ -2,16 +2,15 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import jwt_decode from 'jwt-decode'
 import { useNavigate } from 'react-router-dom'
-import style from './FormTambahRL53.module.css'
+import style from './FormTambahRL31.module.css'
 import { HiSaveAs } from 'react-icons/hi'
-import { ToastContainer, toast } from 'react-toastify'
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import 'react-confirm-alert/src/react-confirm-alert.css'
-import Modal from 'react-bootstrap/Modal'
+import Modal from 'react-bootstrap/Modal';
 import Table from 'react-bootstrap/Table'
-import { downloadExcel } from 'react-export-table-to-excel'
 
-const RL53 = () => {
+const RL31 = () => {
     const [bulan, setBulan] = useState(1)
     const [tahun, setTahun] = useState('')
     const [filterLabel, setFilterLabel] = useState([])
@@ -26,6 +25,12 @@ const RL53 = () => {
     const [show, setShow] = useState(false);
     const [user, setUser] = useState({})
     const navigate = useNavigate()
+    const [abor, setAveBor] = useState(0)
+    const [alos, setAveLos] = useState(0)
+    const [abto, setAveBto] = useState(0)
+    const [atoi, setAveToi] = useState(0)
+    const [andr, setAveNdr] = useState(0)
+    const [agdr, setAveGdr] = useState(0)
 
     useEffect(() => {
         refreshToken()
@@ -36,10 +41,11 @@ const RL53 = () => {
             return date.getFullYear() - 1
         }
         getLastYear().then((results) => {
-            
+
         })
+        Average()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [dataRL])
 
     const refreshToken = async () => {
         try {
@@ -88,6 +94,7 @@ const RL53 = () => {
         results.push({
             key: "April",
             value: "4",
+            JmlHari: "30",
         })
         results.push({
             key: "Mei",
@@ -180,7 +187,7 @@ const RL53 = () => {
 
     const getRL = async (e) => {
         e.preventDefault()
-        if (rumahSakit == null){
+        if (rumahSakit == null) {
             toast(`rumah sakit harus dipilih`, {
                 position: toast.POSITION.TOP_RIGHT
             })
@@ -201,19 +208,50 @@ const RL53 = () => {
                     periode: String(tahun).concat("-").concat(bulan)
                 }
             }
-            const results = await axiosJWT.get('/apisirs6v2/rllimatitiktiga',
+            const results = await axiosJWT.get('/apisirs6v2/rltigatitiksatu',
                 customConfig)
 
-            const rlTigaTitikDuaDetails = results.data.data.map((value) => {
+            const rlTigaTitikSatuDetails = results.data.data.map((value) => {
                 return value
             })
-
-            setDataRL(rlTigaTitikDuaDetails)
+            setDataRL(rlTigaTitikSatuDetails)
             setRumahSakit(null)
             handleClose()
         } catch (error) {
             console.log(error)
         }
+    }
+
+    const Average = () => {
+        let avgbor = 0
+        let avglos = 0
+        let avgbto = 0
+        let avgtoi = 0
+        let avgndr = 0
+        let avggdr = 0
+
+        dataRL.forEach((value) => {
+            avgbor = avgbor + parseFloat(value.BOR)
+            avglos = avglos + parseFloat(value.ALOS)
+            avgbto = avgbto + parseFloat(value.BTO)
+            avgtoi = avgtoi + parseFloat(value.TOI)
+            avgndr = avgndr + parseFloat(value.NDR)
+            avggdr = avggdr + parseFloat(value.GDR)
+        })
+
+        const avbor = (avgbor / dataRL.length)
+        const avlos = (avglos / dataRL.length)
+        const avbto = (avgbto / dataRL.length)
+        const avtoi = (avgtoi / dataRL.length)
+        const avndr = (avgndr / dataRL.length)
+        const avgdr = (avggdr / dataRL.length)
+
+        setAveBor(avbor)
+        setAveLos(avlos)
+        setAveBto(avbto)
+        setAveToi(avtoi)
+        setAveNdr(avndr)
+        setAveGdr(avgdr)
     }
 
     const handleClose = () => setShow(false);
@@ -246,7 +284,7 @@ const RL53 = () => {
         }
     }
 
-    const getProvinsi = async() => {
+    const getProvinsi = async () => {
         try {
             const customConfig = {
                 headers: {
@@ -267,7 +305,7 @@ const RL53 = () => {
         }
     }
 
-    const getKabKota = async(provinsiId) => {
+    const getKabKota = async (provinsiId) => {
         try {
             const customConfig = {
                 headers: {
@@ -291,47 +329,9 @@ const RL53 = () => {
         }
     }
 
-    function handleDownloadExcel() {
-        const header = [
-            "No", 
-            "Kelompok ICD-10", 
-            "Kelompok Diagnosa Penyakit", 
-            "Jumlah Kasus Baru Menurut Jenis Kelamin Laki-Laki",
-            "Jumlah Kasus Baru Menurut Jenis Kelamin Perempuan",
-            "Total Jumlah Kasus Baru",
-            "Jumlah Kunjungan Laki-Laki",
-            "Jumlah Kunjungan Perempuan",
-            "Total Jumlah Kunjungan"
-        ]
-
-        const body = dataRL.map((value, index) => {
-            const data = [
-                index + 1,
-                value.icd_code_group,
-                value.description_code,
-                value.jumlah_kasus_baru_L,
-                value.jumlah_kasus_baru_P,
-                value.total_kasus_baru,
-                value.jumlah_kunjungan_L,
-                value.jumlah_kunjungan_P,
-                value.total_jumlah_kunjungan
-            ]
-            return data
-        })
-
-        downloadExcel({
-            fileName: "react-export-table-to-excel -> downloadExcel method",
-            sheet: "react-export-table-to-excel",
-            tablePayload: {
-                header,
-                body: body,
-            },
-        })
-    }
-
     return (
         <div className="container" style={{ marginTop: "70px" }}>
-            <Modal show={show} onHide={handleClose} style={{position: "fixed"}}>
+            <Modal show={show} onHide={handleClose} style={{ position: "fixed" }}>
                 <Modal.Header closeButton>
                     <Modal.Title>Filter</Modal.Title>
                 </Modal.Header>
@@ -341,69 +341,69 @@ const RL53 = () => {
                         {
                             user.jenisUserId === 1 ? (
                                 <>
-                                    <div className="form-floating" style={{ width: "100%", paddingBottom: "5px"}}>
+                                    <div className="form-floating" style={{ width: "100%", paddingBottom: "5px" }}>
                                         <select
                                             name="provinsi"
                                             id="provinsi"
                                             typeof="select"
                                             className="form-select"
                                             onChange={e => provinsiChangeHandler(e)}
-                                            >
+                                        >
                                             <option key={0} value={0}>Pilih</option>
                                             {daftarProvinsi.map((nilai) => {
                                                 return (
-                                                <option
-                                                    key={nilai.id}
-                                                    value={nilai.id}
-                                                >
-                                                    {nilai.nama}
-                                                </option>
+                                                    <option
+                                                        key={nilai.id}
+                                                        value={nilai.id}
+                                                    >
+                                                        {nilai.nama}
+                                                    </option>
                                                 );
                                             })}
                                         </select>
                                         <label htmlFor="provinsi">Provinsi</label>
                                     </div>
 
-                                    <div className="form-floating" style={{ width: "100%", paddingBottom: "5px"}}>
+                                    <div className="form-floating" style={{ width: "100%", paddingBottom: "5px" }}>
                                         <select
                                             name="kabKota"
                                             id="kabKota"
                                             typeof="select"
                                             className="form-select"
                                             onChange={e => kabKotaChangeHandler(e)}
-                                            >
+                                        >
                                             <option key={0} value={0}>Pilih</option>
                                             {daftarKabKota.map((nilai) => {
                                                 return (
-                                                <option
-                                                    key={nilai.id}
-                                                    value={nilai.id}
-                                                >
-                                                    {nilai.nama}
-                                                </option>
+                                                    <option
+                                                        key={nilai.id}
+                                                        value={nilai.id}
+                                                    >
+                                                        {nilai.nama}
+                                                    </option>
                                                 );
                                             })}
                                         </select>
                                         <label htmlFor="kabKota">Kab/Kota</label>
                                     </div>
 
-                                    <div className="form-floating" style={{ width: "100%", paddingBottom: "5px"}}>
+                                    <div className="form-floating" style={{ width: "100%", paddingBottom: "5px" }}>
                                         <select
                                             name="rumahSakit"
                                             id="rumahSakit"
                                             typeof="select"
                                             className="form-select"
                                             onChange={e => rumahSakitChangeHandler(e)}
-                                            >
+                                        >
                                             <option key={0} value={0}>Pilih</option>
                                             {daftarRumahSakit.map((nilai) => {
                                                 return (
-                                                <option
-                                                    key={nilai.id}
-                                                    value={nilai.id}
-                                                >
-                                                    {nilai.nama}
-                                                </option>
+                                                    <option
+                                                        key={nilai.id}
+                                                        value={nilai.id}
+                                                    >
+                                                        {nilai.nama}
+                                                    </option>
                                                 );
                                             })}
                                         </select>
@@ -417,46 +417,46 @@ const RL53 = () => {
                         {
                             user.jenisUserId === 2 ? (
                                 <>
-                                    <div className="form-floating" style={{ width: "100%", paddingBottom: "5px"}}>
+                                    <div className="form-floating" style={{ width: "100%", paddingBottom: "5px" }}>
                                         <select
                                             name="kabKota"
                                             id="kabKota"
                                             typeof="select"
                                             className="form-select"
                                             onChange={e => kabKotaChangeHandler(e)}
-                                            >
+                                        >
                                             <option key={0} value={0}>Pilih</option>
                                             {daftarKabKota.map((nilai) => {
                                                 return (
-                                                <option
-                                                    key={nilai.id}
-                                                    value={nilai.id}
-                                                >
-                                                    {nilai.nama}
-                                                </option>
+                                                    <option
+                                                        key={nilai.id}
+                                                        value={nilai.id}
+                                                    >
+                                                        {nilai.nama}
+                                                    </option>
                                                 );
                                             })}
                                         </select>
                                         <label htmlFor="kabKota">Kab/Kota</label>
                                     </div>
 
-                                    <div className="form-floating" style={{ width: "100%", paddingBottom: "5px"}}>
+                                    <div className="form-floating" style={{ width: "100%", paddingBottom: "5px" }}>
                                         <select
                                             name="rumahSakit"
                                             id="rumahSakit"
                                             typeof="select"
                                             className="form-select"
                                             onChange={e => rumahSakitChangeHandler(e)}
-                                            >
+                                        >
                                             <option key={0} value={0}>Pilih</option>
                                             {daftarRumahSakit.map((nilai) => {
                                                 return (
-                                                <option
-                                                    key={nilai.id}
-                                                    value={nilai.id}
-                                                >
-                                                    {nilai.nama}
-                                                </option>
+                                                    <option
+                                                        key={nilai.id}
+                                                        value={nilai.id}
+                                                    >
+                                                        {nilai.nama}
+                                                    </option>
                                                 );
                                             })}
                                         </select>
@@ -470,23 +470,23 @@ const RL53 = () => {
                         {
                             user.jenisUserId === 3 ? (
                                 <>
-                                    <div className="form-floating" style={{ width: "100%", paddingBottom: "5px"}}>
+                                    <div className="form-floating" style={{ width: "100%", paddingBottom: "5px" }}>
                                         <select
                                             name="rumahSakit"
                                             id="rumahSakit"
                                             typeof="select"
                                             className="form-select"
                                             onChange={e => rumahSakitChangeHandler(e)}
-                                            >
+                                        >
                                             <option key={0} value={0}>Pilih</option>
                                             {daftarRumahSakit.map((nilai) => {
                                                 return (
-                                                <option
-                                                    key={nilai.id}
-                                                    value={nilai.id}
-                                                >
-                                                    {nilai.nama}
-                                                </option>
+                                                    <option
+                                                        key={nilai.id}
+                                                        value={nilai.id}
+                                                    >
+                                                        {nilai.nama}
+                                                    </option>
                                                 );
                                             })}
                                         </select>
@@ -509,6 +509,7 @@ const RL53 = () => {
                                             key={bulan.value}
                                             name={bulan.key}
                                             value={bulan.value}
+                                            cek={bulan.JmlHari}
                                         >
                                             {bulan.key}
                                         </option>
@@ -533,16 +534,16 @@ const RL53 = () => {
             </Modal>
             <div className="row">
                 <div className="col-md-12">
-                    <div style={{marginBottom: "10px"}}>
+                    <div style={{ marginBottom: "10px" }}>
                         <button className='btn' style={{ fontSize: "18px", backgroundColor: "#779D9E", color: "#FFFFFF" }} onClick={handleShow}>
                             Filter
                         </button>
-                        <button className='btn' style={{ fontSize: "18px", marginLeft: "5px", backgroundColor: "#779D9E", color: "#FFFFFF" }} onClick={handleDownloadExcel}>Download</button> 
                     </div>
+
                     <div>
-                        <h5 style={{fontSize: "14px"}}>
+                        <h5 style={{ fontSize: "14px" }}>
                             filtered by {filterLabel.map((value) => {
-                                return(
+                                return (
                                     value
                                 )
                             }).join(', ')}
@@ -556,43 +557,84 @@ const RL53 = () => {
                     >
                         <thead>
                             <tr>
-                                <th rowSpan="2" style={{ "width": "1%" }}>No.</th>
-                                <th rowSpan="2" style={{ "width": "5%" }}>Kelompok ICD-10</th>
-                                <th rowSpan="2" style={{ "width": "5%" }}>Kelompok Diagnosa Penyakit</th>
-                                <th colSpan="3" style={{ "width": "2%" }}>Jumlah Kasus Baru</th>
-                                <th colSpan="3" style={{ "width": "2%" }}>Jumlah Kunjungan</th>
-                            </tr>
-                            <tr>
-                                <th style={{ "width": "2%" }}>L</th>
-                                <th style={{ "width": "2%" }}>P</th>
-                                <th style={{ "width": "2%" }}>Total</th>
-                                <th style={{ "width": "2%" }}>L</th>
-                                <th style={{ "width": "2%" }}>P</th>
-                                <th style={{ "width": "2%" }}>Total</th>
+                                <th rowSpan="1" style={{ "width": "2%" }}>No.</th>
+                                <th rowSpan="1" style={{ "width": "10%" }}>Jenis Pelayanan</th>
+                                <th rowSpan="1" style={{ "width": "5%" }}>BOR</th>
+                                <th rowSpan="1" style={{ "width": "5%" }}>ALOS</th>
+                                <th rowSpan="1" style={{ "width": "5%" }}>BTO</th>
+                                <th colSpan="1" style={{ "width": "5%" }}>TOI</th>
+                                <th rowSpan="1" style={{ "width": "5%" }}>NDR</th>
+                                <th rowSpan="1" style={{ "width": "5%" }}>GDR</th>
                             </tr>
                         </thead>
                         <tbody>
                             {dataRL.map((value, index) => {
                                 return (
-                                    <tr key={index}>
-                                        <td><ToastContainer />{index + 1}</td>
-                                        <td>{value.kelompok_icd_10}</td>
-                                        <td>{value.kelompok_diagnosa_penyakit}</td>
-                                        <td style={{ textAlign: "right" }}>{value.jumlah_kasus_baru_l}</td>
-                                        <td style={{ textAlign: "right" }}>{value.jumlah_kasus_baru_p}</td>
-                                        <td style={{ textAlign: "right" }}>{value.total_jumlah_kasus_baru}</td>
-                                        <td style={{ textAlign: "right" }}>{value.jumlah_kunjungan_l}</td>
-                                        <td style={{ textAlign: "right" }}>{value.jumlah_kunjungan_p}</td>
-                                        <td style={{ textAlign: "right" }}>{value.total_kunjungan}</td>
+                                    <tr key={value.id}>
+                                        <td>
+                                            {index + 1}
+                                        </td>
+                                        <td>
+                                            {value.nama_kelompok_jenis_pelayanan}
+                                        </td>
+                                        <td style={{ textAlign: "right" }}>
+                                            {(Math.round(value.BOR * 100) / 100).toFixed(2)}
+                                        </td>
+                                        <td style={{ textAlign: "right" }}>
+                                            {(Math.round(value.ALOS * 100) / 100).toFixed(2)}
+                                        </td>
+                                        <td style={{ textAlign: "right" }}>
+                                            {(Math.round(value.BTO * 100) / 100).toFixed(2)}
+                                        </td>
+                                        <td style={{ textAlign: "right" }}>
+                                            {(Math.round(value.TOI * 100) / 100).toFixed(2)}
+                                        </td>
+                                        <td style={{ textAlign: "right" }}>
+                                            {(Math.round(value.NDR * 100) / 100).toFixed(2)}
+                                        </td>
+                                        <td style={{ textAlign: "right" }}>
+                                            {(Math.round(value.GDR * 100) / 100).toFixed(2)} 
+                                        </td>
                                     </tr>
                                 )
                             })}
+                            {
+                                dataRL.length > 0 ? (
+                                    <tr>
+                                        <td>
+                                            {77}
+                                        </td>
+                                        <td>Rata - Rata</td>
+                                        <td style={{ textAlign: "right" }}>
+                                            {(Math.round(abor * 100) / 100).toFixed(2)}
+                                        </td>
+                                        <td style={{ textAlign: "right" }}>
+                                            {(Math.round(alos * 100) / 100).toFixed(2)}
+                                        </td>
+                                        <td style={{ textAlign: "right" }}>
+                                            {(Math.round(abto * 100) / 100).toFixed(2)}
+                                        </td>
+                                        <td style={{ textAlign: "right" }}>
+                                            {(Math.round(atoi * 100) / 100).toFixed(2)}
+                                        </td>
+                                        <td style={{ textAlign: "right" }}>
+                                            {(Math.round(andr * 100) / 100).toFixed(2)}
+                                        </td>
+                                        <td style={{ textAlign: "right" }}>
+                                            {(Math.round(agdr * 100) / 100).toFixed(2)}
+                                        </td>
+                                    </tr>
+                                ) : (
+                                    <></>
+                                )
+                            }
                         </tbody>
                     </Table>
+
                 </div>
             </div>
         </div>
     )
 }
 
-export default RL53
+export default RL31

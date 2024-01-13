@@ -82,6 +82,9 @@ const NavigationBar = () => {
                     <Nav className="me-auto">
                         <Nav.Link as={Link} to="/beranda">Beranda</Nav.Link>
                         <NavDropdown title="RL.3" id="basic-nav-dropdown">
+                            <NavDropdown.Item as={Link} to="/rl31">
+                                RL 3.1 Indikator Pelayanan
+                            </NavDropdown.Item>
                             <NavDropdown.Item as={Link} to="/rl32">
                                 RL 3.2 Rawat Inap
                             </NavDropdown.Item>

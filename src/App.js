@@ -8,6 +8,9 @@ import FormUbahPassword from "./components/User/FormUbahPassword"
 import FormTambahUser from "./components/User/FormTambahUser"
 
 // RL 3.2
+import RL31 from "./components/RL31/RL31.js"
+
+// RL 3.2
 import RL32 from "./components/RL32/RL32.js"
 import FormTambahRL32 from "./components/RL32/FormTambahRL32"
 import FormUbahRL32 from "./components/RL32/FormUbahRL32"
@@ -103,6 +106,8 @@ function App() {
         <Route path="/beranda" element={<><NavigationBar/></>} />
         <Route path="/user/tambahuser" element={<><NavigationBar/><FormTambahUser/></>}/>
         <Route path="/user/ubahpassword" element={<><NavigationBar/><FormUbahPassword/></>}/>
+
+        <Route path="/rl31" element={<><NavigationBar/><RL31/></>}/>
 
         <Route path="/rl32" element={<><NavigationBar/><RL32/></>}/>
         <Route path="/rl32/tambah" element={<><NavigationBar/><FormTambahRL32/></>}/>
