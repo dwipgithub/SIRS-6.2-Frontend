@@ -88,6 +88,9 @@ const NavigationBar = () => {
                             <NavDropdown.Item as={Link} to="/rl32">
                                 RL 3.2 Rawat Inap
                             </NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/rl33">
+                                RL 3.3 Rawat Darurat
+                            </NavDropdown.Item>
                             <NavDropdown.Item as={Link} to="/rl34">
                                 RL 3.4 Pengunjung
                             </NavDropdown.Item>
@@ -106,6 +109,9 @@ const NavigationBar = () => {
                             <NavDropdown.Item as={Link} to="/rl39">
                                 RL 3.9 Radiologi
                             </NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/rl310">
+                                RL 3.10 Rujukan
+                            </NavDropdown.Item>
                             <NavDropdown.Item as={Link} to="/rl311">
                                 RL 3.11 Gigi Dan Mulut
                             </NavDropdown.Item>
@@ -116,7 +122,10 @@ const NavigationBar = () => {
                                 RL 3.13 Rehabilitasi Medik
                             </NavDropdown.Item>
                             <NavDropdown.Item as={Link} to="/rl314">
-                                RL 3.14 Rujukan
+                                RL 3.14 Pelayanan Khusus
+                            </NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/rl315">
+                                RL 3.15 Kesehatan Jiwa
                             </NavDropdown.Item>
                             <NavDropdown.Item as={Link} to="/rl317">
                                 RL 3.17 Farmasi Pengadaan Obat
@@ -139,7 +148,7 @@ const NavigationBar = () => {
                         <NavDropdown title="RL.5" id="basic-nav-dropdown">
                         <NavDropdown.Item as={Link} to="/rl51">
                                 RL 5.1 Mobiditas Pasien Rawat Jalan
-                             </NavDropdown.Item>
+                            </NavDropdown.Item>
                             <NavDropdown.Item as={Link} to="/rl52">
                                 RL 5.2 10 Besar Kasus Baru Penyakit Rawat Jalan
                             </NavDropdown.Item>

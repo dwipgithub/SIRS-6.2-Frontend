@@ -15,6 +15,11 @@ import RL32 from "./components/RL32/RL32.js"
 import FormTambahRL32 from "./components/RL32/FormTambahRL32"
 import FormUbahRL32 from "./components/RL32/FormUbahRL32"
 
+// RL 3.3
+import RL33 from "./components/RL33/RL33.js"
+import FormTambahRL33 from "./components/RL33/FormTambahRL33"
+import FormUbahRL33 from "./components/RL33/FormUbahRL33"
+
 // RL 3.4
 import RL34 from "./components/RL34/RL34.js"
 import FormTambahRL34 from "./components/RL34/FormTambahRL34"
@@ -45,6 +50,11 @@ import RL39 from "./components/RL39/RL39.js";
 import FormTambahRL39 from "./components/RL39/FormTambahRL39.js";
 import FormUbahRL39 from "./components/RL39/FormUbahRL39.js"
 
+// RL 3.10
+import RL310 from "./components/RL310/RL310.js"
+import FormEditRL310 from "./components/RL310/FormEditRL310"
+import FormTambahRL310 from "./components/RL310/FormTambahRL310"
+
 // RL 3.11
 import RL311 from "./components/RL311/RL311.js";
 import FormTambahRL311 from "./components/RL311/FormTambahRL311";
@@ -60,11 +70,15 @@ import RL313 from "./components/RL313/RL313.js";
 import FormTambahRL313 from "./components/RL313/FormTambahRL313";
 import FormEditRL313 from "./components/RL313/FormUbahRL313";
 
-
 // RL 3.14
 import RL314 from "./components/RL314/RL314.js"
 import FormTambahRL314 from "./components/RL314/FormTambahRL314"
 import FormUbahRL314 from "./components/RL314/FormUbahRL314"
+
+// RL 3.15
+import RL315 from "./components/RL315/RL315.js"
+import FormTambahRL315 from "./components/RL315/FormTambahRL315"
+import FormUbahRL315 from "./components/RL315/FormUbahRL315"
 
 // RL 3.17
 import RL317 from "./components/RL317/RL317"
@@ -113,6 +127,10 @@ function App() {
         <Route path="/rl32/tambah" element={<><NavigationBar/><FormTambahRL32/></>}/>
         <Route path="/rl32/ubah/:id" element={<><NavigationBar/><FormUbahRL32/></>}/>
 
+        <Route path="/rl33" element={<><NavigationBar/><RL33/></>}/>
+        <Route path="/rl33/tambah" element={<><NavigationBar/><FormTambahRL33/></>}/>
+        <Route path="/rl33/ubah/:id" element={<><NavigationBar/><FormUbahRL33/></>}/>
+
         <Route path="/rl34" element={<><NavigationBar/><RL34/></>}/>
         <Route path="/rl34/tambah" element={<><NavigationBar/><FormTambahRL34/></>}/>
         <Route path="/rl34/ubah/:id" element={<><NavigationBar/><FormUbahRL34/></>}/>
@@ -136,18 +154,13 @@ function App() {
         <Route path="/rl39" element={<><NavigationBar/><RL39/></>}/>
         <Route path="/rl39/tambah" element={<><NavigationBar/><FormTambahRL39/></>}/>
         <Route path="/rl39/ubah/:id" element={<><NavigationBar/><FormUbahRL39/></>}/>
+
+        <Route path="/rl310" element={<><NavigationBar/><RL310/></>}/>
+        <Route path="/rl310/tambah" element={<><NavigationBar/><FormTambahRL310/></>}/>
+        <Route path="/rl310/ubah/:id" element={<><NavigationBar/><FormEditRL310/></>}/>
         
-        <Route
-          path="/RL311"
-          element={
-            <>
-              <NavigationBar />
-              <RL311 />
-            </>
-          }
-        />
-        <Route
-          path="/rl311/tambah"
+        <Route path="/RL311" element={<><NavigationBar /><RL311 /></>}/>
+        <Route path="/rl311/tambah"
           element={
             <>
               <NavigationBar />
@@ -195,7 +208,7 @@ function App() {
           }
         />
 
-<Route
+        <Route
           path="/RL313"
           element={
             <>
@@ -228,6 +241,10 @@ function App() {
         <Route path="/RL314" element={<><NavigationBar/><RL314/></>}/>
         <Route path="/rl314/tambah" element={<><NavigationBar/><FormTambahRL314/></>}/>
         <Route path="/rl314/ubah/:id" element={<><NavigationBar/><FormUbahRL314/></>}/>
+
+        <Route path="/rl315" element={<><NavigationBar/><RL315/></>}/>
+        <Route path="/rl315/tambah" element={<><NavigationBar/><FormTambahRL315/></>}/>
+        <Route path="/rl315/ubah/:id" element={<><NavigationBar/><FormUbahRL315/></>}/>
 
         <Route path="/rl317" element={<><NavigationBar/><RL317/></>}/>
         <Route path="/rl317/tambah" element={<><NavigationBar/><FormTambahRL317/></>}/>
@@ -265,15 +282,7 @@ function App() {
           }
         />
 
-        <Route
-          path="/rl51/edit/:id"
-          element={
-            <>
-              <NavigationBar />
-              <FormEditRL51 />
-            </>
-          }
-        />
+        <Route path="/rl51/edit/:id"element={<><NavigationBar /><FormEditRL51 /></>}/>
 
         <Route path="/rl52" element={<><NavigationBar/><RL52/></>}/>
 

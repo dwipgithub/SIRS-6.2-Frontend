@@ -340,27 +340,40 @@ const FormTambahRL32 = () => {
                     "rincianHariPerawatanKelas2": value.rincianHariPerawatanKelas2,
                     "rincianHariPerawatanKelas3": value.rincianHariPerawatanKelas3,
                     "rincianHariPerawatanKelasKhusus": value.rincianHariPerawatanKelasKhusus,
-                    "jumlahAlokasiTempatTidurAwalBulan": value.jumlahAlokasiTempatTidurAwalBulan,
-                    "rlTigaTitikDuaKelompokJenisPelayananId": value.kelompokJenisPelayananId
+                    "jumlahAlokasiTempatTidurAwalBulan": value.jumlahAlokasiTempatTidurAwalBulan
                 }
             })
 
-            let errorPasienAkhirBulan = false
-            dataRLArray.forEach((value) => {
-                if (value.pasienAkhirBulan < 0) {
-                    errorPasienAkhirBulan = true
-                    return false
-                }
-                return true
-            })
+            // let errorPasienAkhirBulan = false
+            // let errorJumlahAlokasiTempatTidurAwalBulan = false
+            // dataRLArray.forEach((value) => {
+            //     if (value.pasienAkhirBulan < 0) {
+            //         errorPasienAkhirBulan = true
+            //         return false
+            //     }
+
+            //     if (value.jumlahAlokasiTempatTidurAwalBulan < 0) {
+            //         errorJumlahAlokasiTempatTidurAwalBulan = true
+            //         return false
+            //     }
+            //     return true
+            // })
             
-            if (errorPasienAkhirBulan === true) {
-                toast(`jumlah pasien akhir bulan tidak boleh lebih kecil dari 0`, {
-                    position: toast.POSITION.TOP_RIGHT
-                })
-                setButtonStatus(false)
-                return
-            }
+            // if (errorPasienAkhirBulan === true) {
+            //     toast(`jumlah pasien akhir bulan tidak boleh lebih kecil dari 0`, {
+            //         position: toast.POSITION.TOP_RIGHT
+            //     })
+            //     setButtonStatus(false)
+            //     return
+            // }
+
+            // if (errorJumlahAlokasiTempatTidurAwalBulan === true) {
+            //     toast(`jumlah alokasi tempat tidur tidak boleh lebih kecil dari 0`, {
+            //         position: toast.POSITION.TOP_RIGHT
+            //     })
+            //     setButtonStatus(false)
+            //     return
+            // }
 
             const customConfig = {
                 headers: {
