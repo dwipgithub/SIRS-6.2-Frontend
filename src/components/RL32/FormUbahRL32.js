@@ -121,6 +121,7 @@ const FormUbahRL32 = () => {
                 response.data.data.rincian_hari_perawatan_kelas_3 +
                 response.data.data.rincian_hari_perawatan_kelas_khusus
             )
+            setRincianHariPerawatanKelasVVIP(response.data.data.rincian_hari_perawatan_kelas_VVIP)
             setRincianHariPerawatanKelasVIP(response.data.data.rincian_hari_perawatan_kelas_VIP)
             setRincianHariPerawatanKelas1(response.data.data.rincian_hari_perawatan_kelas_1)
             setRincianHariPerawatanKelas2(response.data.data.rincian_hari_perawatan_kelas_2)
