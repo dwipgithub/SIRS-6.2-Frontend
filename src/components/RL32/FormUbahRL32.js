@@ -95,6 +95,12 @@ const FormUbahRL32 = () => {
                 }
             })
             
+            console.log(
+                (response.data.data.pasien_awal_bulan + response.data.data.pasien_masuk) -
+                (response.data.data.pasien_keluar_hidup + response.data.data.pasien_keluar_mati_kurang_dari_48_jam +
+                    response.data.data.pasien_keluar_mati_lebih_dari_atau_sama_dengan_48_jam)
+            )
+
             setJenisPelayanan(response.data.data.nama_jenis_pelayanan)
             setPasienAwalBulan(response.data.data.pasien_awal_bulan)
             setPasienMasuk(response.data.data.pasien_masuk)
@@ -102,6 +108,19 @@ const FormUbahRL32 = () => {
             setPasienKeluarMatiKurangDari48Jam(response.data.data.pasien_keluar_mati_kurang_dari_48_jam)
             setPasienKeluarMatiLebihDariAtauSamaDengan48Jam(response.data.data.pasien_keluar_mati_lebih_dari_atau_sama_dengan_48_jam)
             setJumlahLamaDirawat(response.data.data.jumlah_lama_dirawat)
+            setPasienAkhirBulan(
+                (response.data.data.pasien_awal_bulan + response.data.data.pasien_masuk) -
+                (response.data.data.pasien_keluar_hidup + response.data.data.pasien_keluar_mati_kurang_dari_48_jam +
+                    response.data.data.pasien_keluar_mati_lebih_dari_atau_sama_dengan_48_jam)
+            )
+            setJumlahHariPerawatan(
+                response.data.data.rincian_hari_perawatan_kelas_VVIP +
+                response.data.data.rincian_hari_perawatan_kelas_VIP +
+                response.data.data.rincian_hari_perawatan_kelas_1 +
+                response.data.data.rincian_hari_perawatan_kelas_2 +
+                response.data.data.rincian_hari_perawatan_kelas_3 +
+                response.data.data.rincian_hari_perawatan_kelas_khusus
+            )
             setRincianHariPerawatanKelasVIP(response.data.data.rincian_hari_perawatan_kelas_VIP)
             setRincianHariPerawatanKelas1(response.data.data.rincian_hari_perawatan_kelas_1)
             setRincianHariPerawatanKelas2(response.data.data.rincian_hari_perawatan_kelas_2)
@@ -109,33 +128,33 @@ const FormUbahRL32 = () => {
             setRincianHariPerawatanKelasKhusus(response.data.data.rincian_hari_perawatan_kelas_khusus)
             setJumlahAlokasiTempatTidurAwalBulan(response.data.data.jumlah_alokasi_tempat_tidur_awal_bulan)
             setKelompokJenisPelayananNama(response.data.data.kelompok_jenis_pelayanan_nama)
-            setPasienAkhirBulan(hitungPasienAkhirBulan())
-            setJumlahHariPerawatan(hitungJumlahHariPerawatan())
+            // setPasienAkhirBulan(hitungPasienAkhirBulan())
+            // setJumlahHariPerawatan(hitungJumlahHariPerawatan())
         } catch (error) {
             console.log(error)
         }
     }
 
-    const hitungPasienAkhirBulan = (() => {
-        const result = pasienAwalBulan +
-        parseInt(pasienMasuk) -
-        (parseInt(pasienKeluarHidup) +
-            parseInt(pasienKeluarMatiKurangDari48Jam) +
-            parseInt(pasienKeluarMatiLebihDariAtauSamaDengan48Jam)
-        )
-        return result
-    })
+    // const hitungPasienAkhirBulan = (() => {
+    //     const result = pasienAwalBulan +
+    //     parseInt(pasienMasuk) -
+    //     (parseInt(pasienKeluarHidup) +
+    //         parseInt(pasienKeluarMatiKurangDari48Jam) +
+    //         parseInt(pasienKeluarMatiLebihDariAtauSamaDengan48Jam)
+    //     )
+    //     return result
+    // })
 
-    const hitungJumlahHariPerawatan = (() => {
-        const result  = 
-            parseInt(rincianHariPerawatanKelasVVIP) + 
-            parseInt(rincianHariPerawatanKelasVIP) +
-            parseInt(rincianHariPerawatanKelas1) +
-            parseInt(rincianHariPerawatanKelas2) +
-            parseInt(rincianHariPerawatanKelas3) +
-            parseInt(rincianHariPerawatanKelasKhusus)
-        return result
-    })
+    // const hitungJumlahHariPerawatan = (() => {
+    //     const result  = 
+    //         parseInt(rincianHariPerawatanKelasVVIP) + 
+    //         parseInt(rincianHariPerawatanKelasVIP) +
+    //         parseInt(rincianHariPerawatanKelas1) +
+    //         parseInt(rincianHariPerawatanKelas2) +
+    //         parseInt(rincianHariPerawatanKelas3) +
+    //         parseInt(rincianHariPerawatanKelasKhusus)
+    //     return result
+    // })
 
     const handleFocus = ((event) => {
         event.target.select()
@@ -170,8 +189,8 @@ const FormUbahRL32 = () => {
                 setPasienMasuk(event.target.value)
                 setPasienAkhirBulan(
                     (
-                        parseInt(event.target.value) +
-                        parseInt(pasienMasuk)
+                        parseInt(pasienAwalBulan) +
+                        parseInt(event.target.value)
                     ) -
                     (
                         parseInt(pasienKeluarHidup) +
@@ -188,11 +207,11 @@ const FormUbahRL32 = () => {
                 setPasienKeluarHidup(event.target.value)
                 setPasienAkhirBulan(
                     (
-                        parseInt(event.target.value) +
+                        parseInt(pasienAwalBulan) +
                         parseInt(pasienMasuk)
                     ) -
                     (
-                        parseInt(pasienKeluarHidup) +
+                        parseInt(event.target.value) +
                         parseInt(pasienKeluarMatiKurangDari48Jam) +
                         parseInt(pasienKeluarMatiLebihDariAtauSamaDengan48Jam)
                     )
@@ -206,12 +225,12 @@ const FormUbahRL32 = () => {
                 setPasienKeluarMatiKurangDari48Jam(event.target.value)
                 setPasienAkhirBulan(
                     (
-                        parseInt(event.target.value) +
+                        parseInt(pasienAwalBulan) +
                         parseInt(pasienMasuk)
                     ) -
                     (
                         parseInt(pasienKeluarHidup) +
-                        parseInt(pasienKeluarMatiKurangDari48Jam) +
+                        parseInt(event.target.value) +
                         parseInt(pasienKeluarMatiLebihDariAtauSamaDengan48Jam)
                     )
                 )
@@ -224,13 +243,13 @@ const FormUbahRL32 = () => {
                 setPasienKeluarMatiLebihDariAtauSamaDengan48Jam(event.target.value)
                 setPasienAkhirBulan(
                     (
-                        parseInt(event.target.value) +
+                        parseInt(pasienAwalBulan) +
                         parseInt(pasienMasuk)
                     ) -
                     (
                         parseInt(pasienKeluarHidup) +
                         parseInt(pasienKeluarMatiKurangDari48Jam) +
-                        parseInt(pasienKeluarMatiLebihDariAtauSamaDengan48Jam)
+                        parseInt(event.target.value)
                     )
                 )
                 break
@@ -463,7 +482,7 @@ const FormUbahRL32 = () => {
                             &lt;
                         </Link>
                         
-                        <span style={{ color: "gray" }}>Kembali RL 3.1 Rawat Inap</span>
+                        <span style={{ color: "gray" }}>Kembali RL 3.2 Rawat Inap</span>
                         <Table
                             className={style.rlTable}
                             striped
