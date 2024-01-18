@@ -11,17 +11,7 @@ import Table from "react-bootstrap/Table";
 // import { IoArrowBack } from "react-icons/io5";
 
 const FormTambahRL316 = () => {
-  // const [tahun, setTahun] = useState(new Date().getFullYear() - 1);
-  // const [namaRS, setNamaRS] = useState("");
-  // const [alamatRS, setAlamatRS] = useState("");
-  // const [namaPropinsi, setNamaPropinsi] = useState("");
-  // const [namaKabKota, setNamaKabKota] = useState("");
-  // const [dataRL, setDataRL] = useState([]);
-  // const [token, setToken] = useState("");
-  // const [expire, setExpire] = useState("");
-  // const navigate = useNavigate();
-  // const [buttonStatus, setButtonStatus] = useState(false);
-  // const [spinner, setSpinner] = useState(false);
+
 
   const [namaRS, setNamaRS] = useState("");
   const [alamatRS, setAlamatRS] = useState("");
@@ -105,10 +95,13 @@ const FormTambahRL316 = () => {
           id: value.id,
           jenisSpesialisasi: value.nama,
           no: value.no,
-          Khusus: 0,
-          Besar: 0,
-          Sedang: 0,
-          Kecil: 0,
+          pelayananKbPaskaPersalinan: 0,
+          pelayananKbPaskaKeguguran: 0,
+          pelayananKbInterval: 0,
+          komplikasiKB: 0,
+          kegagalanKB: 0,
+          efekSamping: 0,
+          dropOut: 0,
           disabledInput: true,
           checked: false,
         };
@@ -132,30 +125,51 @@ const FormTambahRL316 = () => {
         newDataRL[index].disabledInput = true;
       }
       newDataRL[index].checked = event.target.checked;
-    } else if (name === "Khusus") {
+    } else if (name === "pelayananKbPaskaPersalinan") {
       if (event.target.value === "") {
         event.target.value = 0;
         event.target.select(event.target.value);
       }
-      newDataRL[index].Khusus = event.target.value;
-    } else if (name === "Besar") {
+      newDataRL[index].pelayananKbPaskaPersalinan = event.target.value;
+    } else if (name === "pelayananKbPaskaKeguguran") {
       if (event.target.value === "") {
         event.target.value = 0;
         event.target.select(event.target.value);
       }
-      newDataRL[index].Besar = event.target.value;
-    } else if (name === "Sedang") {
+      newDataRL[index].pelayananKbPaskaKeguguran = event.target.value;
+    } else if (name === "pelayananKbInterval") {
       if (event.target.value === "") {
         event.target.value = 0;
         event.target.select(event.target.value);
       }
-      newDataRL[index].Sedang = event.target.value;
-    } else if (name === "Kecil") {
+      newDataRL[index].pelayananKbInterval = event.target.value;
+    } else if (name === "komplikasiKB") {
       if (event.target.value === "") {
         event.target.value = 0;
         event.target.select(event.target.value);
       }
-      newDataRL[index].Kecil = event.target.value;
+      newDataRL[index].komplikasiKB = event.target.value;
+    }
+    else if (name === "kegagalanKB") {
+      if (event.target.value === "") {
+        event.target.value = 0;
+        event.target.select(event.target.value);
+      }
+      newDataRL[index].kegagalanKB = event.target.value;
+    }
+    else if (name === "efekSamping") {
+      if (event.target.value === "") {
+        event.target.value = 0;
+        event.target.select(event.target.value);
+      }
+      newDataRL[index].efekSamping = event.target.value;
+    }
+    else if (name === "dropOut") {
+      if (event.target.value === "") {
+        event.target.value = 0;
+        event.target.select(event.target.value);
+      }
+      newDataRL[index].dropOut = event.target.value;
     }
     setDataRL(newDataRL);
   };
@@ -171,10 +185,13 @@ const FormTambahRL316 = () => {
         .map((value, index) => {
           return {
             SpesialisasiId: value.id,
-            Khusus: parseInt(value.Khusus),
-            Besar: parseInt(value.Besar),
-            Sedang: parseInt(value.Sedang),
-            Kecil: parseInt(value.Kecil),
+            pelayananKbPaskaPersalinan: parseInt(value.pelayananKbPaskaPersalinan),
+            pelayananKbPaskaKeguguran: parseInt(value.pelayananKbPaskaKeguguran),
+            pelayananKbInterval: parseInt(value.pelayananKbInterval),
+            komplikasiKB: parseInt(value.komplikasiKB),
+            kegagalanKB: parseInt(value.kegagalanKB),
+            efekSamping: parseInt(value.efekSamping),
+            dropOut: parseInt(value.dropOut),
           };
         });
 
@@ -345,7 +362,7 @@ const FormTambahRL316 = () => {
                   <th rowSpan="2" style={{ width: "1%" }}></th>
                   <th rowSpan="2" style={{ width: "2%" }}>No Metoda</th>
                   <th rowSpan="2" style={{ width: "8%" }}>Jenis Metoda</th>
-                  <th colSpan="4" style={{ width: "5%" }}>
+                  <th colSpan="3" style={{ width: "5%" }}>
                     Pelayanan KB
                   </th>
                   <th rowSpan="2" style={{ width: "5%" }}>Komplikasi KB</th>
@@ -357,7 +374,6 @@ const FormTambahRL316 = () => {
                   <th style={{ width: "5%" }}>{"Paska Persalinan"}</th>
                   <th style={{ width: "5%" }}>{"Paska Keguguran"}</th>
                   <th style={{ width: "5%" }}>{"Interval"}</th>
-                  <th style={{ width: "5%" }}>{"Total"}</th>
                 </tr>
               </thead>
               <tbody>
@@ -375,21 +391,33 @@ const FormTambahRL316 = () => {
                             checked={value.checked}
                           />
                         </td>
-                        <td>{value.no}</td>
+                        <td><input
+                            type="text"
+                            name="noMetoda"
+                            className="form-control"
+                            value={value.no}
+                            disabled={true}
+                          /></td>
                         <td>
-                          {value.jenisSpesialisasi}
+                          <input
+                            type="text"
+                            name="jenisSpesialisasi"
+                            className="form-control"
+                            value={value.jenisSpesialisasi}
+                            disabled={true}
+                          />
                         </td>
                         <td>
                           <input
                             type="number"
-                            name="Khusus"
+                            name="pelayananKbPaskaPersalinan"
                             min={0}
                             maxLength={7}
                             onInput={(e) => maxLengthCheck(e)}
                             className="form-control"
-                            value={value.Khusus}
+                            value={value.pelayananKbPaskaPersalinan}
                             onChange={(e) => changeHandler(e, index)}
-                            disabled={true}
+                            disabled={value.disabledInput}
                             onPaste={preventPasteNegative}
                             onKeyPress={preventMinus}
                             onFocus={handleFocus}
@@ -398,14 +426,14 @@ const FormTambahRL316 = () => {
                         <td>
                           <input
                             type="number"
-                            name="Besar"
+                            name="pelayananKbPaskaKeguguran"
                             min={0}
                             maxLength={7}
                             onInput={(e) => maxLengthCheck(e)}
                             className="form-control"
-                            value={value.Besar}
+                            value={value.pelayananKbPaskaKeguguran}
                             onChange={(e) => changeHandler(e, index)}
-                            disabled={true}
+                            disabled={value.disabledInput}
                             onPaste={preventPasteNegative}
                             onKeyPress={preventMinus}
                           />
@@ -413,14 +441,14 @@ const FormTambahRL316 = () => {
                         <td>
                           <input
                             type="number"
-                            name="Sedang"
+                            name="pelayananKbInterval"
                             min={0}
                             maxLength={7}
                             onInput={(e) => maxLengthCheck(e)}
                             className="form-control"
-                            value={value.Sedang}
+                            value={value.pelayananKbInterval}
                             onChange={(e) => changeHandler(e, index)}
-                            disabled={true}
+                            disabled={value.disabledInput}
                             onPaste={preventPasteNegative}
                             onKeyPress={preventMinus}
                           />
@@ -428,14 +456,60 @@ const FormTambahRL316 = () => {
                         <td>
                           <input
                             type="number"
-                            name="Kecil"
+                            name="komplikasiKB"
                             min={0}
                             maxLength={7}
                             onInput={(e) => maxLengthCheck(e)}
                             className="form-control"
-                            value={value.Kecil}
+                            value={value.komplikasiKB}
                             onChange={(e) => changeHandler(e, index)}
-                            disabled={true}
+                            disabled={value.disabledInput}
+                            onPaste={preventPasteNegative}
+                            onKeyPress={preventMinus}
+                            onFocus={handleFocus}
+                          />
+                        </td>
+                        <td>
+                          <input
+                            type="number"
+                            name="kegagalanKB"
+                            min={0}
+                            maxLength={7}
+                            onInput={(e) => maxLengthCheck(e)}
+                            className="form-control"
+                            value={value.kegagalanKB}
+                            onChange={(e) => changeHandler(e, index)}
+                            disabled={value.disabledInput}
+                            onPaste={preventPasteNegative}
+                            onKeyPress={preventMinus}
+                          />
+                        </td>
+                        <td>
+                          <input
+                            type="number"
+                            name="efekSamping"
+                            min={0}
+                            maxLength={7}
+                            onInput={(e) => maxLengthCheck(e)}
+                            className="form-control"
+                            value={value.efekSamping}
+                            onChange={(e) => changeHandler(e, index)}
+                            disabled={value.disabledInput}
+                            onPaste={preventPasteNegative}
+                            onKeyPress={preventMinus}
+                          />
+                        </td>
+                        <td>
+                          <input
+                            type="number"
+                            name="dropOut"
+                            min={0}
+                            maxLength={7}
+                            onInput={(e) => maxLengthCheck(e)}
+                            className="form-control"
+                            value={value.dropOut}
+                            onChange={(e) => changeHandler(e, index)}
+                            disabled={value.disabledInput}
                             onPaste={preventPasteNegative}
                             onKeyPress={preventMinus}
                           />
@@ -474,12 +548,12 @@ const FormTambahRL316 = () => {
                         <td>
                           <input
                             type="number"
-                            name="Khusus"
+                            name="pelayananKbPaskaPersalinan"
                             min={0}
                             maxLength={7}
                             onInput={(e) => maxLengthCheck(e)}
                             className="form-control"
-                            value={value.Khusus}
+                            value={value.pelayananKbPaskaPersalinan}
                             onChange={(e) => changeHandler(e, index)}
                             disabled={value.disabledInput}
                             onPaste={preventPasteNegative}
@@ -490,12 +564,12 @@ const FormTambahRL316 = () => {
                         <td>
                           <input
                             type="number"
-                            name="Besar"
+                            name="pelayananKbPaskaKeguguran"
                             min={0}
                             maxLength={7}
                             onInput={(e) => maxLengthCheck(e)}
                             className="form-control"
-                            value={value.Besar}
+                            value={value.pelayananKbPaskaKeguguran}
                             onChange={(e) => changeHandler(e, index)}
                             disabled={value.disabledInput}
                             onPaste={preventPasteNegative}
@@ -505,12 +579,44 @@ const FormTambahRL316 = () => {
                         <td>
                           <input
                             type="number"
-                            name="Sedang"
+                            name="pelayananKbInterval"
                             min={0}
                             maxLength={7}
                             onInput={(e) => maxLengthCheck(e)}
                             className="form-control"
-                            value={value.Sedang}
+                            value={value.pelayananKbInterval}
+                            onChange={(e) => changeHandler(e, index)}
+                            disabled={value.disabledInput}
+                            onPaste={preventPasteNegative}
+                            onKeyPress={preventMinus}
+                          />
+                        </td>
+                        
+                        <td>
+                          <input
+                            type="number"
+                            name="komplikasiKB"
+                            min={0}
+                            maxLength={7}
+                            onInput={(e) => maxLengthCheck(e)}
+                            className="form-control"
+                            value={value.komplikasiKB}
+                            onChange={(e) => changeHandler(e, index)}
+                            disabled={value.disabledInput}
+                            onPaste={preventPasteNegative}
+                            onKeyPress={preventMinus}
+                            onFocus={handleFocus}
+                          />
+                        </td>
+                        <td>
+                          <input
+                            type="number"
+                            name="kegagalanKB"
+                            min={0}
+                            maxLength={7}
+                            onInput={(e) => maxLengthCheck(e)}
+                            className="form-control"
+                            value={value.kegagalanKB}
                             onChange={(e) => changeHandler(e, index)}
                             disabled={value.disabledInput}
                             onPaste={preventPasteNegative}
@@ -520,12 +626,27 @@ const FormTambahRL316 = () => {
                         <td>
                           <input
                             type="number"
-                            name="Kecil"
+                            name="efekSamping"
                             min={0}
                             maxLength={7}
                             onInput={(e) => maxLengthCheck(e)}
                             className="form-control"
-                            value={value.Kecil}
+                            value={value.efekSamping}
+                            onChange={(e) => changeHandler(e, index)}
+                            disabled={value.disabledInput}
+                            onPaste={preventPasteNegative}
+                            onKeyPress={preventMinus}
+                          />
+                        </td>
+                        <td>
+                          <input
+                            type="number"
+                            name="dropOut"
+                            min={0}
+                            maxLength={7}
+                            onInput={(e) => maxLengthCheck(e)}
+                            className="form-control"
+                            value={value.dropOut}
                             onChange={(e) => changeHandler(e, index)}
                             disabled={value.disabledInput}
                             onPaste={preventPasteNegative}

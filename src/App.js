@@ -80,6 +80,11 @@ import RL315 from "./components/RL315/RL315.js"
 import FormTambahRL315 from "./components/RL315/FormTambahRL315"
 import FormUbahRL315 from "./components/RL315/FormUbahRL315"
 
+// RL 3.16
+import RL316 from "./components/RL316/RL316.js"
+import FormTambahRL316 from "./components/RL316/FormTambahRL316"
+import FormUbahRL316 from "./components/RL316/FormUbahRL316"
+
 // RL 3.17
 import RL317 from "./components/RL317/RL317"
 import FormTambahRL317 from "./components/RL317/FormTambahRL317"
@@ -245,6 +250,10 @@ function App() {
         <Route path="/rl315" element={<><NavigationBar/><RL315/></>}/>
         <Route path="/rl315/tambah" element={<><NavigationBar/><FormTambahRL315/></>}/>
         <Route path="/rl315/ubah/:id" element={<><NavigationBar/><FormUbahRL315/></>}/>
+
+        <Route path="/RL316" element={<><NavigationBar/><RL316/></>}/>
+        <Route path="/rl316/tambah" element={<><NavigationBar/><FormTambahRL316/></>}/>
+        <Route path="/rl316/ubah/:id" element={<><NavigationBar/><FormUbahRL316/></>}/>
 
         <Route path="/rl317" element={<><NavigationBar/><RL317/></>}/>
         <Route path="/rl317/tambah" element={<><NavigationBar/><FormTambahRL317/></>}/>

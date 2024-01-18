@@ -27,10 +27,16 @@ export const FormEditRL316 = () => {
   const [namaPropinsi, setNamaPropinsi] = useState("");
   const [namaKabKota, setNamaKabKota] = useState("");
   const [setSpesialis, setNamaSpesialis] = useState("");
-  const [khusus, setKhusus] = useState("");
-  const [besar, setBesar] = useState("");
-  const [sedang, setSedang] = useState("");
-  const [kecil, setKecil] = useState("");
+
+  const [noMetoda, setNoMetoda] = useState("");
+  const [kbPaskaPersalinan, setKBPaskaPersalinan] = useState("");
+  const [kbPaskaKeguguran, setKBPaskaKeguguran] = useState("");
+  const [kbInterval, setKBInterval] = useState("");
+  const [komplikasiKb, setKomplikasiKB] = useState("");
+  const [kegagalanKb, setKegagalanKB] = useState("");
+  const [efekSamping, setEfekSamping] = useState("");
+  const [dropOut, setDropOut] = useState("");
+
   const [token, setToken] = useState("");
   const [expire, setExpire] = useState("");
   const navigate = useNavigate();
@@ -43,7 +49,7 @@ export const FormEditRL316 = () => {
 
   useEffect(() => {
     refreshToken();
-    getRLTigaTitikDuaBelasById();
+    getRLTigaTitikEnamBelasById();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -93,58 +99,94 @@ export const FormEditRL316 = () => {
     } catch (error) {}
   };
 
-  const getRLTigaTitikDuaBelasById = async () => {
+  const getRLTigaTitikEnamBelasById = async () => {
     // setSpinner(true);
     const response = await axiosJWT.get(
-      "/apisirs6v2/rltigatitikduabelas/update/" + id,
+      "/apisirs6v2/rltigatitikenambelas/update/" + id,
       {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       }
     );
-    setNamaSpesialis(response.data.data.nama_spesialisasi);
-    setKhusus(response.data.data.khusus);
-    setBesar(response.data.data.besar);
-    setSedang(response.data.data.sedang);
-    setKecil(response.data.data.kecil);
+    setNoMetoda(response.data.data.id_metoda);
+    setNamaSpesialis(response.data.data.nama);
+    setKBPaskaPersalinan(response.data.data.pelayanan_kb_paska_persalinan);
+    setKBPaskaKeguguran(response.data.data.pelayanan_kb_paska_keguguran);
+    setKBInterval(response.data.data.pelayanan_kb_interval);
+    setKomplikasiKB(response.data.data.komplikasi_kb);
+    setKegagalanKB(response.data.data.kegagalan_kb);
+    setEfekSamping(response.data.data.efek_samping);
+    setDropOut(response.data.data.drop_out);
 
     // setSpinner(false);
     // setNo(response.data.data.jenis_spesialis_id);
   };
 
   const changeHandler = (event, index) => {
-    switch (event.target.name) {
-      case "Khusus":
+    switch (event.target.no) {
+      case "noMetoda":
         if (event.target.value === "") {
           event.target.value = 0;
           event.target.select(event.target.value);
         }
-        setKhusus(parseInt(event.target.value));
+        setNoMetoda(parseInt(event.target.value));
         break;
 
-      case "Besar":
+      case "pelayananKbPaskaPersalinan":
         if (event.target.value === "") {
           event.target.value = 0;
           event.target.select(event.target.value);
         }
-        setBesar(parseInt(event.target.value));
-        break;
-      case "Sedang":
-        if (event.target.value === "") {
-          event.target.value = 0;
-          event.target.select(event.target.value);
-        }
-        setSedang(parseInt(event.target.value));
+        setKBPaskaPersalinan(parseInt(event.target.value));
         break;
 
-      case "Kecil":
+      case "pelayananKbPaskaKeguguran":
         if (event.target.value === "") {
           event.target.value = 0;
           event.target.select(event.target.value);
         }
-        setKecil(parseInt(event.target.value));
+        setKBPaskaKeguguran(parseInt(event.target.value));
         break;
+      case "pelayananKbInterval":
+        if (event.target.value === "") {
+          event.target.value = 0;
+          event.target.select(event.target.value);
+        }
+        setKBInterval(parseInt(event.target.value));
+        break;
+
+      case "komplikasiKB":
+        if (event.target.value === "") {
+          event.target.value = 0;
+          event.target.select(event.target.value);
+        }
+        setKomplikasiKB(parseInt(event.target.value));
+        break;
+
+      case "kegagalanKB":
+        if (event.target.value === "") {
+          event.target.value = 0;
+          event.target.select(event.target.value);
+        }
+        setKegagalanKB(parseInt(event.target.value));
+        break;
+
+      case "efekSamping":
+      if (event.target.value === "") {
+        event.target.value = 0;
+        event.target.select(event.target.value);
+      }
+      setEfekSamping(parseInt(event.target.value));
+      break;
+
+      case "dropOut":
+      if (event.target.value === "") {
+        event.target.value = 0;
+        event.target.select(event.target.value);
+      }
+      setDropOut(parseInt(event.target.value));
+      break;
 
       default:
         console.log(event.target.name);
@@ -165,10 +207,14 @@ export const FormEditRL316 = () => {
       await axiosJWT.patch(
         "/apisirs6v2/updaterltigatitikduabelasdetail/" + id,
         {
-          khusus,
-          besar,
-          sedang,
-          kecil,
+          noMetoda,
+          kbPaskaPersalinan,
+          kbPaskaKeguguran,
+          kbInterval,
+          komplikasiKb,
+          kegagalanKb,
+          efekSamping,
+          dropOut,
         },
         customConfig
       );
@@ -315,23 +361,44 @@ export const FormEditRL316 = () => {
             </div> */}
             <Table className={style.rlTable}>
               <thead>
+              <tr>
+                  
+                  <th rowSpan="2" style={{ width: "2%" }}>No Metoda</th>
+                  <th rowSpan="2" style={{ width: "8%" }}>Jenis Metoda</th>
+                  <th colSpan="3" style={{ width: "5%" }}>
+                    Pelayanan KB
+                  </th>
+                  <th rowSpan="2" style={{ width: "5%" }}>Komplikasi KB</th>
+                  <th rowSpan="2" style={{ width: "5%" }}>Kegagalan KB</th>
+                  <th rowSpan="2" style={{ width: "5%" }}>Efek Samping</th>
+                  <th rowSpan="2" style={{ width: "5%" }}>Drop Out</th>
+                </tr>
                 <tr>
-                  <th style={{ width: "20%" }}>Jenis Spesialisasi</th>
-                  <th>Khusus</th>
-                  <th>Besar</th>
-                  <th>Sedang</th>
-                  <th>Kecil</th>
+                  <th style={{ width: "5%" }}>{"Paska Persalinan"}</th>
+                  <th style={{ width: "5%" }}>{"Paska Keguguran"}</th>
+                  <th style={{ width: "5%" }}>{"Interval"}</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>
+                <td>
                     <input
-                      name="nama"
+                      name="noMetoda"
                       type="text"
                       className="form-control"
-                      id="nama"
-                      placeholder="Jenis Spesialisasi"
+                      id="noMetoda"
+                      value={setNoMetoda}
+                      // onChange={(e) => changeHandler(e)}
+                      disabled={true}
+                    />
+                  </td>
+                  <td>
+                    <input
+                      name="jenisSpesialisasi"
+                      type="text"
+                      className="form-control"
+                      id="jenisSpesialisasi"
+                      placeholder="Jenis Metoda"
                       value={setSpesialis}
                       // onChange={(e) => changeHandler(e)}
                       disabled={true}
@@ -340,10 +407,10 @@ export const FormEditRL316 = () => {
                   <td>
                     <input
                       type="number"
-                      name="Khusus"
+                      name="pelayananKbPaskaPersalinan"
                       className="form-control"
-                      value={khusus}
-                      min={0}
+                      value={kbPaskaPersalinan}
+                      min="0"
                       maxLength={7}
                       onInput={(e) => maxLengthCheck(e)}
                       // onChange={(e) => setKhusus(parseInt(e.target.value))}
@@ -356,10 +423,10 @@ export const FormEditRL316 = () => {
                   <td>
                     <input
                       type="number"
-                      name="Besar"
+                      name="pelayananKbPaskaKeguguran"
                       className="form-control"
-                      value={besar}
-                      min={0}
+                      value={kbPaskaKeguguran}
+                      min="0"
                       maxLength={7}
                       onInput={(e) => maxLengthCheck(e)}
                       // onChange={(e) => setBesar(parseInt(e.target.value))}
@@ -372,10 +439,10 @@ export const FormEditRL316 = () => {
                   <td>
                     <input
                       type="number"
-                      name="Sedang"
+                      name="pelayananKbInterval"
                       className="form-control"
-                      value={sedang}
-                      min={0}
+                      value={kbInterval}
+                      min="0"
                       maxLength={7}
                       onInput={(e) => maxLengthCheck(e)}
                       // onChange={(e) => setSedang(parseInt(e.target.value))}
@@ -388,10 +455,58 @@ export const FormEditRL316 = () => {
                   <td>
                     <input
                       type="number"
-                      name="Kecil"
+                      name="komplikasiKB"
                       className="form-control"
-                      value={kecil}
-                      min={0}
+                      value={komplikasiKb}
+                      min="0"
+                      maxLength={7}
+                      onInput={(e) => maxLengthCheck(e)}
+                      // onChange={(e) => setKecil(parseInt(e.target.value))}
+                      onChange={(e) => changeHandler(e)}
+                      onPaste={preventPasteNegative}
+                      onKeyPress={preventMinus}
+                      onFocus={handleFocus}
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="number"
+                      name="kegagalanKB"
+                      className="form-control"
+                      value={kegagalanKb}
+                      min="0"
+                      maxLength={7}
+                      onInput={(e) => maxLengthCheck(e)}
+                      // onChange={(e) => setKecil(parseInt(e.target.value))}
+                      onChange={(e) => changeHandler(e)}
+                      onPaste={preventPasteNegative}
+                      onKeyPress={preventMinus}
+                      onFocus={handleFocus}
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="number"
+                      name="efekSamping"
+                      className="form-control"
+                      value={efekSamping}
+                      min="0"
+                      maxLength={7}
+                      onInput={(e) => maxLengthCheck(e)}
+                      // onChange={(e) => setKecil(parseInt(e.target.value))}
+                      onChange={(e) => changeHandler(e)}
+                      onPaste={preventPasteNegative}
+                      onKeyPress={preventMinus}
+                      onFocus={handleFocus}
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="number"
+                      name="dropOut"
+                      className="form-control"
+                      value={dropOut}
+                      min="0"
                       maxLength={7}
                       onInput={(e) => maxLengthCheck(e)}
                       // onChange={(e) => setKecil(parseInt(e.target.value))}

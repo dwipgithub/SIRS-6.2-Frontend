@@ -43,11 +43,11 @@ const RL316 = () => {
   const [show, setShow] = useState(false);
   const [user, setUser] = useState({});
   const navigate = useNavigate();
-  const [totalkhusus, settotalkhusus] = useState(0);
-  const [totalbesar, settotalbesar] = useState(0);
-  const [totalsedang, settotalsedang] = useState(0);
-  const [totalkecil, settotalkecil] = useState(0);
-  const [totalall, settotalall] = useState(0);
+
+  const [pelayananKbPaskaPersalinan, setpelayanankbpaskapersalinan] = useState(0);
+  const [pelayananKbPaskaKeguguran, setpelayanankbpaskakeguguran] = useState(0);
+  const [pelayananKbInterval, setpelayanankbinterval] = useState(0);
+  const [pelayananKBTotal, setpelayanankbtotal] = useState(0);
 
   useEffect(() => {
     refreshToken();
@@ -164,38 +164,28 @@ const RL316 = () => {
         },
       };
       const results = await axiosJWT.get(
-        "/apisirs6v2/rltigatitikduabelas",
+        "/apisirs6v2/rltigatitikenambelas",
         customConfig
       );
 
-      const rlTigaTitikDuaBelasDetails = results.data.data.map((value) => {
+      const rlTigaTitikEnamBelasDetails = results.data.data.map((value) => {
         return value;
       });
 
-      let dataRLTigaTitikDuaBelasDetails = [];
-      let totalKhusus = 0;
-      let totalBesar = 0;
-      let totalKecil = 0;
-      let totalSedang = 0;
-      rlTigaTitikDuaBelasDetails.forEach((element) => {
+      let dataRLTigaTitikEnamBelasDetails = [];
+      
+      rlTigaTitikEnamBelasDetails.forEach((element) => {
         // element.forEach((value) => {
-        totalKhusus += element.khusus;
-        totalBesar += element.besar;
-        totalSedang += element.sedang;
-        totalKecil += element.kecil;
-        dataRLTigaTitikDuaBelasDetails.push(element);
+        
+        dataRLTigaTitikEnamBelasDetails.push(element);
         // });
       });
       // console.log(dataRLTigaTitikDuaBelasDetails);
-      let totalALL = totalKhusus + totalBesar + totalSedang + totalKecil;
-      settotalkhusus(totalKhusus);
-      settotalbesar(totalBesar);
-      settotalsedang(totalSedang);
-      settotalkecil(totalKecil);
-      settotalall(totalALL);
+      let pelayanan_Kbtotal = pelayananKbPaskaPersalinan + pelayananKbPaskaKeguguran + pelayananKbInterval;
+      setpelayanankbtotal(pelayanan_Kbtotal);
       // setDataRL(dataRLTigaTitikDuaBelasDetails);
 
-      setDataRL(rlTigaTitikDuaBelasDetails);
+      setDataRL(rlTigaTitikEnamBelasDetails);
       setRumahSakit(null);
       handleClose();
     } catch (error) {
@@ -212,7 +202,7 @@ const RL316 = () => {
     };
     try {
       await axiosJWT.delete(
-        `/apisirs6v2/deleterltigatitikduabelasdetail/${id}`,
+        `/apisirs6v2/deleterltigatitikenambelasdetail/${id}`,
         customConfig
       );
       toast("Data Berhasil Dihapus", {
@@ -324,16 +314,22 @@ const RL316 = () => {
         newDataRL[index].disabledInput = true;
       }
       newDataRL[index].checked = event.target.checked;
-    } else if (name === "Total") {
+    } else if (name === "pelayananKbPaskaPersalinan") {
       newDataRL[index].Total = event.target.value;
-    } else if (name === "Khusus") {
-      newDataRL[index].Khusus = event.target.value;
-    } else if (name === "Besar") {
-      newDataRL[index].Besar = event.target.value;
-    } else if (name === "Sedang") {
-      newDataRL[index].Sedang = event.target.value;
-    } else if (name === "Kecil") {
-      newDataRL[index].Kecil = event.target.value;
+    } else if (name === "pelayananKbPaskaKeguguran") {
+      newDataRL[index].pelayananKbPaskaKeguguran = event.target.value;
+    } else if (name === "pelayananKbInterval") {
+      newDataRL[index].pelayananKbInterval = event.target.value;
+    } else if (name === "pelayananKbTotal") {
+      newDataRL[index].pelayananKbTotal = event.target.value;
+    } else if (name === "komplikasiKB") {
+      newDataRL[index].komplikasiKB = event.target.value;
+    } else if (name === "kegagalanKB") {
+      newDataRL[index].kegagalanKB = event.target.value;
+    } else if (name === "efekSamping") {
+      newDataRL[index].efekSamping = event.target.value;
+    } else if (name === "dropOut") {
+      newDataRL[index].dropOut = event.target.value;
     }
     setDataRL(newDataRL);
   };
@@ -591,6 +587,7 @@ const RL316 = () => {
             <tr>
                   <th rowSpan="2" style={{ width: "4%" }}>No.</th>
                   <th rowSpan="2" style={{ width: "3%" }}></th>
+                  <th rowSpan="4" style={{ width: "3%" }}>Metoda ID</th>
                   <th colSpan="4" style={{ width: "5%" }}>
                     Pelayanan KB
                   </th>
@@ -642,7 +639,7 @@ const RL316 = () => {
                             Hapus
                           </button>
                           <Link
-                            to={`/rl316/edit/${value.id}`}
+                            to={`/rl316/ubah/${value.id}`}
                             className="btn btn-warning"
                             style={{
                               margin: "0 5px 0 0",
@@ -663,52 +660,79 @@ const RL316 = () => {
                         type="text"
                         name="jenisSpesialisasi"
                         className="form-control"
-                        value={value.nama_spesialisasi}
+                        value={value.nama}
                         disabled={true}
                       />
                     </td>
                     <td>
                       <input
                         type="text"
-                        name="khusus"
+                        name="pelayananKbPaskaPersalinan"
                         className="form-control"
-                        value={value.khusus}
+                        value={value.pelayanan_kb_paska_persalinan}
                         disabled={true}
                       />
                     </td>
                     <td>
                       <input
                         type="text"
-                        name="besar"
+                        name="pelayananKbPaskaKeguguran"
                         className="form-control"
-                        value={value.besar}
+                        value={value.pelayanan_kb_paska_keguguran}
                         disabled={true}
                       />
                     </td>
                     <td>
                       <input
                         type="text"
-                        name="sedang"
+                        name="pelayananKbInterval"
                         className="form-control"
-                        value={value.sedang}
+                        value={value.pelayanan_kb_interval}
                         disabled={true}
                       />
                     </td>
                     <td>
                       <input
                         type="text"
-                        name="kecil"
+                        name="pelayananKbTotal"
                         className="form-control"
-                        value={value.kecil}
+                        value={value.pelayanan_kb_total}
                         disabled={true}
                       />
                     </td>
                     <td>
                       <input
                         type="text"
-                        name="total"
+                        name="komplikasiKB"
                         className="form-control"
-                        value={value.total}
+                        value={value.komplikasi_kb}
+                        disabled={true}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        name="kegagalanKB"
+                        className="form-control"
+                        value={value.kegagalan_kb}
+                        disabled={true}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        name="efekSamping"
+                        className="form-control"
+                        value={value.efek_samping}
+                        disabled={true}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        name="dropOut"
+                        className="form-control"
+                        value={value.drop_out}
                         disabled={true}
                       />
                     </td>
@@ -718,59 +742,7 @@ const RL316 = () => {
 
               {dataRL.length > 0 ? (
                 <tr>
-                  <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                    <h6>99</h6>
-                  </td>
-                  <td></td>
-                  <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                    <h6>TOTAL</h6>
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      name="totalKhusus"
-                      className="form-control"
-                      value={totalkhusus}
-                      disabled={true}
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      name="totalBesar"
-                      className="form-control"
-                      value={totalbesar}
-                      disabled={true}
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      name="totalSedang"
-                      className="form-control"
-                      value={totalsedang}
-                      disabled={true}
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      name="totalKecil"
-                      className="form-control"
-                      value={totalkecil}
-                      disabled={true}
-                    />
-                  </td>
-
-                  <td>
-                    <input
-                      type="text"
-                      name="totalAll"
-                      className="form-control"
-                      value={totalall}
-                      disabled={true}
-                    />
-                  </td>
+                  
                 </tr>
               ) : (
                 <></>
@@ -780,314 +752,6 @@ const RL316 = () => {
         </div>
       </div>
     </div>
-    // <div className="container" style={{ marginTop: "70px" }}>
-    //   <div className="row">
-    //     <div className="col-md-6">
-    //       <div className="card">
-    //         <div className="card-body">
-    //           <h5 className="card-title h5">Profile Fasyankes</h5>
-    //           <div
-    //             className="form-floating"
-    //             style={{ width: "100%", display: "inline-block" }}
-    //           >
-    //             <input
-    //               type="text"
-    //               className="form-control"
-    //               id="namaRS"
-    //               value={namaRS}
-    //               disabled={true}
-    //             />
-    //             <label htmlFor="namaRS">Nama</label>
-    //           </div>
-    //           <div
-    //             className="form-floating"
-    //             style={{ width: "100%", display: "inline-block" }}
-    //           >
-    //             <input
-    //               type="text"
-    //               className="form-control"
-    //               id="alamatRS"
-    //               value={alamatRS}
-    //               disabled={true}
-    //             />
-    //             <label htmlFor="alamatRS">Alamat</label>
-    //           </div>
-    //           <div
-    //             className="form-floating"
-    //             style={{ width: "50%", display: "inline-block" }}
-    //           >
-    //             <input
-    //               type="text"
-    //               className="form-control"
-    //               id="provinsiRS"
-    //               value={namaPropinsi}
-    //               disabled={true}
-    //             />
-    //             <label htmlFor="provinsiRS">Provinsi </label>
-    //           </div>
-    //           <div
-    //             className="form-floating"
-    //             style={{ width: "50%", display: "inline-block" }}
-    //           >
-    //             <input
-    //               type="text"
-    //               className="form-control"
-    //               id="kabkotaRS"
-    //               value={namaKabKota}
-    //               disabled={true}
-    //             />
-    //             <label htmlFor="kabkotaRS">Kab/Kota</label>
-    //           </div>
-    //         </div>
-    //       </div>
-    //     </div>
-    //     <div className="col-md-6">
-    //       <div className="card">
-    //         <div className="card-body">
-    //           <h5 className="card-title h5">Periode Laporan</h5>
-    //           <form onSubmit={Cari}>
-    //             <div
-    //               className="form-floating"
-    //               style={{ width: "100%", display: "inline-block" }}
-    //             >
-    //               <input
-    //                 name="tahun"
-    //                 type="text"
-    //                 className="form-control"
-    //                 id="tahun"
-    //                 placeholder="Tahun"
-    //                 value={tahun}
-    //                 onChange={(e) => changeHandlerSingle(e)}
-    //               />
-    //               <label htmlFor="tahun">Tahun</label>
-    //             </div>
-    //             <div className="mt-3 mb-3">
-    //               <button type="submit" className="btn btn-outline-success">
-    //                 <HiSaveAs /> Cari
-    //               </button>
-    //             </div>
-    //           </form>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   </div>
-    //   <br />
-    //   <div className="row mt-3 mb-3">
-    //     <div className="col-md-12">
-    //       <Link
-    //         to={`/rl312/tambah/`}
-    //         className="btn btn-info"
-    //         style={{
-    //           fontSize: "18px",
-    //           backgroundColor: "#779D9E",
-    //           color: "#FFFFFF",
-    //         }}
-    //       >
-    //         +
-    //       </Link>
-    //       <span style={{ color: "gray" }}>RL. 3.12 Pembedahan </span>
-    //       <div className="container" style={{ textAlign: "center" }}>
-    //         {spinner && <Spinner animation="grow" variant="success"></Spinner>}
-    //         {spinner && <Spinner animation="grow" variant="success"></Spinner>}
-    //         {spinner && <Spinner animation="grow" variant="success"></Spinner>}
-    //         {spinner && <Spinner animation="grow" variant="success"></Spinner>}
-    //         {spinner && <Spinner animation="grow" variant="success"></Spinner>}
-    //         {spinner && <Spinner animation="grow" variant="success"></Spinner>}
-    //       </div>
-    //       <Table
-    //         className={style.rlTable}
-    //         bordered
-    //         responsive
-    //         style={{ width: "100%" }}
-    //       >
-    //         <thead>
-    //           <tr>
-    //             <th
-    //               style={{
-    //                 width: "2%",
-    //                 textAlign: "center",
-    //                 verticalAlign: "middle",
-    //               }}
-    //             >
-    //               No.
-    //             </th>
-    //             <th style={{ width: "5%", textAlign: "center" }}> </th>
-    //             <th style={{ width: "20%", textAlign: "center" }}>
-    //               Jenis Spesialisasi
-    //             </th>
-    //             <th style={{ width: "10%", textAlign: "center" }}>Khusus</th>
-    //             <th style={{ width: "10%", textAlign: "center" }}>Besar</th>
-    //             <th style={{ width: "10%", textAlign: "center" }}>Sedang</th>
-    //             <th style={{ width: "10%", textAlign: "center" }}>Kecil</th>
-    //             <th style={{ width: "10%", textAlign: "center" }}>Total</th>
-    //           </tr>
-    //         </thead>
-    //         <tbody>
-    //           {dataRL.map((value, index) => {
-    //             return (
-    //               <tr key={value.id}>
-    //                 <td
-    //                   style={{ textAlign: "center", verticalAlign: "middle" }}
-    //                 >
-    //                   <label>{index + 1}</label>
-    //                 </td>
-    //                 <td>
-    //                   <ToastContainer />
-    //                   <div style={{ display: "flex" }}>
-    //                     <button
-    //                       className="btn btn-danger"
-    //                       style={{
-    //                         margin: "0 5px 0 0",
-    //                         backgroundColor: "#FF6663",
-    //                         border: "1px solid #FF6663",
-    //                       }}
-    //                       type="button"
-    //                       onClick={(e) => Delete(value.id)}
-    //                     >
-    //                       H
-    //                     </button>
-    //                     {value.rl_tiga_titik_dua_belas_spesialisasi
-    //                       .nama_spesialisasi !== "Tidak Ada Data" && (
-    //                       <Link
-    //                         to={`/rl312/edit/${value.id}`}
-    //                         className="btn btn-warning"
-    //                         style={{
-    //                           margin: "0 5px 0 0",
-    //                           backgroundColor: "#CFD35E",
-    //                           border: "1px solid #CFD35E",
-    //                           color: "#FFFFFF",
-    //                         }}
-    //                       >
-    //                         U
-    //                       </Link>
-    //                     )}
-    //                   </div>
-    //                 </td>
-    //                 <td>
-    //                   <input
-    //                     type="text"
-    //                     name="jenisSpesialisasi"
-    //                     className="form-control"
-    //                     value={
-    //                       value.rl_tiga_titik_dua_belas_spesialisasi
-    //                         .nama_spesialisasi
-    //                     }
-    //                     disabled={true}
-    //                   />
-    //                 </td>
-    //                 <td>
-    //                   <input
-    //                     type="text"
-    //                     name="Khusus"
-    //                     className="form-control"
-    //                     value={value.khusus}
-    //                     onChange={(e) => changeHandler(e, index)}
-    //                     disabled={true}
-    //                   />
-    //                 </td>
-    //                 <td>
-    //                   <input
-    //                     type="text"
-    //                     name="Besar"
-    //                     className="form-control"
-    //                     value={value.besar}
-    //                     onChange={(e) => changeHandler(e, index)}
-    //                     disabled={true}
-    //                   />
-    //                 </td>
-    //                 <td>
-    //                   <input
-    //                     type="text"
-    //                     name="Sedang"
-    //                     className="form-control"
-    //                     value={value.sedang}
-    //                     onChange={(e) => changeHandler(e, index)}
-    //                     disabled={true}
-    //                   />
-    //                 </td>
-    //                 <td>
-    //                   <input
-    //                     type="text"
-    //                     name="Kecil"
-    //                     className="form-control"
-    //                     value={value.kecil}
-    //                     onChange={(e) => changeHandler(e, index)}
-    //                     disabled={true}
-    //                   />
-    //                 </td>
-    //                 <td>
-    //                   <input
-    //                     type="number"
-    //                     name="Total"
-    //                     className="form-control"
-    //                     value={value.total}
-    //                     onChange={(e) => changeHandler(e, index)}
-    //                     disabled={true}
-    //                   />
-    //                 </td>
-    //               </tr>
-    //             );
-    //           })}
-    //           <tr>
-    //             <td> </td>
-    //             <td> </td>
-    //             <td style={{ textAlign: "center" }}>
-    //               <b>TOTAL</b>
-    //             </td>
-    //             <td>
-    //               <input
-    //                 type="text"
-    //                 name="TotalKhusus"
-    //                 className="form-control"
-    //                 value={totalkhusus}
-    //                 disabled={true}
-    //               />
-    //             </td>
-    //             <td>
-    //               <input
-    //                 type="text"
-    //                 name="totalbesar"
-    //                 className="form-control"
-    //                 value={totalbesar}
-    //                 disabled={true}
-    //               />
-    //             </td>
-    //             <td>
-    //               {" "}
-    //               <input
-    //                 type="text"
-    //                 name="totalsedang"
-    //                 className="form-control"
-    //                 value={totalsedang}
-    //                 disabled={true}
-    //               />
-    //             </td>
-    //             <td>
-    //               {" "}
-    //               <input
-    //                 type="text"
-    //                 name="totalkecil"
-    //                 className="form-control"
-    //                 value={totalkecil}
-    //                 disabled={true}
-    //               />
-    //             </td>
-    //             <td>
-    //               {" "}
-    //               <input
-    //                 type="text"
-    //                 name="totalall"
-    //                 className="form-control"
-    //                 value={totalall}
-    //                 disabled={true}
-    //               />
-    //             </td>
-    //           </tr>
-    //         </tbody>
-    //       </Table>
-    //     </div>
-    //   </div>
-    // </div>
   );
 };
 
