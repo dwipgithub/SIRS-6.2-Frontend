@@ -32,8 +32,8 @@ const RL32 = () => {
         getBulan()
         const getLastYear = async () => {
             const date = new Date()
-            setTahun(date.getFullYear() - 1)
-            return date.getFullYear() - 1
+            setTahun(date.getFullYear())
+            return date.getFullYear()
         }
         getLastYear().then((results) => {
             
@@ -603,7 +603,6 @@ const RL32 = () => {
                                 <th rowSpan="2" style={{ "width": "5%" }}>Jumlah Hari Perawatan</th>
                                 <th colSpan="6" style={{ "width": "5%" }}>Rincian Hari Perawatan Per Kelas</th>
                                 <th rowSpan="2" style={{ "width": "5%" }}>Jumlah Alokasi TT Awal Bulan</th>
-                                <th rowSpan="2" style={{ "width": "7%" }}>Kelompok Jenis Pelayanan</th>
                             </tr>
                             <tr>
                                 <th style={{ "width": "5%" }}>{"< 48 jam"}</th>
@@ -688,9 +687,6 @@ const RL32 = () => {
                                             disabled={true} />
                                         </td>
                                         <td><input type="text" name="jumlahAlokasiTTAwalBulan" className="form-control" value={value.jumlah_alokasi_tempat_tidur_awal_bulan}
-                                            disabled={true} />
-                                        </td>
-                                        <td><input type="text" name="namaKelompokJenisPelayanan" className="form-control" value={value.nama_kelompok_jenis_pelayanan}
                                             disabled={true} />
                                         </td>
                                     </tr>

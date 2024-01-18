@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import jwt_decode from 'jwt-decode'
-import { useNavigate, useHistory, Link } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import style from './FormTambahRL32.module.css'
 import { HiSaveAs } from 'react-icons/hi'
 import { ToastContainer, toast } from 'react-toastify';
@@ -27,7 +27,7 @@ const FormTambahRL32 = () => {
         getRLTigaTitikSatuTemplate()
         getBulan()
         const date = new Date();
-        setTahun(date.getFullYear() - 1)
+        setTahun(date.getFullYear())
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
@@ -514,7 +514,6 @@ const FormTambahRL32 = () => {
                                     <th rowSpan="2" style={{"width": "5%"}}>Jumlah Hari Perawatan</th>
                                     <th colSpan="6" style={{"width": "5%"}}>Rincian Hari Perawatan Per Kelas</th>
                                     <th rowSpan="2" style={{"width": "5%"}}>Jumlah Alokasi TT Awal Bulan</th>
-                                    <th rowSpan="2" style={{"width": "5%"}}>Kelompok Jenis Pelayanan</th>
                                 </tr>
                                 <tr>
                                     <th style={{"width": "5%"}}>{"< 48 jam"}</th>
@@ -601,9 +600,6 @@ const FormTambahRL32 = () => {
                                                 <input type="number" name="jumlahAlokasiTempatTidurAwalBulan" className="form-control" value={value.jumlahAlokasiTempatTidurAwalBulan} 
                                                 onFocus={handleFocus} onChange={e => changeHandler(e, index)} disabled={value.disabledInput} min={0} onPaste={preventPasteNegative}
                                                 onKeyPress={preventMinus}/>
-                                            </td>
-                                            <td>
-                                                <input type="text" name="jenisPelayanan" className="form-control" value={value.kelompokJenisPelayananNama} disabled={true} />
                                             </td>
                                         </tr>
                                     )

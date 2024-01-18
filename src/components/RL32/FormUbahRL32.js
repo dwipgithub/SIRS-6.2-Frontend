@@ -29,7 +29,6 @@ const FormUbahRL32 = () => {
     const [rincianHariPerawatanKelas3, setRincianHariPerawatanKelas3] = useState(0)
     const [rincianHariPerawatanKelasKhusus, setRincianHariPerawatanKelasKhusus] = useState(0)
     const [jumlahAlokasiTempatTidurAwalBulan, setJumlahAlokasiTempatTidurAwalBulan] = useState(0)
-    const [kelompokJenisPelayananNama, setKelompokJenisPelayananNama] = useState('')
     const [token, setToken] = useState(0)
     const [expire, setExpire] = useState(0)
     const navigate = useNavigate()
@@ -128,7 +127,6 @@ const FormUbahRL32 = () => {
             setRincianHariPerawatanKelas3(response.data.data.rincian_hari_perawatan_kelas_3)
             setRincianHariPerawatanKelasKhusus(response.data.data.rincian_hari_perawatan_kelas_khusus)
             setJumlahAlokasiTempatTidurAwalBulan(response.data.data.jumlah_alokasi_tempat_tidur_awal_bulan)
-            setKelompokJenisPelayananNama(response.data.data.kelompok_jenis_pelayanan_nama)
             // setPasienAkhirBulan(hitungPasienAkhirBulan())
             // setJumlahHariPerawatan(hitungJumlahHariPerawatan())
         } catch (error) {
@@ -504,7 +502,6 @@ const FormUbahRL32 = () => {
                                     <th rowSpan="2" style={{ "width": "5%" }}>Jumlah Hari Perawatan</th>
                                     <th colSpan="6" style={{ "width": "5%" }}>Rincian Hari Perawatan Per Kelas</th>
                                     <th rowSpan="2" style={{ "width": "5%" }}>Jumlah Alokasi TT Awal Bulan</th>
-                                    <th rowSpan="2" style={{ "width": "5%" }}>Kelompok Jenis Pelayanan</th>
                                 </tr>
                                 <tr>
                                     <th style={{ "width": "5%" }}>{"< 48 jam"}</th>
@@ -588,9 +585,6 @@ const FormUbahRL32 = () => {
                                         <input type="number" name="jumlahAlokasiTempatTidurAwalBulan" className="form-control" value={jumlahAlokasiTempatTidurAwalBulan}
                                             onFocus={handleFocus} onChange={e => changeHandler(e)} disabled={false} min={0} onPaste={preventPasteNegative}
                                             onKeyPress={preventMinus} />
-                                    </td>
-                                    <td><input type="text" name="kelompokJenisPelayananNama" className="form-control" value={kelompokJenisPelayananNama}
-                                        disabled={true}  />
                                     </td>
                                 </tr>
                             </tbody>

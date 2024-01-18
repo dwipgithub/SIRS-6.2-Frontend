@@ -32,8 +32,8 @@ const RL53 = () => {
         getBulan()
         const getLastYear = async () => {
             const date = new Date()
-            setTahun(date.getFullYear() - 1)
-            return date.getFullYear() - 1
+            setTahun(date.getFullYear())
+            return date.getFullYear()
         }
         getLastYear().then((results) => {
             
@@ -304,17 +304,19 @@ const RL53 = () => {
             "Total Jumlah Kunjungan"
         ]
 
+        console.log(dataRL)
+
         const body = dataRL.map((value, index) => {
             const data = [
                 index + 1,
-                value.icd_code_group,
-                value.description_code,
-                value.jumlah_kasus_baru_L,
-                value.jumlah_kasus_baru_P,
-                value.total_kasus_baru,
-                value.jumlah_kunjungan_L,
-                value.jumlah_kunjungan_P,
-                value.total_jumlah_kunjungan
+                value.kelompok_icd_10,
+                value.kelompok_diagnosa_penyakit,
+                value.jumlah_kasus_baru_l,
+                value.jumlah_kasus_baru_p,
+                value.total_jumlah_kasus_baru,
+                value.jumlah_kunjungan_l,
+                value.jumlah_kunjungan_p,
+                value.total_kunjungan
             ]
             return data
         })
