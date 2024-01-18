@@ -592,7 +592,7 @@ const RL32 = () => {
                         <thead>
                             <tr>
                                 <th rowSpan="2" style={{ "width": "2%" }}>No.</th>
-                                <th rowSpan="2" style={{ "width": "2%" }}></th>
+                                <th rowSpan="2" style={{ "width": "2%" }}>Aksi</th>
                                 <th rowSpan="2" style={{ "width": "10%" }}>Jenis Pelayanan</th>
                                 <th rowSpan="2" style={{ "width": "5%" }}>Pasien Awal Bulan</th>
                                 <th rowSpan="2" style={{ "width": "5%" }}>Pasien Masuk</th>
