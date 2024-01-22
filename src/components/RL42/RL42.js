@@ -16,7 +16,7 @@ const RL42 = () => {
   // const [alamatRS, setAlamatRS] = useState("");
   // const [namaPropinsi, setNamaPropinsi] = useState("");
   // const [namaKabKota, setNamaKabKota] = useState("");
-  const [tahun, setTahun] = useState("2023");
+  const [tahun, setTahun] = useState("2024");
   const [bulan, setBulan] = useState("01");
   const [dataRL, setDataRL] = useState([]);
   const [token, setToken] = useState("");
@@ -40,8 +40,8 @@ const RL42 = () => {
     getBulan();
     const getLastYear = async () => {
       const date = new Date();
-      setTahun(date.getFullYear() - 1);
-      return date.getFullYear() - 1;
+      setTahun(date.getFullYear() );
+      return date.getFullYear();
     };
     getLastYear().then((results) => {});
   }, []);

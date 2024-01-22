@@ -38,8 +38,8 @@ const RL38 = () => {
     getBulan();
     const getLastYear = async () => {
       const date = new Date();
-      setTahun(date.getFullYear() - 1);
-      return date.getFullYear() - 1;
+      setTahun(date.getFullYear());
+      return date.getFullYear();
     };
     getLastYear().then((results) => {});
   }, []);

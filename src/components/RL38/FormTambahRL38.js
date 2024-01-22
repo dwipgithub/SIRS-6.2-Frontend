@@ -10,7 +10,7 @@ import { IoArrowBack } from "react-icons/io5";
 import Table from "react-bootstrap/esm/Table";
 
 const FormTambahRL38 = () => {
-  const [tahun, setTahun] = useState("2023");
+  const [tahun, setTahun] = useState("2024");
   const [bulan, setBulan] = useState("01");
   const [namaRS, setNamaRS] = useState("");
   const [alamatRS, setAlamatRS] = useState("");

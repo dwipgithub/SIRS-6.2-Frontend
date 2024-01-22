@@ -11,7 +11,7 @@ import { IoArrowBack } from "react-icons/io5";
 import { Spinner } from "react-bootstrap";
 
 const FormTambahRL41 = () => {
-  const [tahun, setTahun] = useState(new Date().getFullYear() - 1);
+  const [tahun, setTahun] = useState(new Date().getFullYear());
   const [bulan, setBulan] = useState("01");
   const [namaRS, setNamaRS] = useState("");
   const [alamatRS, setAlamatRS] = useState("");
