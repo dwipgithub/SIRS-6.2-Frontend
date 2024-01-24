@@ -151,54 +151,126 @@ const FormTambahRL33 = () => {
         event.target.select(event.target.value);
       }
       newDataRL[index].total_pasien_rujukan = event.target.value;
+      newDataRL[index].tlp_dirawat =
+        parseInt(event.target.value) +
+        parseInt(newDataRL[index].total_pasien_non_rujukan) -
+        (parseInt(newDataRL[index].tlp_dirujuk) +
+          parseInt(newDataRL[index].tlp_pulang) +
+          parseInt(newDataRL[index].m_igd_laki) +
+          parseInt(newDataRL[index].m_igd_perempuan) +
+          parseInt(newDataRL[index].doa_laki) +
+          parseInt(newDataRL[index].doa_perempuan));
     } else if (name === "total_pasien_non_rujukan") {
       if (event.target.value === "") {
         event.target.value = 0;
         event.target.select(event.target.value);
       }
       newDataRL[index].total_pasien_non_rujukan = event.target.value;
-    } else if (name === "tlp_dirawat") {
-      if (event.target.value === "") {
-        event.target.value = 0;
-        event.target.select(event.target.value);
-      }
-      newDataRL[index].tlp_dirawat = event.target.value;
+      newDataRL[index].tlp_dirawat =
+        parseInt(event.target.value) +
+        parseInt(newDataRL[index].total_pasien_rujukan) -
+        (parseInt(newDataRL[index].tlp_dirujuk) +
+          parseInt(newDataRL[index].tlp_pulang) +
+          parseInt(newDataRL[index].m_igd_laki) +
+          parseInt(newDataRL[index].m_igd_perempuan) +
+          parseInt(newDataRL[index].doa_laki) +
+          parseInt(newDataRL[index].doa_perempuan));
+      // } else if (name === "tlp_dirawat") {
+      //   if (event.target.value === "") {
+      //     event.target.value = 0;
+      //     event.target.select(event.target.value);
+      //   }
+      //   newDataRL[index].tlp_dirawat = event.target.value;
     } else if (name === "tlp_dirujuk") {
       if (event.target.value === "") {
         event.target.value = 0;
         event.target.select(event.target.value);
       }
       newDataRL[index].tlp_dirujuk = event.target.value;
+      newDataRL[index].tlp_dirawat =
+        parseInt(newDataRL[index].total_pasien_non_rujukan) +
+        parseInt(newDataRL[index].total_pasien_rujukan) -
+        (parseInt(newDataRL[index].tlp_pulang) +
+          parseInt(event.target.value) +
+          parseInt(newDataRL[index].m_igd_laki) +
+          parseInt(newDataRL[index].m_igd_perempuan) +
+          parseInt(newDataRL[index].doa_laki) +
+          parseInt(newDataRL[index].doa_perempuan));
     } else if (name === "tlp_pulang") {
       if (event.target.value === "") {
         event.target.value = 0;
         event.target.select(event.target.value);
       }
       newDataRL[index].tlp_pulang = event.target.value;
+      newDataRL[index].tlp_dirawat =
+        parseInt(newDataRL[index].total_pasien_non_rujukan) +
+        parseInt(newDataRL[index].total_pasien_rujukan) -
+        (parseInt(newDataRL[index].tlp_dirujuk) +
+          parseInt(event.target.value) +
+          parseInt(newDataRL[index].m_igd_laki) +
+          parseInt(newDataRL[index].m_igd_perempuan) +
+          parseInt(newDataRL[index].doa_laki) +
+          parseInt(newDataRL[index].doa_perempuan));
     } else if (name === "m_igd_laki") {
       if (event.target.value === "") {
         event.target.value = 0;
         event.target.select(event.target.value);
       }
       newDataRL[index].m_igd_laki = event.target.value;
+      newDataRL[index].tlp_dirawat =
+        parseInt(newDataRL[index].total_pasien_non_rujukan) +
+        parseInt(newDataRL[index].total_pasien_rujukan) -
+        (parseInt(newDataRL[index].tlp_dirujuk) +
+          parseInt(event.target.value) +
+          parseInt(newDataRL[index].tlp_pulang) +
+          parseInt(newDataRL[index].m_igd_perempuan) +
+          parseInt(newDataRL[index].doa_laki) +
+          parseInt(newDataRL[index].doa_perempuan));
     } else if (name === "m_igd_perempuan") {
       if (event.target.value === "") {
         event.target.value = 0;
         event.target.select(event.target.value);
       }
       newDataRL[index].m_igd_perempuan = event.target.value;
+      newDataRL[index].tlp_dirawat =
+        parseInt(newDataRL[index].total_pasien_non_rujukan) +
+        parseInt(newDataRL[index].total_pasien_rujukan) -
+        (parseInt(newDataRL[index].tlp_dirujuk) +
+          parseInt(event.target.value) +
+          parseInt(newDataRL[index].m_igd_laki) +
+          parseInt(newDataRL[index].tlp_pulang) +
+          parseInt(newDataRL[index].doa_laki) +
+          parseInt(newDataRL[index].doa_perempuan));
     } else if (name === "doa_laki") {
       if (event.target.value === "") {
         event.target.value = 0;
         event.target.select(event.target.value);
       }
       newDataRL[index].doa_laki = event.target.value;
+      newDataRL[index].tlp_dirawat =
+        parseInt(newDataRL[index].total_pasien_non_rujukan) +
+        parseInt(newDataRL[index].total_pasien_rujukan) -
+        (parseInt(newDataRL[index].tlp_dirujuk) +
+          parseInt(event.target.value) +
+          parseInt(newDataRL[index].m_igd_laki) +
+          parseInt(newDataRL[index].m_igd_perempuan) +
+          parseInt(newDataRL[index].tlp_pulang) +
+          parseInt(newDataRL[index].doa_perempuan));
     } else if (name === "doa_perempuan") {
       if (event.target.value === "") {
         event.target.value = 0;
         event.target.select(event.target.value);
       }
       newDataRL[index].doa_perempuan = event.target.value;
+      newDataRL[index].tlp_dirawat =
+        parseInt(newDataRL[index].total_pasien_non_rujukan) +
+        parseInt(newDataRL[index].total_pasien_rujukan) -
+        (parseInt(newDataRL[index].tlp_dirujuk) +
+          parseInt(event.target.value) +
+          parseInt(newDataRL[index].m_igd_laki) +
+          parseInt(newDataRL[index].m_igd_perempuan) +
+          parseInt(newDataRL[index].doa_laki) +
+          parseInt(newDataRL[index].tlp_pulang));
     } else if (name === "luka_laki") {
       if (event.target.value === "") {
         event.target.value = 0;
@@ -590,6 +662,10 @@ const FormTambahRL33 = () => {
                     placeholder="Tahun"
                     value={tahun}
                     onChange={(e) => setTahun(e.target.value)}
+                    min="0"
+                    maxLength={4}
+                    onInput={(e) => maxLengthCheck(e)}
+                    onPaste={preventPasteNegative}
                   />
                   <label htmlFor="tahun">Tahun</label>
                 </div>
@@ -742,13 +818,14 @@ const FormTambahRL33 = () => {
                           type="number"
                           min="0"
                           maxLength={7}
-                          onInput={(e) => maxLengthCheck(e)}
-                          onPaste={preventPasteNegative}
+                          // onInput={(e) => maxLengthCheck(e)}
+                          // onPaste={preventPasteNegative}
                           name="tlp_dirawat"
                           className="form-control"
                           value={value.tlp_dirawat}
-                          onChange={(e) => changeHandler(e, index)}
-                          disabled={value.disabledInput}
+                          // onChange={(e) => changeHandler(e, index)}
+                          // disabled={value.disabledInput}
+                          readOnly={true}
                         />
                       </td>
                       <td>
@@ -791,6 +868,11 @@ const FormTambahRL33 = () => {
                           value={value.m_igd_laki}
                           onChange={(e) => changeHandler(e, index)}
                           disabled={value.disabledInput}
+                          readOnly={
+                            value.no === "3" || value.no === "2.1"
+                              ? true
+                              : false
+                          }
                         />
                       </td>
                       <td>
@@ -819,6 +901,11 @@ const FormTambahRL33 = () => {
                           value={value.doa_laki}
                           onChange={(e) => changeHandler(e, index)}
                           disabled={value.disabledInput}
+                          readOnly={
+                            value.no === "3" || value.no === "2.1"
+                              ? true
+                              : false
+                          }
                         />
                       </td>
                       <td>
@@ -847,6 +934,11 @@ const FormTambahRL33 = () => {
                           value={value.luka_laki}
                           onChange={(e) => changeHandler(e, index)}
                           disabled={value.disabledInput}
+                          readOnly={
+                            value.no === "3" || value.no === "2.1"
+                              ? true
+                              : false
+                          }
                         />
                       </td>
                       <td>
@@ -875,6 +967,7 @@ const FormTambahRL33 = () => {
                           value={value.false_emergency}
                           onChange={(e) => changeHandler(e, index)}
                           disabled={value.disabledInput}
+                          readOnly={value.no.includes("1.") ? true : false}
                         />
                       </td>
                     </tr>

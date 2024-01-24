@@ -305,11 +305,11 @@ export const FormUbahRL33 = () => {
                   <input
                     type="text"
                     className="form-control"
-                    id="nama"
+                    id="floatingInput"
                     value={namaRS}
                     disabled={true}
                   />
-                  <label htmlFor="nama">Nama</label>
+                  <label htmlFor="floatingInput">Nama</label>
                 </div>
                 <div
                   className="form-floating"
@@ -318,11 +318,11 @@ export const FormUbahRL33 = () => {
                   <input
                     type="text"
                     className="form-control"
-                    id="alamat"
+                    id="floatingInput"
                     value={alamatRS}
                     disabled={true}
                   />
-                  <label htmlFor="alamat">Alamat</label>
+                  <label htmlFor="floatingInput">Alamat</label>
                 </div>
                 <div
                   className="form-floating"
@@ -331,11 +331,11 @@ export const FormUbahRL33 = () => {
                   <input
                     type="text"
                     className="form-control"
-                    id="provinsi"
+                    id="floatingInput"
                     value={namaPropinsi}
                     disabled={true}
                   />
-                  <label htmlFor="provinsi">Provinsi </label>
+                  <label htmlFor="floatingInput">Provinsi </label>
                 </div>
                 <div
                   className="form-floating"
@@ -344,11 +344,11 @@ export const FormUbahRL33 = () => {
                   <input
                     type="text"
                     className="form-control"
-                    id="kabkota"
+                    id="floatingInput"
                     value={namaKabKota}
                     disabled={true}
                   />
-                  <label htmlFor="kabkota">Kab/Kota</label>
+                  <label htmlFor="floatingInput">Kab/Kota</label>
                 </div>
               </div>
             </div>
@@ -421,7 +421,7 @@ export const FormUbahRL33 = () => {
                       name="no"
                       type="text"
                       className="form-control"
-                      id="no"
+                      id="floatingInput"
                       placeholder="No"
                       value={no}
                       disabled={true}
@@ -432,7 +432,7 @@ export const FormUbahRL33 = () => {
                       name="nama"
                       type="text"
                       className="form-control"
-                      id="namakegiatan"
+                      id="floatingInput"
                       placeholder="Kegiatan"
                       value={nama}
                       disabled={true}

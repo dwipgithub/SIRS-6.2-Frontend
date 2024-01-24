@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { useNavigate, Link } from "react-router-dom";
-import style from "./FormTambahRL33.module.css";
+import style from "./FormTambahRL319.module.css";
 import { HiSaveAs } from "react-icons/hi";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -11,7 +11,7 @@ import "react-confirm-alert/src/react-confirm-alert.css";
 import Modal from "react-bootstrap/Modal";
 import Table from "react-bootstrap/Table";
 
-const RL33 = () => {
+const RL319 = () => {
   const [tahun, setTahun] = useState("");
   const [bulan, setBulan] = useState("");
   const [filterLabel, setFilterLabel] = useState([]);
@@ -31,7 +31,6 @@ const RL33 = () => {
     const date = new Date();
     setTahun(date.getFullYear());
     setBulan(date.getMonth() + 1);
-    // getDataRLTigaTitikTiga();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -95,7 +94,7 @@ const RL33 = () => {
     } catch (error) {}
   };
 
-  const getDataRLTigaTitikTiga = async (e) => {
+  const getDataRLTigaTitikSembilanBelas = async (e) => {
     e.preventDefault();
     if (rumahSakit == null) {
       toast(`rumah sakit harus dipilih`, {
@@ -106,13 +105,7 @@ const RL33 = () => {
 
     const filter = [];
     filter.push("Nama: ".concat(rumahSakit.nama));
-    filter.push(
-      "Periode ".concat(
-        String(months[bulan - 1].label)
-          .concat(" ")
-          .concat(tahun)
-      )
-    );
+    filter.push("Periode ".concat(String(tahun)));
     setFilterLabel(filter);
 
     try {
@@ -123,25 +116,24 @@ const RL33 = () => {
         },
         params: {
           tahun: tahun,
-          bulan: bulan,
         },
       };
       const results = await axiosJWT.get(
-        "/apisirs6v2/rltigatitiktiga",
+        "/apisirs6v2/rltigatitiksembilanbelas",
         customConfig
       );
 
-      const rlTigaTitikTigaDetails = results.data.data.map((value) => {
-        return value.rl_tiga_titik_tiga_details;
+      const rlTigaTitikSembilanBelasDetails = results.data.data.map((value) => {
+        return value.rl_tiga_titik_sembilan_belas_details;
       });
 
-      let dataRLTigaTitikTigaDetails = [];
-      rlTigaTitikTigaDetails.forEach((element) => {
+      let dataRLTigaTitikSembilanBelasDetails = [];
+      rlTigaTitikSembilanBelasDetails.forEach((element) => {
         element.forEach((value) => {
-          dataRLTigaTitikTigaDetails.push(value);
+          dataRLTigaTitikSembilanBelasDetails.push(value);
         });
       });
-      setDataRL(dataRLTigaTitikTigaDetails);
+      setDataRL(dataRLTigaTitikSembilanBelasDetails);
       setRumahSakit(null);
       handleClose();
     } catch (error) {
@@ -158,28 +150,30 @@ const RL33 = () => {
     };
     try {
       let parent;
-      const currentData = await getRLTigaTitikTigaById(id);
+      const currentData = await getRLTigaTitikSembilanBelasById(id);
 
-      if (currentData.jenis_pelayanan_rl_tiga_titik_tiga.no.includes("1.")) {
-        parent = await getParent(1, id);
+      if (
+        currentData.golongan_obat_rl_tiga_titik_sembilan_belas.no.includes("4.")
+      ) {
+        parent = await getParent(4, id);
       } else if (
-        currentData.jenis_pelayanan_rl_tiga_titik_tiga.no.includes("2.")
+        currentData.golongan_obat_rl_tiga_titik_sembilan_belas.no.includes("2.")
       ) {
         parent = await getParent(2, id);
       }
 
       if (parent) {
         await axiosJWT.patch(
-          "/apisirs6v2/rltigatitiktigadetail/" + parent.id,
+          "/apisirs6v2/rltigatitiksembilanbelasdetail/" + parent.id,
           parent.data,
           customConfig
         );
       }
       const results = await axiosJWT.delete(
-        `/apisirs6v2/rltigatitiktiga/${id}`,
+        `/apisirs6v2/rltigatitiksembilanbelas/${id}`,
         customConfig
       );
-      // getDataRLTigaTitikTiga();
+
       toast("Data Berhasil Dihapus", {
         position: toast.POSITION.TOP_RIGHT,
       });
@@ -187,7 +181,6 @@ const RL33 = () => {
       setTimeout(() => {
         window.location.reload();
       }, 3000);
-      // setDataRL((current) => current.filter((value) => value.id !== id));
     } catch (error) {
       console.log(error);
       toast("Data Gagal Disimpan", {
@@ -216,7 +209,7 @@ const RL33 = () => {
 
   const getParent = async (filter, id) => {
     const response = await axiosJWT.get(
-      "/apisirs6v2/rltigatitiktigadetail/" + id,
+      "/apisirs6v2/rltigatitiksembilanbelasdetail/" + id,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -224,55 +217,52 @@ const RL33 = () => {
       }
     );
 
-    const newResponse = await axiosJWT.get("/apisirs6v2/rltigatitiktiga", {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      params: {
-        tahun: tahun,
-        bulan: bulan,
-      },
-    });
+    const newResponse = await axiosJWT.get(
+      "/apisirs6v2/rltigatitiksembilanbelas",
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        params: {
+          tahun: tahun,
+        },
+      }
+    );
 
-    let dataRLTigaTitikTigaDetails = [];
-    const rlTigaTitikTigaDetails = newResponse.data.data.map((value) => {
-      return value.rl_tiga_titik_tiga_details;
-    });
-    rlTigaTitikTigaDetails.forEach((element) => {
+    let dataRLTigaTitikSembilanBelasDetails = [];
+    const rlTigaTitikSembilanBelasDetails = newResponse.data.data.map(
+      (value) => {
+        return value.rl_tiga_titik_sembilan_belas_details;
+      }
+    );
+    rlTigaTitikSembilanBelasDetails.forEach((element) => {
       element.forEach((value) => {
-        dataRLTigaTitikTigaDetails.push(value);
+        dataRLTigaTitikSembilanBelasDetails.push(value);
       });
     });
 
-    const parent = dataRLTigaTitikTigaDetails
+    const parent = dataRLTigaTitikSembilanBelasDetails
       .filter((value) => {
-        return value.jenis_pelayanan_rl_tiga_titik_tiga.no == filter;
+        return value.golongan_obat_rl_tiga_titik_sembilan_belas.no == filter;
       })
       .map((value) => {
         return {
           id: value.id,
           data: {
-            total_pasien_rujukan:
-              value.total_pasien_rujukan -
-              response.data.data.total_pasien_rujukan,
-            total_pasien_non_rujukan:
-              value.total_pasien_non_rujukan -
-              response.data.data.total_pasien_non_rujukan,
-            tlp_dirawat: value.tlp_dirawat - response.data.data.tlp_dirawat,
-            tlp_dirujuk: value.tlp_dirujuk - response.data.data.tlp_dirujuk,
-            tlp_pulang: value.tlp_pulang - response.data.data.tlp_pulang,
-            m_igd_laki: value.m_igd_laki - response.data.data.m_igd_laki,
-            m_igd_perempuan:
-              value.m_igd_perempuan - response.data.data.m_igd_perempuan,
-            doa_laki: value.doa_laki - response.data.data.doa_laki,
-            doa_perempuan:
-              value.doa_perempuan - response.data.data.doa_perempuan,
-            luka_laki: value.luka_laki - response.data.data.luka_laki,
-            luka_perempuan:
-              value.luka_perempuan - response.data.data.luka_perempuan,
-            false_emergency:
-              value.false_emergency - response.data.data.false_emergency,
+            ranap_pasien_keluar:
+              value.ranap_pasien_keluar -
+              response.data.data.ranap_pasien_keluar,
+            ranap_lama_dirawat:
+              value.ranap_lama_dirawat - response.data.data.ranap_lama_dirawat,
+            jumlah_pasien_rajal:
+              value.jumlah_pasien_rajal -
+              response.data.data.jumlah_pasien_rajal,
+            rajal_lab: value.rajal_lab - response.data.data.rajal_lab,
+            rajal_radiologi:
+              value.rajal_radiologi - response.data.data.rajal_radiologi,
+            rajal_lain_lain:
+              value.rajal_lain_lain - response.data.data.rajal_lain_lain,
           },
         };
       });
@@ -280,9 +270,9 @@ const RL33 = () => {
     return parent[0];
   };
 
-  const getRLTigaTitikTigaById = async (id) => {
+  const getRLTigaTitikSembilanBelasById = async (id) => {
     const response = await axiosJWT.get(
-      "/apisirs6v2/rltigatitiktigadetail/" + id,
+      "/apisirs6v2/rltigatitiksembilanbelasdetail/" + id,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -366,58 +356,29 @@ const RL33 = () => {
     }
   };
 
-  const months = [
-    { value: "1", label: "Januari" },
-    { value: "2", label: "Februari" },
-    { value: "3", label: "Maret" },
-    { value: "4", label: "April" },
-    { value: "5", label: "Mei" },
-    { value: "6", label: "Juni" },
-    { value: "7", label: "Juli" },
-    { value: "8", label: "Agustus" },
-    { value: "9", label: "September" },
-    { value: "10", label: "Oktober" },
-    { value: "11", label: "November" },
-    { value: "12", label: "Desember" },
-  ];
-
   let total = {
-    total_pasien_rujukan: 0,
-    total_pasien_non_rujukan: 0,
-    tlp_dirawat: 0,
-    tlp_dirujuk: 0,
-    tlp_pulang: 0,
-    m_igd_laki: 0,
-    m_igd_perempuan: 0,
-    doa_laki: 0,
-    doa_perempuan: 0,
-    luka_laki: 0,
-    luka_perempuan: 0,
-    false_emergency: 0,
+    ranap_pasien_keluar: 0,
+    ranap_lama_dirawat: 0,
+    jumlah_pasien_rajal: 0,
+    rajal_lab: 0,
+    rajal_radiologi: 0,
+    rajal_lain_lain: 0,
   };
 
   dataRL
     .filter((value) => {
       return (
-        value.jenis_pelayanan_rl_tiga_titik_tiga.no != 1 &&
-        value.jenis_pelayanan_rl_tiga_titik_tiga.no != 2
+        value.golongan_obat_rl_tiga_titik_sembilan_belas.no != 4 &&
+        value.golongan_obat_rl_tiga_titik_sembilan_belas.no != 2
       );
     })
     .map((value, index) => {
-      total.total_pasien_rujukan += parseInt(value.total_pasien_rujukan);
-      total.total_pasien_non_rujukan += parseInt(
-        value.total_pasien_non_rujukan
-      );
-      total.tlp_dirawat += parseInt(value.tlp_dirawat);
-      total.tlp_dirujuk += parseInt(value.tlp_dirujuk);
-      total.tlp_pulang += parseInt(value.tlp_pulang);
-      total.m_igd_laki += parseInt(value.m_igd_laki);
-      total.m_igd_perempuan += parseInt(value.m_igd_perempuan);
-      total.doa_laki += parseInt(value.doa_laki);
-      total.doa_perempuan += parseInt(value.doa_perempuan);
-      total.luka_laki += parseInt(value.luka_laki);
-      total.luka_perempuan += parseInt(value.luka_perempuan);
-      total.false_emergency += parseInt(value.false_emergency);
+      total.ranap_lama_dirawat += parseInt(value.ranap_lama_dirawat);
+      total.ranap_pasien_keluar += parseInt(value.ranap_pasien_keluar);
+      total.jumlah_pasien_rajal += parseInt(value.jumlah_pasien_rajal);
+      total.rajal_lab += parseInt(value.rajal_lab);
+      total.rajal_lain_lain += parseInt(value.rajal_lain_lain);
+      total.rajal_radiologi += parseInt(value.rajal_radiologi);
     });
 
   return (
@@ -427,7 +388,7 @@ const RL33 = () => {
           <Modal.Title>Filter</Modal.Title>
         </Modal.Header>
 
-        <form onSubmit={getDataRLTigaTitikTiga}>
+        <form onSubmit={getDataRLTigaTitikSembilanBelas}>
           <Modal.Body>
             {user.jenisUserId === 1 ? (
               <>
@@ -596,26 +557,7 @@ const RL33 = () => {
             )}
             <div
               className="form-floating"
-              style={{ width: "70%", display: "inline-block" }}
-            >
-              <select
-                name="bulan"
-                className="form-control"
-                id="bulan"
-                value={bulan}
-                onChange={(e) => setBulan(e.target.value)}
-              >
-                {months.map((value) => (
-                  <option key={value.value - 1} value={value.value}>
-                    {value.label}
-                  </option>
-                ))}
-              </select>
-              <label>Bulan</label>
-            </div>
-            <div
-              className="form-floating"
-              style={{ width: "30%", display: "inline-block" }}
+              style={{ width: "100%", display: "inline-block" }}
             >
               <input
                 name="tahun"
@@ -640,138 +582,14 @@ const RL33 = () => {
           </Modal.Footer>
         </form>
       </Modal>
-      {/* <div className="row">
-        <div className="col-md-6">
-          <div className="card">
-            <div className="card-body">
-              <h5 className="card-title h5">Profil Fasyankes</h5>
-              <div
-                className="form-floating"
-                style={{ width: "100%", display: "inline-block" }}
-              >
-                <input
-                  type="text"
-                  className="form-control"
-                  id="floatingInput"
-                  value={namaRS}
-                  disabled={true}
-                />
-                <label htmlFor="floatingInput">Nama</label>
-              </div>
-              <div
-                className="form-floating"
-                style={{ width: "100%", display: "inline-block" }}
-              >
-                <input
-                  type="text"
-                  className="form-control"
-                  id="floatingInput"
-                  value={alamatRS}
-                  disabled={true}
-                />
-                <label htmlFor="floatingInput">Alamat</label>
-              </div>
-              <div
-                className="form-floating"
-                style={{ width: "50%", display: "inline-block" }}
-              >
-                <input
-                  type="text"
-                  className="form-control"
-                  id="floatingInput"
-                  value={namaPropinsi}
-                  disabled={true}
-                />
-                <label htmlFor="floatingInput">Provinsi </label>
-              </div>
-              <div
-                className="form-floating"
-                style={{ width: "50%", display: "inline-block" }}
-              >
-                <input
-                  type="text"
-                  className="form-control"
-                  id="floatingInput"
-                  value={namaKabKota}
-                  disabled={true}
-                />
-                <label htmlFor="floatingInput">Kab/Kota</label>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="col-md-6">
-          <div className="card">
-            <div className="card-body">
-              <h5 className="card-title h5">Periode Laporan</h5>
-              <form onSubmit={Cari}>
-                <div
-                  className="form-floating"
-                  style={{ width: "100%", display: "inline-block" }}
-                >
-                  <input
-                    name="tahun"
-                    type="text"
-                    className="form-control"
-                    id="floatingInput"
-                    placeholder="Tahun"
-                    value={tahun}
-                    onChange={(e) => changeHandlerSingle(e)}
-                  />
-                  <label htmlFor="floatingInput">Tahun</label>
-                </div>
-                <div
-                  className="form-floating"
-                  style={{ width: "100%", display: "inline-block" }}
-                >
-                  <select
-                    name="bulan"
-                    className="form-control"
-                    id="bulan"
-                    value={bulan}
-                    onChange={(e) => setBulan(e.target.value)}
-                  >
-                    {months.map((value) => (
-                      <option key={value.value - 1} value={value.value}>
-                        {value.label}
-                      </option>
-                    ))}
-                  </select>
-                  <label htmlFor="floatingInput">Bulan</label>
-                </div>
-                <div className="mt-3 mb-3">
-                  <button
-                    type="submit"
-                    className="btn btn-outline-success w-100"
-                  >
-                    <HiSaveAs /> Cari
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div> */}
 
       <div className="row">
-        <div className="col-md-12">
-          {/* <Link
-            to={`/rl33/tambah/`}
-            className="btn btn-info"
-            style={{
-              fontSize: "18px",
-              backgroundColor: "#779D9E",
-              color: "#FFFFFF",
-            }}
-          >
-            +
-          </Link>
-          <span style={{ color: "gray" }}>RL. 3.3 Rawat Darurat </span> */}
+        <div className="col-sm-12">
           <div style={{ marginBottom: "10px" }}>
             {user.jenisUserId === 4 ? (
               <Link
                 className="btn"
-                to={`/rl33/tambah/`}
+                to={`/rl319/tambah/`}
                 style={{
                   marginRight: "5px",
                   fontSize: "18px",
@@ -824,7 +642,7 @@ const RL33 = () => {
                   style={{ width: "4%", verticalAlign: "middle" }}
                   rowSpan={2}
                 >
-                  No Pelayanan
+                  No
                 </th>
                 <th
                   style={{ width: "3%", verticalAlign: "middle" }}
@@ -836,29 +654,23 @@ const RL33 = () => {
                   style={{ width: "20%", verticalAlign: "middle" }}
                   rowSpan={2}
                 >
-                  Jenis Pelayanan
+                  Golongan Obat
                 </th>
-                <th colSpan={2}>Total Pasien</th>
-                <th colSpan={3}>Tindak Lanjut Pelayanan</th>
-                <th colSpan={2}>Mati di IGD</th>
-                <th colSpan={2}>DOA</th>
-                <th colSpan={2}>Luka-luka</th>
-                <th style={{ verticalAlign: "middle" }} rowSpan={2}>
-                  False Emergency
+                <th colSpan={2}>Pasien Rawat Inap</th>
+                <th
+                  style={{ width: "10%", verticalAlign: "middle" }}
+                  rowSpan={2}
+                >
+                  Jumlah Pasien Rawat Jalan
                 </th>
+                <th colSpan={3}>Jumlah Pasien Rawat Jalan</th>
               </tr>
               <tr>
-                <th>Rujukan</th>
-                <th>Non Rujukan</th>
-                <th>Dirawat</th>
-                <th>Dirujuk</th>
-                <th>Pulang</th>
-                <th style={{ width: "5%" }}>Laki-laki</th>
-                <th style={{ width: "5%" }}>Perempuan</th>
-                <th style={{ width: "5%" }}>Laki-laki</th>
-                <th style={{ width: "5%" }}>Perempuan</th>
-                <th style={{ width: "5%" }}>Laki-laki</th>
-                <th style={{ width: "5%" }}>Perempuan</th>
+                <th style={{ width: "10%" }}>Jumlah Pasien Keluar</th>
+                <th style={{ width: "10%" }}>Jumlah Lama Dirawat</th>
+                <th style={{ width: "10%" }}>Laboratorium</th>
+                <th style={{ width: "10%" }}>Radiologi</th>
+                <th style={{ width: "10%" }}>Lain-lain</th>
               </tr>
             </thead>
             <tbody>
@@ -872,7 +684,10 @@ const RL33 = () => {
                             type="text"
                             name="no"
                             className="form-control"
-                            value={value.jenis_pelayanan_rl_tiga_titik_tiga.no}
+                            value={
+                              value.golongan_obat_rl_tiga_titik_sembilan_belas
+                                .no
+                            }
                             disabled={true}
                           />
                         </td>
@@ -883,8 +698,10 @@ const RL33 = () => {
                           }}
                         >
                           <ToastContainer />
-                          {value.jenis_pelayanan_rl_tiga_titik_tiga.no != 1 &&
-                          value.jenis_pelayanan_rl_tiga_titik_tiga.no != 2 ? (
+                          {value.golongan_obat_rl_tiga_titik_sembilan_belas
+                            .no != 4 &&
+                          value.golongan_obat_rl_tiga_titik_sembilan_belas.no !=
+                            2 ? (
                             <div style={{ display: "flex" }}>
                               <button
                                 className="btn btn-danger"
@@ -899,7 +716,7 @@ const RL33 = () => {
                                 Hapus
                               </button>
                               <Link
-                                to={`/rl33/ubah/${value.id}`}
+                                to={`/rl319/ubah/${value.id}`}
                                 className="btn btn-warning"
                                 style={{
                                   margin: "0 5px 0 0",
@@ -918,10 +735,11 @@ const RL33 = () => {
                         <td>
                           <input
                             type="text"
-                            name="jenisKegiatan"
+                            name="golonganObat"
                             className="form-control"
                             value={
-                              value.jenis_pelayanan_rl_tiga_titik_tiga.nama
+                              value.golongan_obat_rl_tiga_titik_sembilan_belas
+                                .nama
                             }
                             disabled={true}
                           />
@@ -929,134 +747,71 @@ const RL33 = () => {
                         <td>
                           <input
                             type="text"
-                            name="total_pasien_rujukan"
+                            name="ranap_pasien_keluar"
                             className="form-control"
-                            value={value.total_pasien_rujukan}
+                            value={value.ranap_pasien_keluar}
                             disabled={true}
                           />
                         </td>
                         <td>
                           <input
                             type="text"
-                            name="total_pasien_non_rujukan"
+                            name="ranap_lama_dirawat"
                             className="form-control"
-                            value={value.total_pasien_non_rujukan}
+                            value={value.ranap_lama_dirawat}
                             disabled={true}
                           />
                         </td>
                         <td>
                           <input
                             type="text"
-                            name="tlp_dirawat"
+                            name="jumlah_pasien_rajal"
                             className="form-control"
-                            value={value.tlp_dirawat}
+                            value={value.jumlah_pasien_rajal}
                             disabled={true}
                           />
                         </td>
                         <td>
                           <input
                             type="text"
-                            name="tlp_dirujuk"
+                            name="rajal_lab"
                             className="form-control"
-                            value={value.tlp_dirujuk}
+                            value={value.rajal_lab}
                             disabled={true}
                           />
                         </td>
                         <td>
                           <input
                             type="text"
-                            name="tlp_pulang"
+                            name="rajal_radiologi"
                             className="form-control"
-                            value={value.tlp_pulang}
+                            value={value.rajal_radiologi}
                             disabled={true}
                           />
                         </td>
                         <td>
                           <input
                             type="text"
-                            name="m_igd_laki"
+                            name="rajal_lain_lain"
                             className="form-control"
-                            value={value.m_igd_laki}
-                            disabled={true}
-                          />
-                        </td>
-                        <td>
-                          <input
-                            type="text"
-                            name="m_igd_perempuan"
-                            className="form-control"
-                            value={value.m_igd_perempuan}
-                            disabled={true}
-                          />
-                        </td>
-                        <td>
-                          <input
-                            type="text"
-                            name="doa_laki"
-                            className="form-control"
-                            value={value.doa_laki}
-                            disabled={true}
-                          />
-                        </td>
-                        <td>
-                          <input
-                            type="text"
-                            name="doa_perempuan"
-                            className="form-control"
-                            value={value.doa_perempuan}
-                            disabled={true}
-                          />
-                        </td>
-                        <td>
-                          <input
-                            type="text"
-                            name="luka_laki"
-                            className="form-control"
-                            value={value.luka_laki}
-                            disabled={true}
-                          />
-                        </td>
-                        <td>
-                          <input
-                            type="text"
-                            name="luka_perempuan"
-                            className="form-control"
-                            value={value.luka_perempuan}
-                            disabled={true}
-                          />
-                        </td>
-                        <td>
-                          <input
-                            type="text"
-                            name="false_emergency"
-                            className="form-control"
-                            value={value.false_emergency}
+                            value={value.rajal_lain_lain}
                             disabled={true}
                           />
                         </td>
                       </tr>
                     );
                   })}
+
                   <tr>
                     <td colSpan={3} className="text-center">
                       <strong>Total</strong>
                     </td>
-                    <td className="text-center">
-                      {total.total_pasien_rujukan}
-                    </td>
-                    <td className="text-center">
-                      {total.total_pasien_non_rujukan}
-                    </td>
-                    <td className="text-center">{total.tlp_dirawat}</td>
-                    <td className="text-center">{total.tlp_dirujuk}</td>
-                    <td className="text-center">{total.tlp_pulang}</td>
-                    <td className="text-center">{total.m_igd_laki}</td>
-                    <td className="text-center">{total.m_igd_perempuan}</td>
-                    <td className="text-center">{total.doa_laki}</td>
-                    <td className="text-center">{total.doa_perempuan}</td>
-                    <td className="text-center">{total.luka_laki}</td>
-                    <td className="text-center">{total.luka_perempuan}</td>
-                    <td className="text-center">{total.false_emergency}</td>
+                    <td className="text-center">{total.ranap_pasien_keluar}</td>
+                    <td className="text-center">{total.ranap_lama_dirawat}</td>
+                    <td className="text-center">{total.jumlah_pasien_rajal}</td>
+                    <td className="text-center">{total.rajal_lab}</td>
+                    <td className="text-center">{total.rajal_radiologi}</td>
+                    <td className="text-center">{total.rajal_lain_lain}</td>
                   </tr>
                 </>
               ) : (
@@ -1070,4 +825,4 @@ const RL33 = () => {
   );
 };
 
-export default RL33;
+export default RL319;
