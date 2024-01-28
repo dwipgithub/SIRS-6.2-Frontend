@@ -1,15 +1,3 @@
-// import React, { useState, useEffect } from "react";
-// import axios from "axios";
-// import jwt_decode from "jwt-decode";
-// import { useNavigate, useParams, Link } from "react-router-dom";
-// import style from "./FormTambahRL312.module.css";
-// import { HiSaveAs } from "react-icons/hi";
-// import { ToastContainer, toast } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
-// import { IoArrowBack } from "react-icons/io5";
-// import Table from "react-bootstrap/Table";
-// import Spinner from "react-bootstrap/Spinner";
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
@@ -21,31 +9,26 @@ import "react-toastify/dist/ReactToastify.css";
 import Table from "react-bootstrap/Table";
 
 export const FormEditRL316 = () => {
-  // const [tahun, setTahun] = useState("");
   const [namaRS, setNamaRS] = useState("");
   const [alamatRS, setAlamatRS] = useState("");
   const [namaPropinsi, setNamaPropinsi] = useState("");
   const [namaKabKota, setNamaKabKota] = useState("");
-  const [setSpesialis, setNamaSpesialis] = useState("");
+  const [namaJenisPelayanan, setNamaJenisPelayanan] = useState("");
 
   const [noMetoda, setNoMetoda] = useState("");
-  const [kbPaskaPersalinan, setKBPaskaPersalinan] = useState("");
-  const [kbPaskaKeguguran, setKBPaskaKeguguran] = useState("");
-  const [kbInterval, setKBInterval] = useState("");
-  const [komplikasiKb, setKomplikasiKB] = useState("");
-  const [kegagalanKb, setKegagalanKB] = useState("");
-  const [efekSamping, setEfekSamping] = useState("");
-  const [dropOut, setDropOut] = useState("");
+  const [pelayanan_kb_paska_persalinan, setKBPaskaPersalinan] = useState("");
+  const [pelayanan_kb_paska_keguguran, setKBPaskaKeguguran] = useState("");
+  const [pelayanan_kb_interval, setKBInterval] = useState("");
+  const [komplikasi_kb, setKomplikasiKB] = useState("");
+  const [kegagalan_kb, setKegagalanKB] = useState("");
+  const [efek_samping, setEfekSamping] = useState("");
+  const [drop_out, setDropOut] = useState("");
 
   const [token, setToken] = useState("");
   const [expire, setExpire] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
   const [buttonStatus, setButtonStatus] = useState(false);
-
-  // const [no, setNo] = useState("");
-  // const [spinner, setSpinner] = useState(false);
-  // const [dataRL, setDataRL] = useState([]);
 
   useEffect(() => {
     refreshToken();
@@ -102,15 +85,18 @@ export const FormEditRL316 = () => {
   const getRLTigaTitikEnamBelasById = async () => {
     // setSpinner(true);
     const response = await axiosJWT.get(
-      "/apisirs6v2/rltigatitikenambelas/update/" + id,
+      "/apisirs6v2/rltigatitikenambelas/" + id,
       {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       }
     );
-    setNoMetoda(response.data.data.id_metoda);
-    setNamaSpesialis(response.data.data.nama);
+    setNoMetoda(response.data.data.rl_tiga_titik_enam_belas_metoda_id);
+    setNamaJenisPelayanan(
+      response.data.data
+        .rl_tiga_titik_enam_belas_jenis_pelayanan_keluarga_berencana.nama
+    );
     setKBPaskaPersalinan(response.data.data.pelayanan_kb_paska_persalinan);
     setKBPaskaKeguguran(response.data.data.pelayanan_kb_paska_keguguran);
     setKBInterval(response.data.data.pelayanan_kb_interval);
@@ -173,20 +159,20 @@ export const FormEditRL316 = () => {
         break;
 
       case "efekSamping":
-      if (event.target.value === "") {
-        event.target.value = 0;
-        event.target.select(event.target.value);
-      }
-      setEfekSamping(parseInt(event.target.value));
-      break;
+        if (event.target.value === "") {
+          event.target.value = 0;
+          event.target.select(event.target.value);
+        }
+        setEfekSamping(parseInt(event.target.value));
+        break;
 
       case "dropOut":
-      if (event.target.value === "") {
-        event.target.value = 0;
-        event.target.select(event.target.value);
-      }
-      setDropOut(parseInt(event.target.value));
-      break;
+        if (event.target.value === "") {
+          event.target.value = 0;
+          event.target.select(event.target.value);
+        }
+        setDropOut(parseInt(event.target.value));
+        break;
 
       default:
         console.log(event.target.name);
@@ -205,16 +191,15 @@ export const FormEditRL316 = () => {
         },
       };
       await axiosJWT.patch(
-        "/apisirs6v2/updaterltigatitikduabelasdetail/" + id,
+        "/apisirs6v2/rltigatitikenambelas/" + id,
         {
-          noMetoda,
-          kbPaskaPersalinan,
-          kbPaskaKeguguran,
-          kbInterval,
-          komplikasiKb,
-          kegagalanKb,
-          efekSamping,
-          dropOut,
+          pelayanan_kb_paska_persalinan,
+          pelayanan_kb_paska_keguguran,
+          pelayanan_kb_interval,
+          komplikasi_kb,
+          kegagalan_kb,
+          efek_samping,
+          drop_out,
         },
         customConfig
       );
@@ -338,7 +323,10 @@ export const FormEditRL316 = () => {
             >
               &lt;
             </Link>
-            <span style={{ color: "gray" }}> Kembali RL 3.16 Keluarga Berencana</span>
+            <span style={{ color: "gray" }}>
+              {" "}
+              Kembali RL 3.16 Keluarga Berencana
+            </span>
             {/* <div className="container" style={{ textAlign: "center" }}>
               {spinner && (
                 <Spinner animation="grow" variant="success"></Spinner>
@@ -361,17 +349,28 @@ export const FormEditRL316 = () => {
             </div> */}
             <Table className={style.rlTable}>
               <thead>
-              <tr>
-                  
-                  <th rowSpan="2" style={{ width: "2%" }}>No Metoda</th>
-                  <th rowSpan="2" style={{ width: "8%" }}>Jenis Metoda</th>
+                <tr>
+                  <th rowSpan="2" style={{ width: "2%" }}>
+                    No
+                  </th>
+                  <th rowSpan="2" style={{ width: "15%" }}>
+                    Jenis Pelayanan Keluarga Berencana
+                  </th>
                   <th colSpan="3" style={{ width: "5%" }}>
                     Pelayanan KB
                   </th>
-                  <th rowSpan="2" style={{ width: "5%" }}>Komplikasi KB</th>
-                  <th rowSpan="2" style={{ width: "5%" }}>Kegagalan KB</th>
-                  <th rowSpan="2" style={{ width: "5%" }}>Efek Samping</th>
-                  <th rowSpan="2" style={{ width: "5%" }}>Drop Out</th>
+                  <th rowSpan="2" style={{ width: "5%" }}>
+                    Komplikasi KB
+                  </th>
+                  <th rowSpan="2" style={{ width: "5%" }}>
+                    Kegagalan KB
+                  </th>
+                  <th rowSpan="2" style={{ width: "5%" }}>
+                    Efek Samping
+                  </th>
+                  <th rowSpan="2" style={{ width: "5%" }}>
+                    Drop Out
+                  </th>
                 </tr>
                 <tr>
                   <th style={{ width: "5%" }}>{"Paska Persalinan"}</th>
@@ -381,25 +380,25 @@ export const FormEditRL316 = () => {
               </thead>
               <tbody>
                 <tr>
-                <td>
+                  <td>
                     <input
                       name="noMetoda"
                       type="text"
                       className="form-control"
                       id="noMetoda"
-                      value={setNoMetoda}
+                      value={noMetoda}
                       // onChange={(e) => changeHandler(e)}
                       disabled={true}
                     />
                   </td>
                   <td>
                     <input
-                      name="jenisSpesialisasi"
+                      name="jenisPelayanan"
                       type="text"
                       className="form-control"
-                      id="jenisSpesialisasi"
+                      id="jenisPelayanan"
                       placeholder="Jenis Metoda"
-                      value={setSpesialis}
+                      value={namaJenisPelayanan}
                       // onChange={(e) => changeHandler(e)}
                       disabled={true}
                     />
@@ -407,14 +406,16 @@ export const FormEditRL316 = () => {
                   <td>
                     <input
                       type="number"
-                      name="pelayananKbPaskaPersalinan"
+                      name="pelayanan_kb_paska_persalinan"
                       className="form-control"
-                      value={kbPaskaPersalinan}
+                      value={pelayanan_kb_paska_persalinan}
                       min="0"
                       maxLength={7}
                       onInput={(e) => maxLengthCheck(e)}
-                      // onChange={(e) => setKhusus(parseInt(e.target.value))}
-                      onChange={(e) => changeHandler(e)}
+                      onChange={(e) =>
+                        setKBPaskaPersalinan(parseInt(e.target.value))
+                      }
+                      // onChange={(e) => changeHandler(e)}
                       onPaste={preventPasteNegative}
                       onKeyPress={preventMinus}
                       onFocus={handleFocus}
@@ -423,14 +424,16 @@ export const FormEditRL316 = () => {
                   <td>
                     <input
                       type="number"
-                      name="pelayananKbPaskaKeguguran"
+                      name="pelayanan_kb_paska_keguguran"
                       className="form-control"
-                      value={kbPaskaKeguguran}
+                      value={pelayanan_kb_paska_keguguran}
                       min="0"
                       maxLength={7}
                       onInput={(e) => maxLengthCheck(e)}
-                      // onChange={(e) => setBesar(parseInt(e.target.value))}
-                      onChange={(e) => changeHandler(e)}
+                      onChange={(e) =>
+                        setKBPaskaKeguguran(parseInt(e.target.value))
+                      }
+                      // onChange={(e) => changeHandler(e)}
                       onPaste={preventPasteNegative}
                       onKeyPress={preventMinus}
                       onFocus={handleFocus}
@@ -439,14 +442,14 @@ export const FormEditRL316 = () => {
                   <td>
                     <input
                       type="number"
-                      name="pelayananKbInterval"
+                      name="pelayanan_kb_interval"
                       className="form-control"
-                      value={kbInterval}
+                      value={pelayanan_kb_interval}
                       min="0"
                       maxLength={7}
                       onInput={(e) => maxLengthCheck(e)}
-                      // onChange={(e) => setSedang(parseInt(e.target.value))}
-                      onChange={(e) => changeHandler(e)}
+                      onChange={(e) => setKBInterval(parseInt(e.target.value))}
+                      // onChange={(e) => changeHandler(e)}
                       onPaste={preventPasteNegative}
                       onKeyPress={preventMinus}
                       onFocus={handleFocus}
@@ -455,14 +458,16 @@ export const FormEditRL316 = () => {
                   <td>
                     <input
                       type="number"
-                      name="komplikasiKB"
+                      name="komplikasi_kb"
                       className="form-control"
-                      value={komplikasiKb}
+                      value={komplikasi_kb}
                       min="0"
                       maxLength={7}
                       onInput={(e) => maxLengthCheck(e)}
-                      // onChange={(e) => setKecil(parseInt(e.target.value))}
-                      onChange={(e) => changeHandler(e)}
+                      onChange={(e) =>
+                        setKomplikasiKB(parseInt(e.target.value))
+                      }
+                      // onChange={(e) => changeHandler(e)}
                       onPaste={preventPasteNegative}
                       onKeyPress={preventMinus}
                       onFocus={handleFocus}
@@ -471,14 +476,14 @@ export const FormEditRL316 = () => {
                   <td>
                     <input
                       type="number"
-                      name="kegagalanKB"
+                      name="kegagalan_kb"
                       className="form-control"
-                      value={kegagalanKb}
+                      value={kegagalan_kb}
                       min="0"
                       maxLength={7}
                       onInput={(e) => maxLengthCheck(e)}
-                      // onChange={(e) => setKecil(parseInt(e.target.value))}
-                      onChange={(e) => changeHandler(e)}
+                      onChange={(e) => setKegagalanKB(parseInt(e.target.value))}
+                      // onChange={(e) => changeHandler(e)}
                       onPaste={preventPasteNegative}
                       onKeyPress={preventMinus}
                       onFocus={handleFocus}
@@ -487,14 +492,14 @@ export const FormEditRL316 = () => {
                   <td>
                     <input
                       type="number"
-                      name="efekSamping"
+                      name="efek_samping"
                       className="form-control"
-                      value={efekSamping}
+                      value={efek_samping}
                       min="0"
                       maxLength={7}
                       onInput={(e) => maxLengthCheck(e)}
-                      // onChange={(e) => setKecil(parseInt(e.target.value))}
-                      onChange={(e) => changeHandler(e)}
+                      onChange={(e) => setEfekSamping(parseInt(e.target.value))}
+                      // onChange={(e) => changeHandler(e)}
                       onPaste={preventPasteNegative}
                       onKeyPress={preventMinus}
                       onFocus={handleFocus}
@@ -503,14 +508,14 @@ export const FormEditRL316 = () => {
                   <td>
                     <input
                       type="number"
-                      name="dropOut"
+                      name="drop_out"
                       className="form-control"
-                      value={dropOut}
+                      value={drop_out}
                       min="0"
                       maxLength={7}
                       onInput={(e) => maxLengthCheck(e)}
-                      // onChange={(e) => setKecil(parseInt(e.target.value))}
-                      onChange={(e) => changeHandler(e)}
+                      onChange={(e) => setDropOut(parseInt(e.target.value))}
+                      // onChange={(e) => changeHandler(e)}
                       onPaste={preventPasteNegative}
                       onKeyPress={preventMinus}
                       onFocus={handleFocus}

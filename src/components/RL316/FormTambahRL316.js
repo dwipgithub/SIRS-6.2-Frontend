@@ -11,8 +11,6 @@ import Table from "react-bootstrap/Table";
 // import { IoArrowBack } from "react-icons/io5";
 
 const FormTambahRL316 = () => {
-
-
   const [namaRS, setNamaRS] = useState("");
   const [alamatRS, setAlamatRS] = useState("");
   const [namaPropinsi, setNamaPropinsi] = useState("");
@@ -82,7 +80,7 @@ const FormTambahRL316 = () => {
     // setSpinner(true);
     try {
       const response = await axiosJWT.get(
-        "/apisirs6v2/metodarltigatitikenambelas",
+        "/apisirs6v2/jenispelayanankeluargaberencana",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -93,8 +91,8 @@ const FormTambahRL316 = () => {
       const rlTemplate = response.data.data.map((value, index) => {
         return {
           id: value.id,
-          jenisSpesialisasi: value.nama,
-          no: value.no,
+          JenisPelayananKeluargaBerencana: value.nama,
+          no: value.id,
           pelayananKbPaskaPersalinan: 0,
           pelayananKbPaskaKeguguran: 0,
           pelayananKbInterval: 0,
@@ -149,22 +147,19 @@ const FormTambahRL316 = () => {
         event.target.select(event.target.value);
       }
       newDataRL[index].komplikasiKB = event.target.value;
-    }
-    else if (name === "kegagalanKB") {
+    } else if (name === "kegagalanKB") {
       if (event.target.value === "") {
         event.target.value = 0;
         event.target.select(event.target.value);
       }
       newDataRL[index].kegagalanKB = event.target.value;
-    }
-    else if (name === "efekSamping") {
+    } else if (name === "efekSamping") {
       if (event.target.value === "") {
         event.target.value = 0;
         event.target.select(event.target.value);
       }
       newDataRL[index].efekSamping = event.target.value;
-    }
-    else if (name === "dropOut") {
+    } else if (name === "dropOut") {
       if (event.target.value === "") {
         event.target.value = 0;
         event.target.select(event.target.value);
@@ -184,9 +179,13 @@ const FormTambahRL316 = () => {
         })
         .map((value, index) => {
           return {
-            SpesialisasiId: value.id,
-            pelayananKbPaskaPersalinan: parseInt(value.pelayananKbPaskaPersalinan),
-            pelayananKbPaskaKeguguran: parseInt(value.pelayananKbPaskaKeguguran),
+            JenisPelayananKeluargaBerencanaId: value.id,
+            pelayananKbPaskaPersalinan: parseInt(
+              value.pelayananKbPaskaPersalinan
+            ),
+            pelayananKbPaskaKeguguran: parseInt(
+              value.pelayananKbPaskaKeguguran
+            ),
             pelayananKbInterval: parseInt(value.pelayananKbInterval),
             komplikasiKB: parseInt(value.komplikasiKB),
             kegagalanKB: parseInt(value.kegagalanKB),
@@ -194,6 +193,8 @@ const FormTambahRL316 = () => {
             dropOut: parseInt(value.dropOut),
           };
         });
+
+      // console.log(dataRLArray);
 
       const customConfig = {
         headers: {
@@ -203,7 +204,7 @@ const FormTambahRL316 = () => {
       };
 
       await axiosJWT.post(
-        "/apisirs6v2/insertrltigatitikenambelas",
+        "/apisirs6v2/rltigatitikenambelas",
         {
           tahun: parseInt(tahun),
           data: dataRLArray,
@@ -353,22 +354,38 @@ const FormTambahRL316 = () => {
             >
               &lt;
             </Link>
-            <span style={{ color: "gray" }}>Kembali RL 3.16 Keluarga Berencana</span>
+            <span style={{ color: "gray" }}>
+              Kembali RL 3.16 Keluarga Berencana
+            </span>
 
             <Table className={style.rlTable}>
               <thead>
                 <tr>
-                  <th rowSpan="2" style={{ width: "2%" }}>No.</th>
+                  <th rowSpan="2" style={{ width: "2%" }}>
+                    No.
+                  </th>
                   <th rowSpan="2" style={{ width: "1%" }}></th>
-                  <th rowSpan="2" style={{ width: "2%" }}>No Metoda</th>
-                  <th rowSpan="2" style={{ width: "8%" }}>Jenis Metoda</th>
+                  <th rowSpan="2" style={{ width: "2%" }}>
+                    No
+                  </th>
+                  <th rowSpan="2" style={{ width: "15%" }}>
+                    Jenis Pelayanan Keluarga Berencana
+                  </th>
                   <th colSpan="3" style={{ width: "5%" }}>
                     Pelayanan KB
                   </th>
-                  <th rowSpan="2" style={{ width: "5%" }}>Komplikasi KB</th>
-                  <th rowSpan="2" style={{ width: "5%" }}>Kegagalan KB</th>
-                  <th rowSpan="2" style={{ width: "5%" }}>Efek Samping</th>
-                  <th rowSpan="2" style={{ width: "5%" }}>Drop Out</th>
+                  <th rowSpan="2" style={{ width: "5%" }}>
+                    Komplikasi KB
+                  </th>
+                  <th rowSpan="2" style={{ width: "5%" }}>
+                    Kegagalan KB
+                  </th>
+                  <th rowSpan="2" style={{ width: "5%" }}>
+                    Efek Samping
+                  </th>
+                  <th rowSpan="2" style={{ width: "5%" }}>
+                    Drop Out
+                  </th>
                 </tr>
                 <tr>
                   <th style={{ width: "5%" }}>{"Paska Persalinan"}</th>
@@ -391,19 +408,21 @@ const FormTambahRL316 = () => {
                             checked={value.checked}
                           />
                         </td>
-                        <td><input
+                        <td>
+                          <input
                             type="text"
                             name="noMetoda"
                             className="form-control"
                             value={value.no}
                             disabled={true}
-                          /></td>
+                          />
+                        </td>
                         <td>
                           <input
                             type="text"
-                            name="jenisSpesialisasi"
+                            name="JenisPelayananKeluargaBerencana"
                             className="form-control"
-                            value={value.jenisSpesialisasi}
+                            value={value.JenisPelayananKeluargaBerencana}
                             disabled={true}
                           />
                         </td>
@@ -529,19 +548,21 @@ const FormTambahRL316 = () => {
                             checked={value.checked}
                           />
                         </td>
-                        <td><input
+                        <td>
+                          <input
                             type="text"
                             name="noMetoda"
                             className="form-control"
                             value={value.no}
                             disabled={true}
-                          /></td>
+                          />
+                        </td>
                         <td>
                           <input
                             type="text"
-                            name="jenisSpesialisasi"
+                            name="JenisPelayananKeluargaBerencana"
                             className="form-control"
-                            value={value.jenisSpesialisasi}
+                            value={value.JenisPelayananKeluargaBerencana}
                             disabled={true}
                           />
                         </td>
@@ -591,7 +612,7 @@ const FormTambahRL316 = () => {
                             onKeyPress={preventMinus}
                           />
                         </td>
-                        
+
                         <td>
                           <input
                             type="number"

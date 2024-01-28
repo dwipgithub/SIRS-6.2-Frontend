@@ -11,26 +11,7 @@ import "react-confirm-alert/src/react-confirm-alert.css";
 import Table from "react-bootstrap/Table";
 import Modal from "react-bootstrap/Modal";
 
-// import { Link } from "react-router-dom";
-// import { Spinner } from "react-bootstrap";
-// import { RiDeleteBin5Fill, RiEdit2Fill } from "react-icons/ri";
-// import { AiFillFileAdd } from "react-icons/ai";
-// import Container from "react-bootstrap/Container";
-// import Row from "react-bootstrap/Row";
-// import Button from "react-bootstrap/Button";
-
 const RL316 = () => {
-  // const [tahun, setTahun] = useState("");
-  // const [namaRS, setNamaRS] = useState("");
-  // const [alamatRS, setAlamatRS] = useState("");
-  // const [namaPropinsi, setNamaPropinsi] = useState("");
-  // const [namaKabKota, setNamaKabKota] = useState("");
-  // const [nama, setNama] = useState("");
-  // const [dataRL, setDataRL] = useState([]);
-  // const [token, setToken] = useState("");
-  // const [expire, setExpire] = useState("");
-  // const navigate = useNavigate();
-  // const [spinner, setSpinner] = useState(false);
   const [tahun, setTahun] = useState("");
   const [filterLabel, setFilterLabel] = useState([]);
   const [rumahSakit, setRumahSakit] = useState("");
@@ -44,7 +25,8 @@ const RL316 = () => {
   const [user, setUser] = useState({});
   const navigate = useNavigate();
 
-  const [pelayananKbPaskaPersalinan, setpelayanankbpaskapersalinan] = useState(0);
+  const [pelayananKbPaskaPersalinan, setpelayanankbpaskapersalinan] =
+    useState(0);
   const [pelayananKbPaskaKeguguran, setpelayanankbpaskakeguguran] = useState(0);
   const [pelayananKbInterval, setpelayanankbinterval] = useState(0);
   const [pelayananKBTotal, setpelayanankbtotal] = useState(0);
@@ -173,15 +155,18 @@ const RL316 = () => {
       });
 
       let dataRLTigaTitikEnamBelasDetails = [];
-      
+
       rlTigaTitikEnamBelasDetails.forEach((element) => {
         // element.forEach((value) => {
-        
+
         dataRLTigaTitikEnamBelasDetails.push(element);
         // });
       });
       // console.log(dataRLTigaTitikDuaBelasDetails);
-      let pelayanan_Kbtotal = pelayananKbPaskaPersalinan + pelayananKbPaskaKeguguran + pelayananKbInterval;
+      let pelayanan_Kbtotal =
+        pelayananKbPaskaPersalinan +
+        pelayananKbPaskaKeguguran +
+        pelayananKbInterval;
       setpelayanankbtotal(pelayanan_Kbtotal);
       // setDataRL(dataRLTigaTitikDuaBelasDetails);
 
@@ -202,7 +187,7 @@ const RL316 = () => {
     };
     try {
       await axiosJWT.delete(
-        `/apisirs6v2/deleterltigatitikenambelasdetail/${id}`,
+        `/apisirs6v2/rltigatitikenambelas/${id}`,
         customConfig
       );
       toast("Data Berhasil Dihapus", {
@@ -581,27 +566,39 @@ const RL316 = () => {
             className={style.rlTable}
             striped
             responsive
-            style={{ width: "100%" }}
+            style={{ width: "200%" }}
           >
             <thead>
-            <tr>
-                  <th rowSpan="2" style={{ width: "4%" }}>No.</th>
-                  <th rowSpan="2" style={{ width: "3%" }}></th>
-                  <th rowSpan="4" style={{ width: "3%" }}>Metoda ID</th>
-                  <th colSpan="4" style={{ width: "5%" }}>
-                    Pelayanan KB
-                  </th>
-                  <th rowSpan="2" style={{ width: "5%" }}>Komplikasi KB</th>
-                  <th rowSpan="2" style={{ width: "5%" }}>Kegagalan KB</th>
-                  <th rowSpan="2" style={{ width: "5%" }}>Efek Samping</th>
-                  <th rowSpan="2" style={{ width: "5%" }}>Drop Out</th>
-                </tr>
-                <tr>
-                  <th style={{ width: "5%" }}>{"Paska Persalinan"}</th>
-                  <th style={{ width: "5%" }}>{"Paska Keguguran"}</th>
-                  <th style={{ width: "5%" }}>{"Interval"}</th>
-                  <th style={{ width: "5%" }}>{"Total"}</th>
-                </tr>
+              <tr>
+                <th rowSpan="2" style={{ width: "4%" }}>
+                  No.
+                </th>
+                <th rowSpan="2" style={{ width: "3%" }}></th>
+                <th rowSpan="4" style={{ width: "10%" }}>
+                  Jenis Pelayanan Keluarga Berencana
+                </th>
+                <th colSpan="4" style={{ width: "5%" }}>
+                  Pelayanan KB
+                </th>
+                <th rowSpan="2" style={{ width: "5%" }}>
+                  Komplikasi KB
+                </th>
+                <th rowSpan="2" style={{ width: "5%" }}>
+                  Kegagalan KB
+                </th>
+                <th rowSpan="2" style={{ width: "5%" }}>
+                  Efek Samping
+                </th>
+                <th rowSpan="2" style={{ width: "5%" }}>
+                  Drop Out
+                </th>
+              </tr>
+              <tr>
+                <th style={{ width: "5%" }}>{"Pasca Persalinan"}</th>
+                <th style={{ width: "5%" }}>{"Pasca Keguguran"}</th>
+                <th style={{ width: "5%" }}>{"Interval"}</th>
+                <th style={{ width: "5%" }}>{"Total"}</th>
+              </tr>
             </thead>
             <tbody>
               {dataRL.map((value, index) => {
@@ -639,7 +636,7 @@ const RL316 = () => {
                             Hapus
                           </button>
                           <Link
-                            to={`/rl316/ubah/${value.id}`}
+                            to={`/rl316/edit/${value.id}`}
                             className="btn btn-warning"
                             style={{
                               margin: "0 5px 0 0",
@@ -740,13 +737,7 @@ const RL316 = () => {
                 );
               })}
 
-              {dataRL.length > 0 ? (
-                <tr>
-                  
-                </tr>
-              ) : (
-                <></>
-              )}
+              {dataRL.length > 0 ? <tr></tr> : <></>}
             </tbody>
           </Table>
         </div>
