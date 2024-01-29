@@ -101,6 +101,7 @@ export const FormUbahRL36 = () => {
                 }
             setRmRumahSakit(parseInt(event.target.value))
             setRmTotal(parseInt(event.target.value) + parseInt(rmBidan) + parseInt(rmPuskesmas) + parseInt(rmFaskesLainnya))
+            setRmHidup(parseInt(rmTotal) - parseInt(rmMati))
         } else if (name === 'rmBidan') {
             if(event.target.value === ''){
                     
@@ -109,6 +110,7 @@ export const FormUbahRL36 = () => {
                 }
             setRmBidan(parseInt(event.target.value))
             setRmTotal(parseInt(event.target.value) + parseInt(rmRumahSakit) + parseInt(rmPuskesmas) + parseInt(rmFaskesLainnya))
+            setRmHidup(parseInt(rmTotal) - parseInt(rmMati))
         } else if (name === 'rmPuskesmas') {
             if(event.target.value === ''){
                     
@@ -117,6 +119,7 @@ export const FormUbahRL36 = () => {
                 }
             setRmPuskesmas(parseInt(event.target.value))
             setRmTotal(parseInt(event.target.value) + parseInt(rmBidan) + parseInt(rmRumahSakit) + parseInt(rmFaskesLainnya))
+            setRmHidup(parseInt(rmTotal) - parseInt(rmMati))
         } else if (name === 'rmFaskesLainnya') {
             if(event.target.value === ''){
                     
@@ -125,6 +128,7 @@ export const FormUbahRL36 = () => {
                 }
             setRmFaskesLainnya(parseInt(event.target.value))
             setRmTotal(parseInt(event.target.value) + parseInt(rmBidan) + parseInt(rmPuskesmas) + parseInt(rmRumahSakit))
+            setRmHidup(parseInt(rmTotal) - parseInt(rmMati))
         } else if (name === 'rmHidup') {
             if(event.target.value === ''){
                     

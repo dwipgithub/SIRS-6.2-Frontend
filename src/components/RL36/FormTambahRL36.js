@@ -144,6 +144,8 @@ const FormTambahRL36 = () => {
                 }
             newDataRL[index].rmRumahSakit = parseInt(event.target.value)
             newDataRL[index].rmTotal = parseInt(event.target.value) + parseInt(dataRL[index].rmBidan) + parseInt(dataRL[index].rmPuskesmas) + parseInt(dataRL[index].rmFaskesLainnya)
+            newDataRL[index].rmHidup = parseInt(dataRL[index].rmTotal) - parseInt(dataRL[index].rmMati)
+            
         } else if (name === 'rmBidan') {
             if(event.target.value === ''){
                     
@@ -152,6 +154,7 @@ const FormTambahRL36 = () => {
                 }
             newDataRL[index].rmBidan = parseInt(event.target.value)
             newDataRL[index].rmTotal = parseInt(event.target.value) + parseInt(dataRL[index].rmRumahSakit) + parseInt(dataRL[index].rmPuskesmas) + parseInt(dataRL[index].rmFaskesLainnya)
+            newDataRL[index].rmHidup = parseInt(dataRL[index].rmTotal) - parseInt(dataRL[index].rmMati)
         } else if (name === 'rmPuskesmas') {
             if(event.target.value === ''){
                     
@@ -160,6 +163,7 @@ const FormTambahRL36 = () => {
                 }
             newDataRL[index].rmPuskesmas = parseInt(event.target.value)
             newDataRL[index].rmTotal = parseInt(event.target.value) + parseInt(dataRL[index].rmBidan) + parseInt(dataRL[index].rmRumahSakit) + parseInt(dataRL[index].rmFaskesLainnya)
+            newDataRL[index].rmHidup = parseInt(dataRL[index].rmTotal) - parseInt(dataRL[index].rmMati)
         } else if (name === 'rmFaskesLainnya') {
             if(event.target.value === ''){
                     
@@ -168,6 +172,7 @@ const FormTambahRL36 = () => {
                 }
             newDataRL[index].rmFaskesLainnya = parseInt(event.target.value)
             newDataRL[index].rmTotal = parseInt(event.target.value) + parseInt(dataRL[index].rmBidan) + parseInt(dataRL[index].rmPuskesmas) + parseInt(dataRL[index].rmRumahSakit)
+            newDataRL[index].rmHidup = parseInt(dataRL[index].rmTotal) - parseInt(dataRL[index].rmMati)
         } else if (name === 'rmHidup') {
             if(event.target.value === ''){
                     
@@ -181,8 +186,15 @@ const FormTambahRL36 = () => {
                 event.target.value = 0
                 event.target.select(event.target.value)
                 }
-            newDataRL[index].rmMati = parseInt(event.target.value)
-            newDataRL[index].rmHidup = parseInt(dataRL[index].rmTotal) - parseInt(event.target.value)
+            // newDataRL[index].rmMati = parseInt(event.target.value)
+            
+            if(parseInt(event.target.value) >  parseInt(dataRL[index].rmTotal)){
+                alert('RM Mati tidak boleh lebih besar dari RM Total')
+                newDataRL[index].rmMati = 0
+            } else {
+                newDataRL[index].rmMati = parseInt(event.target.value)
+                newDataRL[index].rmHidup = parseInt(dataRL[index].rmTotal) - parseInt(event.target.value)
+            }
         } else if (name === 'rmTotal') {
             if(event.target.value === ''){
                     
@@ -352,24 +364,24 @@ const FormTambahRL36 = () => {
                             <div className="card-body">
                                 <h5 className="card-title h5">Profile Fasyankes</h5>
                                 <div className="form-floating" style={{width:"100%", display:"inline-block"}}>
-                                    <input type="text" className="form-control" id="nama"
+                                    <input type="text" className="form-control" id="floatingInput"
                                         value={ namaRS } disabled={true}/>
-                                    <label htmlFor="nama">Nama</label>
+                                    <label htmlFor="floatingInput">Nama</label>
                                 </div>
                                 <div className="form-floating" style={{width:"100%", display:"inline-block"}}>
-                                    <input type="text" className="form-control" id="alamat"
+                                    <input type="text" className="form-control" id="floatingInput"
                                         value={ alamatRS} disabled={true}/>
-                                    <label htmlFor="alamat">Alamat</label>
+                                    <label htmlFor="floatingInput">Alamat</label>
                                 </div>
                                 <div className="form-floating" style={{width:"50%", display:"inline-block"}}>
-                                    <input type="text" className="form-control" id="provinsi"
+                                    <input type="text" className="form-control" id="floatingInput"
                                         value={ namaPropinsi } disabled={true}/>
-                                    <label htmlFor="provinsi">Provinsi </label>
+                                    <label htmlFor="floatingInput">Provinsi </label>
                                 </div>
                                 <div className="form-floating" style={{width:"50%", display:"inline-block"}}>
-                                    <input type="text" className="form-control" id="kabkota"
+                                    <input type="text" className="form-control" id="floatingInput"
                                         value= { namaKabKota } disabled={true}/>
-                                    <label htmlFor="kabkota">Kab/Kota</label>
+                                    <label htmlFor="floatingInput">Kab/Kota</label>
                                 </div>
                             </div>
                         </div>

@@ -427,6 +427,10 @@ const FormTambahRL35 = () => {
                                     if(value.no == 99){
                                         disabled = true
                                         visibled = "none" 
+                                    }else if(value.no == 0){
+                                        value.disabledInput = true
+                                        disabled = false
+                                        visibled = "block"
                                     } else {
                                         disabled = false
                                         visibled = "block"

@@ -211,24 +211,24 @@ const FormTambahRL34 = () => {
                             <div className="card-body">
                                 <h5 className="card-title h5">Profile Fasyankes</h5>
                                 <div className="form-floating" style={{width:"100%", display:"inline-block"}}>
-                                    <input type="text" className="form-control" id="nama"
+                                    <input type="text" className="form-control" id="floatingInput"
                                         value={ namaRS } disabled={true}/>
-                                    <label htmlFor="nama">Nama</label>
+                                    <label htmlFor="floatingInput">Nama</label>
                                 </div>
                                 <div className="form-floating" style={{width:"100%", display:"inline-block"}}>
-                                    <input type="text" className="form-control" id="alamat"
+                                    <input type="text" className="form-control" id="floatingInput"
                                         value={ alamatRS} disabled={true}/>
-                                    <label htmlFor="alamat">Alamat</label>
+                                    <label htmlFor="floatingInput">Alamat</label>
                                 </div>
                                 <div className="form-floating" style={{width:"50%", display:"inline-block"}}>
-                                    <input type="text" className="form-control" id="provinsi"
+                                    <input type="text" className="form-control" id="floatingInput"
                                         value={ namaPropinsi } disabled={true}/>
-                                    <label htmlFor="provinsi">Provinsi </label>
+                                    <label htmlFor="floatingInput">Provinsi </label>
                                 </div>
                                 <div className="form-floating" style={{width:"50%", display:"inline-block"}}>
-                                    <input type="text" className="form-control" id="kabkota"
+                                    <input type="text" className="form-control" id="floatingInput"
                                         value= { namaKabKota } disabled={true}/>
-                                    <label htmlFor="kabkota">Kab/Kota</label>
+                                    <label htmlFor="floatingInput">Kab/Kota</label>
                                 </div>
                             </div>
                         </div>
@@ -240,7 +240,7 @@ const FormTambahRL34 = () => {
                                 <div className="form-floating" style={{width:"100%", display:"inline-block"}}>
                                     <input name="tahun" type="number" className="form-control" id="floatingInput" min="2024"
                                         placeholder="Tahun" value={tahun} onChange={e => changeHandlerSingle(e)}/>
-                                    <label htmlFor="floatingInput">Tahun</label>
+                                    <label htmlFor="tahun">Tahun</label>
                                 </div>
                                 <div className="form-floating" style={{width:"100%", display:"inline-block"}}>
                                     <select name="bulan" className="form-control" id="bulan" onChange={e => changeHandlerSingle(e)}>

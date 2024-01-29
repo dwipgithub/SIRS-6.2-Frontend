@@ -494,8 +494,6 @@ const RL36 = () => {
             setDataRL(data)
 
             setSpinner(false)
-
-            handleClose()
         } catch (error) {
             console.log(error)
             setSpinner(false)

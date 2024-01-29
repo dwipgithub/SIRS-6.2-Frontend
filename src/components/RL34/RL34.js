@@ -650,7 +650,9 @@ const RL34 = () => {
                                                 <input type='text' name='id' className="form-control" value={99} disabled={true}/>
                                             </td>
                                             <td></td>
-                                            <td>Total</td>
+                                            <td>
+                                                <input type="text" name="jenisPengunjung" className="form-control" value="Total" disabled={true} />
+                                            </td>
                                             <td>
                                                 <input type="text" name="jumlah" className="form-control" value={total} 
                                                     disabled={true} />

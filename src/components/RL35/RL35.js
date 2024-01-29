@@ -266,9 +266,17 @@ const RL35 = () => {
         let total2 = 0
         let total3 = 0
         dataRL.map((value, index) =>
-            {total1 = total1 + value.kunjungan_pasien_dalam_kabkota
-            total2 = total2 + value.kunjungan_pasien_luar_kabkota
-            total3 = total3 + value.total_kunjungan}
+            {
+                if(value.jenis_kegiatan_id == 32 || value.jenis_kegiatan_id == 33){
+                    total1 = total1
+                        total2 = total2
+                        total3 = total3
+                } else {
+                    total1 = total1 + value.kunjungan_pasien_dalam_kabkota
+                        total2 = total2 + value.kunjungan_pasien_luar_kabkota
+                        total3 = total3 + value.total_kunjungan
+                }
+            }
         )
         console.log(total1)
         console.log(total2)
