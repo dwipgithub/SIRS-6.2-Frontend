@@ -10,8 +10,9 @@ import Table from "react-bootstrap/Table";
 import { IoArrowBack } from "react-icons/io5";
 import { Spinner } from "react-bootstrap";
 
-const FormTambahRL51 = () => {
-  const [tahun, setTahun] = useState(new Date().getFullYear() - 1);
+const FormTambahRL41 = () => {
+  // const [tahun, setTahun] = useState(new Date().getFullYear() - 1);
+  const [tahun, setTahun] = useState(new Date().getFullYear());
   const [bulan, setBulan] = useState("01");
   const [namaRS, setNamaRS] = useState("");
   const [alamatRS, setAlamatRS] = useState("");
@@ -392,10 +393,12 @@ const FormTambahRL51 = () => {
       data: [transformedObject],
     };
 
+    // console.log(datainput[0]);
+
     if (total <= totalkunjungan) {
       //   console.log(totalkunjungan);
       //   console.log(total);
-      //   console.log(dataReady);
+      // console.log(dataReady);
       try {
         const customConfig = {
           headers: {
@@ -412,10 +415,8 @@ const FormTambahRL51 = () => {
           position: toast.POSITION.TOP_RIGHT,
         });
         setTimeout(() => {
-          navigate('/rl51')
+          navigate(0);
         }, 1000);
-
-
       } catch (error) {
         toast(
           `Data tidak bisa disimpan karena ,${error.response.data.message}`,
@@ -459,11 +460,11 @@ const FormTambahRL51 = () => {
                 <input
                   type="text"
                   className="form-control"
-                  id="floatingInput"
+                  id="NamaRs"
                   value={namaRS}
                   disabled={true}
                 />
-                <label htmlFor="floatingInput">Nama</label>
+                <label htmlFor="NamaRs">Nama</label>
               </div>
               <div
                 className="form-floating"
@@ -472,11 +473,11 @@ const FormTambahRL51 = () => {
                 <input
                   type="text"
                   className="form-control"
-                  id="floatingInput"
+                  id="AlamatRS"
                   value={alamatRS}
                   disabled={true}
                 />
-                <label htmlFor="floatingInput">Alamat</label>
+                <label htmlFor="AlamatRS">Alamat</label>
               </div>
               <div
                 className="form-floating"
@@ -485,11 +486,11 @@ const FormTambahRL51 = () => {
                 <input
                   type="text"
                   className="form-control"
-                  id="floatingInput"
+                  id="ProvinsiRS"
                   value={namaPropinsi}
                   disabled={true}
                 />
-                <label htmlFor="floatingInput">Provinsi </label>
+                <label htmlFor="ProvinsiRS">Provinsi </label>
               </div>
               <div
                 className="form-floating"
@@ -498,11 +499,11 @@ const FormTambahRL51 = () => {
                 <input
                   type="text"
                   className="form-control"
-                  id="floatingInput"
+                  id="KabKotaRS"
                   value={namaKabKota}
                   disabled={true}
                 />
-                <label htmlFor="floatingInput">Kab/Kota</label>
+                <label htmlFor="KabKotaRS">Kab/Kota</label>
               </div>
             </div>
           </div>
@@ -768,4 +769,4 @@ const FormTambahRL51 = () => {
   );
 };
 
-export default FormTambahRL51;
+export default FormTambahRL41;

@@ -32,8 +32,10 @@ const RL51 = () => {
     getBulan();
     const getLastYear = async () => {
       const date = new Date();
-      setTahun(date.getFullYear() - 1);
-      return date.getFullYear() - 1;
+      setTahun(date.getFullYear());
+      return date.getFullYear();
+      // setTahun(date.getFullYear() - 1);
+      // return date.getFullYear() - 1;
     };
     getLastYear().then((results) => {});
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -604,7 +606,9 @@ const RL51 = () => {
                 <th rowSpan="3" style={{ width: "1%" }}>
                   No.
                 </th>
-                <th rowSpan="3" style={{ width: "2%" }}></th>
+                <th rowSpan="3" style={{ width: "2%" }}>
+                  Aksi
+                </th>
                 <th rowSpan="3" style={{ width: "5%" }}>
                   Kode ICD 10
                 </th>

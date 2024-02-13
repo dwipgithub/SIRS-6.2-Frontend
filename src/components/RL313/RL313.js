@@ -39,8 +39,10 @@ const RL313 = () => {
     refreshToken();
     const getLastYear = async () => {
       const date = new Date();
-      setTahun(date.getFullYear() - 1);
-      return date.getFullYear() - 1;
+      // setTahun(date.getFullYear() - 1);
+      // return date.getFullYear() - 1;
+      setTahun(date.getFullYear());
+      return date.getFullYear();
     };
     getLastYear().then((results) => {});
 
@@ -735,7 +737,7 @@ const RL313 = () => {
             <thead>
               <tr>
                 <th style={{ width: "2%" }}>No.</th>
-                <th style={{ width: "2%" }}></th>
+                <th style={{ width: "2%" }}>Aksi</th>
                 <th style={{ width: "10%" }}>Jenis Tindakan</th>
                 <th style={{ width: "5%" }}>Jumlah</th>
               </tr>
@@ -745,7 +747,7 @@ const RL313 = () => {
                 return (
                   <React.Fragment key={index}>
                     <tr className="table-primary">
-                      {value.groupNo === 88 && (
+                      {value.groupNo === 8 && (
                         <td
                           style={{
                             textAlign: "center",
@@ -820,18 +822,23 @@ const RL313 = () => {
                                 >
                                   Hapus
                                 </button>
-                                <Link
-                                  to={`/rl313/edit/${value2.id}`}
-                                  className="btn btn-warning"
-                                  style={{
-                                    margin: "0 5px 0 0",
-                                    backgroundColor: "#CFD35E",
-                                    border: "1px solid #CFD35E",
-                                    color: "#FFFFFF",
-                                  }}
-                                >
-                                  Ubah
-                                </Link>
+
+                                {value2.jenis_tindakan_no != 88 ? (
+                                  <Link
+                                    to={`/rl313/edit/${value2.id}`}
+                                    className="btn btn-warning"
+                                    style={{
+                                      margin: "0 5px 0 0",
+                                      backgroundColor: "#CFD35E",
+                                      border: "1px solid #CFD35E",
+                                      color: "#FFFFFF",
+                                    }}
+                                  >
+                                    Ubah
+                                  </Link>
+                                ) : (
+                                  <></>
+                                )}
                               </div>
                             ) : (
                               <></>

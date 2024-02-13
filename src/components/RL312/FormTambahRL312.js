@@ -24,7 +24,8 @@ const FormTambahRL312 = () => {
     refreshToken();
     getRLTigaTitikDuaBelasTemplate();
     const date = new Date();
-    setTahun(date.getFullYear() - 1);
+    setTahun(date.getFullYear());
+    // setTahun(date.getFullYear() - 1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

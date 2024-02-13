@@ -34,8 +34,10 @@ const RL312 = () => {
     refreshToken();
     const getLastYear = async () => {
       const date = new Date();
-      setTahun(date.getFullYear() - 1);
-      return date.getFullYear() - 1;
+      setTahun(date.getFullYear());
+      return date.getFullYear();
+      // setTahun(date.getFullYear() - 1);
+      // return date.getFullYear() - 1;
     };
     getLastYear().then((results) => {
       // getDataRLTigaTitikDuaBelas(results);
@@ -571,7 +573,7 @@ const RL312 = () => {
             <thead>
               <tr>
                 <th style={{ width: "2%" }}>No.</th>
-                <th style={{ width: "2%" }}></th>
+                <th style={{ width: "2%" }}>Aksi</th>
                 <th style={{ width: "10%" }}>Jenis Spesialisasi</th>
                 <th style={{ width: "5%" }}>Khusus</th>
                 <th style={{ width: "5%" }}>Besar</th>
@@ -615,18 +617,22 @@ const RL312 = () => {
                           >
                             Hapus
                           </button>
-                          <Link
-                            to={`/rl312/edit/${value.id}`}
-                            className="btn btn-warning"
-                            style={{
-                              margin: "0 5px 0 0",
-                              backgroundColor: "#CFD35E",
-                              border: "1px solid #CFD35E",
-                              color: "#FFFFFF",
-                            }}
-                          >
-                            Ubah
-                          </Link>
+                          {value.nama_spesialisasi != "Tidak Ada Data" ? (
+                            <Link
+                              to={`/rl312/edit/${value.id}`}
+                              className="btn btn-warning"
+                              style={{
+                                margin: "0 5px 0 0",
+                                backgroundColor: "#CFD35E",
+                                border: "1px solid #CFD35E",
+                                color: "#FFFFFF",
+                              }}
+                            >
+                              Ubah
+                            </Link>
+                          ) : (
+                            <></>
+                          )}
                         </div>
                       ) : (
                         <></>

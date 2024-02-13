@@ -25,7 +25,8 @@ const FormTambahRL313 = () => {
     getRLTigaTitikTigaBelasTemplate();
 
     const date = new Date();
-    setTahun(date.getFullYear() - 1);
+    // setTahun(date.getFullYear() - 1);
+    setTahun(date.getFullYear());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -320,7 +321,7 @@ const FormTambahRL313 = () => {
               </thead>
               <tbody>
                 {dataRL.map((value, index) => {
-                  if (value.id === 402) {
+                  if (value.no == 88) {
                     return (
                       <tr key={value.id}>
                         <td>
@@ -376,7 +377,7 @@ const FormTambahRL313 = () => {
                             className="form-control"
                             value={value.jumlah}
                             onChange={(e) => changeHandler(e, index)}
-                            disabled={value.disabledInput}
+                            disabled={true}
                           />
                         </td>
                       </tr>

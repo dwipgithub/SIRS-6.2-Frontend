@@ -30,8 +30,10 @@ const RL311 = () => {
     refreshToken();
     const getLastYear = async () => {
       const date = new Date();
-      setTahun(date.getFullYear() - 1);
-      return date.getFullYear() - 1;
+      // setTahun(date.getFullYear() - 1);
+      // return date.getFullYear() - 1;
+      setTahun(date.getFullYear());
+      return date.getFullYear();
     };
     getLastYear().then((results) => {
       // getDataRLTigaTitikSebelas(results);
@@ -531,7 +533,9 @@ const RL311 = () => {
                 <th rowSpan="2" style={{ width: "2%" }}>
                   No.
                 </th>
-                <th rowSpan="2" style={{ width: "2%" }}></th>
+                <th rowSpan="2" style={{ width: "2%" }}>
+                  Aksi
+                </th>
                 <th rowSpan="2" style={{ width: "10%" }}>
                   Jenis Kegiatan
                 </th>
@@ -573,18 +577,22 @@ const RL311 = () => {
                           >
                             Hapus
                           </button>
-                          <Link
-                            to={`/rl311/edit/${value.id}`}
-                            className="btn btn-warning"
-                            style={{
-                              margin: "0 5px 0 0",
-                              backgroundColor: "#CFD35E",
-                              border: "1px solid #CFD35E",
-                              color: "#FFFFFF",
-                            }}
-                          >
-                            Ubah
-                          </Link>
+                          {value.no != 88 ? (
+                            <Link
+                              to={`/rl311/edit/${value.id}`}
+                              className="btn btn-warning"
+                              style={{
+                                margin: "0 5px 0 0",
+                                backgroundColor: "#CFD35E",
+                                border: "1px solid #CFD35E",
+                                color: "#FFFFFF",
+                              }}
+                            >
+                              Ubah
+                            </Link>
+                          ) : (
+                            <></>
+                          )}
                         </div>
                       ) : (
                         <></>
